@@ -16,9 +16,6 @@ namespace Pixel_Magic.Utilities
         public static List<Color> GenerateMedianHistogram(Image Source,int paletteSize)
         {
             ProcessWindow.WriteLine("Bucketing pixels...");
-
-
-
  
             using (StreamWriter outfile = new StreamWriter("C:/Test4.csv"))
             {
@@ -33,7 +30,6 @@ namespace Pixel_Magic.Utilities
                     i++;
                 }
             }
-
 
             using (StreamWriter outfile = new StreamWriter("C:/x.csv"))
             {

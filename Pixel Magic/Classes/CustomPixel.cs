@@ -3,8 +3,6 @@ using System.Drawing;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Windows.Media.Media3D;
-using ColorMine.ColorSpaces;
-using ColorMine.ColorSpaces.Comparisons;
 using Colourful;
 using Colourful.Difference;
 using Colourful.Conversion;
@@ -17,9 +15,12 @@ namespace Pixel_Magic.Classes
     {
         public Color Color;
         public int x, y;
-
         public LabColor LAB;
         public Point3D Point;
+
+        public static ComparisonMode CurrentMode = ComparisonMode.Colorspace;
+        //private static readonly IColorSpaceComparison _comparer = new CieDe2000Comparison();
+        public static ColourfulConverter converter = new ColourfulConverter { WhitePoint = Illuminants.D65 };
 
         public enum ComparisonMode
         {
@@ -27,12 +28,6 @@ namespace Pixel_Magic.Classes
             Colorspace,
             ColorMine
         }
-
-         
-        public static ComparisonMode CurrentMode = ComparisonMode.Colorspace;
-        private static readonly IColorSpaceComparison _comparer = new CieDe2000Comparison();
-        public static ColourfulConverter converter = new ColourfulConverter { WhitePoint = Illuminants.D65 };
-
 
         public CustomPixel(Color color, int x, int y)
         {
@@ -42,8 +37,6 @@ namespace Pixel_Magic.Classes
             Point = new Point3D(color.R, color.G, color.B); ;
             LAB = converter.ToLab(new RGBColor(color.R / 255.00, color.G / 255.00, color.B / 255.00));
         }
-
-
 
         public int CompareTo(CustomPixel o)
         {

@@ -20,56 +20,6 @@ namespace Pixel_Magic.Utilities
             internal static extern bool DeleteObject(IntPtr hObject);
         }
 
-
-        //public static Image ToWpfBitmap(this Bitmap bitmap, int height, int width)
-        //{
-        //    using (MemoryStream stream = new MemoryStream())
-        //    {
-        //        bitmap.Save(stream, ImageFormat.Bmp);
-
-        //        stream.Position = 0;
-        //        BitmapImage result = new BitmapImage();
-        //        result.BeginInit();
-        //        result.CacheOption = BitmapCacheOption.OnLoad;
-        //        result.StreamSource = stream;
-        //        result.EndInit();
-        //        var imageResult = new Image
-        //        {
-        //            Source = result,
-        //            Width = width,
-        //            Height = height
-        //        };
-
-
-        //        return imageResult;
-        //    }
-        //}
-
-        //public static Image ToWpfBitmap(this Bitmap bitmap, double height, double width)
-        //{
-        //    using (MemoryStream stream = new MemoryStream())
-        //    {
-        //        bitmap.Save(stream, ImageFormat.Bmp);
-
-        //        stream.Position = 0;
-        //        BitmapImage result = new BitmapImage();
-        //        result.BeginInit();
-        //        result.CacheOption = BitmapCacheOption.OnLoad;
-        //        result.StreamSource = stream;
-        //        result.EndInit();
-        //        result.Freeze();
-        //        var imageResult = new Image
-        //        {
-        //            Source = result,
-        //            Width = width,
-        //            Height = height
-        //        };
-
-        //        return imageResult;
-        //    }
-        //}
-
-
         public static Image ToBitmapSource(this Bitmap source, double height, double width)
         {
             BitmapSource bitSrc;

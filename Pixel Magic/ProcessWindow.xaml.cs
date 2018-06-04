@@ -14,8 +14,6 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using ColorMine.ColorSpaces;
-using ColorMine.ColorSpaces.Comparisons;
 using Colourful;
 using Colourful.Difference;
 using Microsoft.Win32;

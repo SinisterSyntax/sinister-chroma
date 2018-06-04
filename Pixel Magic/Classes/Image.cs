@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
@@ -110,7 +111,8 @@ namespace Pixel_Magic.Classes
 
         public static List<CustomPixel> ConvertToList(Bitmap b, int w, int h)
         {
-            List<CustomPixel> list = new List<CustomPixel>();
+            
+            List<CustomPixel> list = new List<CustomPixel>(w*h);
             var frame = new DispatcherFrame();
             ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
             {
@@ -120,6 +122,7 @@ namespace Pixel_Magic.Classes
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
+
 
             for (int i = 0; i < w; i++)
             {
@@ -136,7 +139,7 @@ namespace Pixel_Magic.Classes
                 Dispatcher.PushFrame(frame);
 
             }
-
+            
 
             ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
             { 
