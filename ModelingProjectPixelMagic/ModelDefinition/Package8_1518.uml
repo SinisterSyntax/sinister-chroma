@@ -1,0 +1,1471 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="32d47730-58cf-43fd-9bfd-367393913997"
+  name="Classes"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="8b51e749-e8bd-49d5-ac70-bd8953770625"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DPixel_Magic.Classes"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="df854b55-3332-49b4-9efc-b42a058f14f4"
+        name="CustomPixel"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="6d0f7b6d-8c0c-443f-8720-e6f8948cfb36"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="f93a4ec3-2413-4888-b5f7-46cf6ad917d9"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="77f1fc30-f341-4f4b-9895-442c8852bde0">
+                <propertyInstance
+                  Id="dfd87ae2-e88b-42dd-ab10-4f1d58a5ecd8"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="ebb22c5b-02e4-46c4-ad1c-c2259b93c8dd">
+                <propertyInstance
+                  Id="a9db8ece-ab51-428f-bcca-9d8d933c41ce"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fcb7b689-463f-4e6e-946e-afd3aef516b3">
+                <propertyInstance
+                  Id="89b0eee6-1387-4564-a223-93ae129c878c"
+                  name="IsStatic"
+                  value="False" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="c4fdfc1f-7fea-42b7-a8b0-2cc2717eb5b0">
+                <propertyInstance
+                  Id="f531ba36-cdb6-46a4-b0a6-492866108f4e"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="d8392b8b-7a65-4d50-afff-1806b905fb1f">
+                <propertyInstance
+                  Id="c2cb56bc-c70e-438f-99b7-0c96339ce324"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <suppliersInternal>
+          <interfaceRealization
+            Id="63620fb6-4b37-4eb7-baf5-92587ea53cd8">
+            <interfaceMoniker
+              Id="3b70a231-3c1b-4ab7-b47e-36e95288967e"
+              LastKnownName="IComparable&lt;CustomPixel‎&gt;"
+              LastKnownLocation="Package1_1518.uml" />
+          </interfaceRealization>
+        </suppliersInternal>
+        <ownedAttributesInternal>
+          <property
+            Id="67bcf19e-7c4e-4a61-b77f-03099a5267ee"
+            name="Color"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="b02b44b3-3617-4681-b75b-374895a34449"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3DColor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="cfd3f18b-46f5-419d-a4e1-c43ed42a8ee1"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5ad6e782-44b4-41e5-a0ff-be8033a419a2">
+                    <propertyInstance
+                      Id="2062a481-50d3-47fe-8ca7-de95f21d401a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b1d66ff3-4da4-4a1c-abfa-53810bf93c91">
+                    <propertyInstance
+                      Id="7cc5bd79-1038-401f-9f8d-9fb3dd4ec658"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b0aaf67e-6e83-4fb0-9b3a-cda402ed637a">
+                    <propertyInstance
+                      Id="57ea5828-6f69-491b-9d89-53dff5ad1689"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b9bf76f8-4f91-4842-b0c4-dc9b522e1025">
+                    <propertyInstance
+                      Id="5af80ed9-6420-4b30-abd0-b9f8d2f92d8d"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bd132940-26a4-407f-8f82-cea1bfe9aa56">
+                    <propertyInstance
+                      Id="af79ea8d-0a47-4d4b-a9b8-5565e53ce2f1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="b2481b9d-0bbb-46f7-b240-63630be8b82c"
+                LastKnownName="Color"
+                LastKnownLocation="Package6_1518.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="a0b07c5f-c417-4f73-aa87-03ce4a427557"
+            name="x"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="969543bf-0da6-41b3-9539-3be3d9529e43"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3Dx"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="76dd718c-4bdf-43b8-8b64-4b5b412d5812"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1702625f-1e87-4ce5-bbad-58a8e6921aa4">
+                    <propertyInstance
+                      Id="08a8062e-d7cb-49c3-9810-ac2f49cb25d2"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="43e70774-b362-4471-9f2c-d462d05a2d6e">
+                    <propertyInstance
+                      Id="9371773a-ab8c-46c0-a9d4-9cff2ac93387"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9a7ffb99-84e4-4414-a389-7f54eb37ffe5">
+                    <propertyInstance
+                      Id="e7401e90-193c-4beb-a8c9-6ea0fb81ce42"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="bbe54d70-f779-4f2b-a5fc-612fcfb6fc6c">
+                    <propertyInstance
+                      Id="3c08e839-d041-4d38-ba67-c2512472c592"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="088c0342-e730-495b-979a-be8c97893011">
+                    <propertyInstance
+                      Id="02f9f38a-1d75-46b7-9bba-f7262ba4ac6a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="ModelingProjectPixelMagic.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="d58abc4d-0cb0-477e-a1ce-2ffd96e40a0c"
+            name="y"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="f152f28d-85e2-4c95-9273-48a2c1f697a9"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3Dy"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="1a149e79-48e3-4947-babe-8d78c03b761c"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0dce6254-4bcb-48ca-9464-ddd400824bea">
+                    <propertyInstance
+                      Id="58c89d34-126b-45db-a93c-ee7df6edbf54"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="010e2145-45e5-450b-bf4c-42c4835c043a">
+                    <propertyInstance
+                      Id="35df8af8-18dd-4b83-b381-045def45900b"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1b76b28d-1881-4fd1-90b8-dbad17e47dc5">
+                    <propertyInstance
+                      Id="31546a6f-25ad-4970-8cab-02c11518158c"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8f7013f6-1337-4a67-b58f-512a66f2e228">
+                    <propertyInstance
+                      Id="b4d7ef83-655b-4b0b-bb1f-c3fe934a5a55"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fe635e61-f752-4577-b653-ce72a981d41b">
+                    <propertyInstance
+                      Id="dba8e359-2afe-4377-8695-5cb577f82214"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <primitiveTypeMoniker
+                Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                LastKnownName="Integer"
+                LastKnownLocation="ModelingProjectPixelMagic.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="08c98560-c6a7-4a8e-b004-0e5f73ffca8c"
+            name="labColor"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="0ce0565c-b04b-496f-a167-551cd6709041"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3DlabColor"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="9217bebe-f4e6-4196-bb95-35cc7af73145"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8c32c039-a62d-4988-96d9-e598400d0cfb">
+                    <propertyInstance
+                      Id="72c0df0f-c06e-4aec-aab5-cb6bce418f11"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="451acc64-a085-4917-9466-e24f7c3feb12">
+                    <propertyInstance
+                      Id="b171545a-b218-4af3-a9bb-c126d8e4ddf9"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9ddc9bab-b8fd-4360-89ca-66eee08a7b36">
+                    <propertyInstance
+                      Id="70bd9ca7-a9b4-40f1-8b91-ea9ee0d4e02c"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8141a9b4-33e6-45d0-81bf-e5882fbc79d4">
+                    <propertyInstance
+                      Id="83f41b50-53d0-41bc-82bb-e7b2bef7416a"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7097dfec-73ac-407b-a9e4-562c2b11d52d">
+                    <propertyInstance
+                      Id="920f0e2c-b7e3-45c6-ad34-9df267c40df7"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="d1f57cb9-b1d3-4e43-9aae-bf62ed6e1c19"
+                LastKnownName="Lab"
+                LastKnownLocation="Package10_1518.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="e13ede8c-a2ae-42a0-b120-6c9c8fdeae41"
+            name="rgb1"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="02b88a82-7e70-4d61-bb95-0fdfb75b69fd"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3Drgb1"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="37dbc6ff-4196-4b25-8686-b33a7879ac7f"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f425c672-0f35-4327-a7ea-fada1216ef9d">
+                    <propertyInstance
+                      Id="c81d5ba0-b59f-4fd8-acd5-30288bd844d5"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5e3613ac-8b5b-460b-b27e-1ea5ab5125f6">
+                    <propertyInstance
+                      Id="2789c510-4950-4965-b70a-cf9ff7bf3c2b"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="a5fca9f9-4b87-420e-8ed8-ecd31099e05b">
+                    <propertyInstance
+                      Id="f48671f1-5556-4f59-88e5-ea3e329d00e0"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e148ef2a-457b-4ecf-9bc3-2b890954a7f0">
+                    <propertyInstance
+                      Id="f07ed770-6254-45f4-b180-f0e8c4edad42"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4458aacc-474f-45e8-934d-f206d421aaa4">
+                    <propertyInstance
+                      Id="de6a2a13-a2b9-4cda-aaf4-7c778f0a9522"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="9bcc051c-25a2-47de-9884-e0db55f6686a"
+                LastKnownName="Rgb"
+                LastKnownLocation="Package10_1518.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="7474e469-c330-45b3-8280-a770cee3d4f8"
+            name="rgb2"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="5f064518-6070-469e-84a9-1e6a14d7ff30"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3Drgb2"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="4f7228ef-cc33-47da-bb80-43550d45e7c4"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1b936173-eae5-461e-b277-997bfd441ced">
+                    <propertyInstance
+                      Id="776dc9eb-d413-4871-adf3-b7ceb3560066"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4ee791f8-ffc1-4dab-9647-00cdb40e4eaa">
+                    <propertyInstance
+                      Id="6e01263b-1817-4b21-a60c-13920ece17aa"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1685c850-697b-4b22-8449-3c15e2b966c6">
+                    <propertyInstance
+                      Id="2d49ec47-b3f4-4f94-a1e7-04965b6170dd"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="98c0a3f5-42e0-4930-83ff-884c72f577c0">
+                    <propertyInstance
+                      Id="38068299-28e3-4aeb-97b8-8ab2ab142a31"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="32cf1971-db3f-44c3-852d-82f84164edf6">
+                    <propertyInstance
+                      Id="7d8ba42c-3e54-4c9a-8aec-464757c6aec9"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <classMoniker
+                Id="9bcc051c-25a2-47de-9884-e0db55f6686a"
+                LastKnownName="Rgb"
+                LastKnownLocation="Package10_1518.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="5a424bd8-2999-431b-84f1-a8d2b7e5be93"
+            name="CurrentMode"
+            isLeaf="false"
+            isStatic="true"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="3ebaee4f-5c0f-43a0-ae90-ec98907a3a53"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3DCurrentMode"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="efbfe70b-1c4d-40a3-a2f5-0ec361aed00f"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="caa0845a-79e5-4e3e-a1fd-08ca117de2c2">
+                    <propertyInstance
+                      Id="80f5e89a-03fb-47cf-9768-a319093800ec"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1fa4d629-24df-4a4f-be0a-88482fa0e97d">
+                    <propertyInstance
+                      Id="f4f03517-42ab-4461-9729-80f684bb98d9"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="6531c631-2444-4430-94c6-92bad7c8172a">
+                    <propertyInstance
+                      Id="2bb37a82-3131-465a-af04-39853f972566"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4641d148-422e-443d-8e0e-973ab350a58d">
+                    <propertyInstance
+                      Id="4cd92841-4a11-4d77-bc29-2024a3d477e7"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="edacef59-d418-488b-85f0-3a0e1be31804">
+                    <propertyInstance
+                      Id="5764479a-f6ef-4e70-aacd-61a9ec3b2690"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <enumerationMoniker
+                Id="9aab00a5-2fc4-4ce0-be21-da9adda75793"
+                LastKnownName="ComparisonMode"
+                LastKnownLocation="Package8_1518.uml" />
+            </type_NamedElement>
+          </property>
+          <property
+            Id="56ce4f81-8ac1-4533-ad1c-fb4b8ac2c57d"
+            name="_comparer"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isReadOnly="false"
+            isDerived="false"
+            isDerivedUnion="false"
+            aggregation="None"
+            isComposite="false">
+            <referencesInternal>
+              <reference
+                Id="fc1c3dca-72e4-4189-bfb5-93d6078f74f3"
+                handle="viewcode://./CodeSchema_Field?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D_comparer"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5a063ed7-7cc9-4a7e-b7f3-f754a9a2ed96"
+                name="field"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e1bc52c9-3556-4a21-a1ae-6ff38de6db34">
+                    <propertyInstance
+                      Id="5d7202e7-38d7-4cc3-9972-02f414b3b000"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7f1905e9-7b77-4d71-8b9e-ea8f8262e4d3">
+                    <propertyInstance
+                      Id="bfceb43b-00f6-4e43-9176-f73d4cf2b352"
+                      name="IsConst"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b6e67e8e-896c-466b-9837-1d294c2bd465">
+                    <propertyInstance
+                      Id="174d1b2c-b0fe-4130-a524-75491c00ebfc"
+                      name="IsNullable"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="43164cf7-1490-4292-a73d-e7f65d2fce40">
+                    <propertyInstance
+                      Id="a145709d-8dd0-465b-9fec-b900eeece1c4"
+                      name="IsVolatile"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b7c2b064-0551-4124-9bb8-8140b15801c6">
+                    <propertyInstance
+                      Id="42d3ea48-cdd4-44dd-abfa-3a4795703674"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <type_NamedElement>
+              <interfaceMoniker
+                Id="698e555c-4ac3-4194-b02b-0c9abbdf5a7b"
+                LastKnownName="IColorSpaceComparison"
+                LastKnownLocation="Package11_1518.uml" />
+            </type_NamedElement>
+          </property>
+        </ownedAttributesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="96c0ed5d-bcaf-4016-a0b8-cf2ccaf2bd8c"
+            name="CustomPixel"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c478ff2c-2103-420e-9a22-3ca19f2f3db7"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DColor)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="2c89fdd9-d601-42f5-b827-e59ef55c02d8"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d36e0e03-89e7-4884-ba21-040201c5e038">
+                    <propertyInstance
+                      Id="aaea72ee-7132-4b64-b23c-0d40ad99bbd6"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="555efea4-3627-43c3-89a8-1bb861aa609e">
+                    <propertyInstance
+                      Id="1ce1c430-329d-4e4c-97fe-592017bfaae1"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d1370c79-ed53-4e9d-9162-8c385e8c7fa7">
+                    <propertyInstance
+                      Id="35e4dece-991b-46f6-8376-8147f75faaa6"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="aaada502-38dc-417f-91da-257948f932a8">
+                    <propertyInstance
+                      Id="36f16418-b78c-430c-a6a3-eeb5c177561b"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3434aa1d-41cb-4be0-87ec-4cac13e09d36">
+                    <propertyInstance
+                      Id="727eb6b8-c212-46a1-93e3-1bc298b25f9a"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ddcee8c9-0fc4-470f-9097-0f4f69a71a1d">
+                    <propertyInstance
+                      Id="2f02f07c-0dc3-4abe-ae4e-dcd037923791"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b902b38d-8a30-4441-b919-21f7a68c9d05"
+                  name="color"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="5ea86772-54fb-4c73-ac59-41a5559ec552"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DColor)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dcolor"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="b2481b9d-0bbb-46f7-b240-63630be8b82c"
+                      LastKnownName="Color"
+                      LastKnownLocation="Package6_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="545b869a-d7e3-45a3-be7a-f823088d694e"
+                  name="x"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="8983524d-559b-46c5-8124-5378176cb637"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DColor)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dx"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProjectPixelMagic.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="eb312a4c-9059-4cbd-985d-a05c7a5ad795"
+                  name="y"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="86a8cee2-5937-43f6-943f-7aff1224b0f1"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3D.ctor OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DColor)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dy"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProjectPixelMagic.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="38c58a70-7fcf-41d9-9984-30a7a7d5d102"
+            name="ToLabNumber"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="c83f00b6-2703-4230-a7c2-b59ad1d2ffc4"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3DToLabNumber"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="b02459f9-92ce-4acf-aa23-8055bd972548"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f689747f-ed01-4599-91d4-897d2cc20678">
+                    <propertyInstance
+                      Id="f57569b0-fcf9-4c05-9d78-4534efcbd315"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="1757aa4e-de43-46c4-a73e-36693cbced72">
+                    <propertyInstance
+                      Id="872b78b3-e40f-4d05-8d8e-a43bfc0c7419"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="086b6a6e-f397-4dd5-8352-514b8875c96d">
+                    <propertyInstance
+                      Id="966ff464-6765-4cd5-b5c0-57d1c9cd807c"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2944f0b1-5c09-4457-b0ed-75c19fce9ef6">
+                    <propertyInstance
+                      Id="85b08c8f-b54a-4d84-a173-a215142386d1"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4cef8149-bf85-42bc-81f5-40da3c8a0273">
+                    <propertyInstance
+                      Id="ca028b0e-5e7b-41ca-8d2d-ba621e5298bf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="ccc217b1-5c57-4090-bdb5-45fffa1e242a">
+                    <propertyInstance
+                      Id="32f86349-7578-4e01-b0a8-d13d6ecc28a2"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c2955832-99f3-4ccc-829c-2b8820450fcb"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="831e8c45-59c1-44a5-8628-909db06ba542"
+            name="CompareTo"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="658845cb-2981-4175-9671-d7289eff012f"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DCompareTo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a599c174-f91a-4fef-960c-0b48f22ae354"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0e2b3aee-5fee-4555-a6db-87998bf50a51">
+                    <propertyInstance
+                      Id="7c5426f6-c511-4da6-82b2-02b5299087d0"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="8abf551e-a397-4bc3-b014-768c66ff882e">
+                    <propertyInstance
+                      Id="73e75ddd-3970-422f-b74a-fe3223def739"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f2e0d1ee-fcf8-4f8a-a4b4-f8b1a96da44e">
+                    <propertyInstance
+                      Id="48ef6230-0d65-418d-a608-8ff005f4e3f0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3c3e5de2-15cf-4dcd-b7ba-95be9231bfe5">
+                    <propertyInstance
+                      Id="ac377aef-a653-4c46-9c78-552909b88e5a"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e7465d4b-8035-4d78-8014-535b70e9cc50">
+                    <propertyInstance
+                      Id="8a9aa01a-876b-477a-a01f-b4b650d49ba8"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="71db5898-884a-459f-97f8-525153c51dfc">
+                    <propertyInstance
+                      Id="d911a447-d585-4a00-8977-efb174681b3d"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6351712a-d313-4ee7-8e75-9ff45be62b65"
+                  direction="Return">
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProjectPixelMagic.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0a61715a-0389-4ed4-9286-06c4458cccfa"
+                  name="o"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="570346d2-7ce0-4b83-8ee1-d4a89ff00591"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DCompareTo OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)]) ParameterIdentifier%3Do"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="df854b55-3332-49b4-9efc-b42a058f14f4"
+                      LastKnownName="CustomPixel"
+                      LastKnownLocation="Package8_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="a3658497-3cdb-4949-b409-c933afb3a6eb"
+            name="ComparePix"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="3c568b17-2740-407c-92f8-1d77c8cebb9e"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePix OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="a44dfebd-fa33-4d1b-96a4-3d38ed87dd32"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="48c266bf-7a5a-427b-92ef-fd3ea7b084a0">
+                    <propertyInstance
+                      Id="e2fc8830-5251-4503-82fe-a774095bbe5a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="de331cc6-bf93-4b84-8622-a018f6c55640">
+                    <propertyInstance
+                      Id="f61418ed-4d28-415b-9a1a-1a2ab58cb30b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="52208521-49d5-40c0-adbc-82d599aa4a39">
+                    <propertyInstance
+                      Id="77642ee5-7edd-422f-9c62-1ec7a00dcb50"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="c3748efc-0676-4c45-b1fb-28076c0be710">
+                    <propertyInstance
+                      Id="486bdc30-edd2-441f-bc9b-8cdd7ed12ee4"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="4d1560e1-7db5-4a8b-93ac-f53edba80f0e">
+                    <propertyInstance
+                      Id="72d360bf-e9dd-4571-a054-af029a2f96c4"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f5d277b4-f74b-400d-8725-59b759fe2e3e">
+                    <propertyInstance
+                      Id="249f84d5-40fc-4a32-a071-5a980feefdf3"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="6d99bb40-7bfb-4d46-b7d7-8f9d107e0796"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="807acb1d-27f9-40b4-9dde-5babd86a4516"
+                  name="o"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="7faa3a84-812a-4e92-a53a-d85de8f0f74d"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePix OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)]) ParameterIdentifier%3Do"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="df854b55-3332-49b4-9efc-b42a058f14f4"
+                      LastKnownName="CustomPixel"
+                      LastKnownLocation="Package8_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="8da3b210-ec90-4817-8447-8b26dd26b31d"
+            name="ComparePix2"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="eaa8bef3-dee6-4673-a1f0-13b798c81b41"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePix2 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="c0e75608-232a-4031-ac66-da837d1a2ade"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f1482662-42ff-488d-b483-9848f024799f">
+                    <propertyInstance
+                      Id="e758e926-520e-4ca7-8288-a92e84b1506b"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0bde32ff-c017-4919-99a0-2d989a415c92">
+                    <propertyInstance
+                      Id="74eb9e3f-2afd-4173-814b-a8b77df32a07"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="30fba872-e3be-4287-bd3c-0d1613869ace">
+                    <propertyInstance
+                      Id="a3c5e5af-3064-462a-9004-6854f932d31e"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3922404d-31be-441f-b920-1311e61b3d22">
+                    <propertyInstance
+                      Id="ae196afa-d2ac-40cd-91d6-90cf4268ecf7"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d87835ca-cbc6-4e3d-afd0-661d99ddd65a">
+                    <propertyInstance
+                      Id="20219fa2-eebf-4372-a1ca-14bfc253d4bf"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7d4bfe54-8113-43a7-b76c-a3df78372e77">
+                    <propertyInstance
+                      Id="6c70b21c-02b9-42d1-b444-e384c297ab2b"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7e4c415f-dda6-45b9-a223-1d71c7b7f8d1"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="99845345-6a44-4675-87c3-ca285fad554b"
+                  name="o"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="2ef63719-2f05-4572-bde7-6119604394b9"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePix2 OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)]) ParameterIdentifier%3Do"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="df854b55-3332-49b4-9efc-b42a058f14f4"
+                      LastKnownName="CustomPixel"
+                      LastKnownLocation="Package8_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="206f60c5-d8a7-4e17-919f-926baf2493df"
+            name="ComparePixLab"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="d271172f-0ecd-4cd5-bf59-c952b5ee037d"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePixLab OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="4691ae53-6ec1-450b-93d7-3a4a8e2b4f0f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f972a9a5-3c35-408c-aa53-07f49970fb00">
+                    <propertyInstance
+                      Id="ea2a3457-1d08-4f72-84ec-32737aead404"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b8ce3e59-916d-444f-92a6-ca2e7ffe82f8">
+                    <propertyInstance
+                      Id="12932cb1-5ace-476f-9c96-29f8939aa31b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="add8467f-49ba-4e90-b336-4237214ef667">
+                    <propertyInstance
+                      Id="7af9231e-e7ef-494f-9202-3548eba45415"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="65ecd676-709a-42bf-8dc0-2a1f3d1435ba">
+                    <propertyInstance
+                      Id="af631342-fca7-43da-9359-34fa6f570631"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="05145c2e-4b92-45ce-9639-a982b0897b89">
+                    <propertyInstance
+                      Id="d0ffaa58-2705-4e60-8c70-28e50d0bf22b"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f240f419-f0e1-47e1-813f-64fe0f44f1a0">
+                    <propertyInstance
+                      Id="d31e52fa-cce7-4272-a936-2ac67a98a735"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="bd541931-35ce-4dfa-9b03-30270b565b32"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b3cdf858-e72e-447a-ad2e-948c248e86e5"
+                  name="o"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="92970e40-d6d4-4f6e-80ad-06d9d2d28a80"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DComparePixLab OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel)]) ParameterIdentifier%3Do"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="df854b55-3332-49b4-9efc-b42a058f14f4"
+                      LastKnownName="CustomPixel"
+                      LastKnownLocation="Package8_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="47bdd47f-c9a0-4755-ae59-5fb09b3b55a7"
+            name="CustomCompare"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="e1cd26b4-6472-4512-ac10-42cd0e920f31"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DCustomCompare OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)%2C(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="439710bb-1bab-4388-9079-e3ba2c0be346"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="318f940e-c3be-4ddc-8e30-37351d3bcb9f">
+                    <propertyInstance
+                      Id="d0f81124-3924-49b4-bf99-88a6568d3f03"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3accf290-bbc9-4d99-be38-0b7cdb377942">
+                    <propertyInstance
+                      Id="ab4a53b1-e769-4060-8e3e-3072860ba008"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="7c83ad79-b611-46f4-bac3-9d3e41c71e20">
+                    <propertyInstance
+                      Id="db96aaa0-b5a0-4402-b563-02c70393c4f7"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="af183d96-2953-4c7c-846f-3a82b6b0db2b">
+                    <propertyInstance
+                      Id="844942f2-f3c1-43df-8493-24cb1b80dbda"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3e6ac670-23ae-45aa-9b36-17ccfb64d8a3">
+                    <propertyInstance
+                      Id="3c029ea5-1f30-4765-b423-268ea1f4fd61"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e48756a1-8365-4772-b0d8-27cd5a6227ca">
+                    <propertyInstance
+                      Id="f33934f4-fda9-4c9b-a405-2b61ab063b98"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="7c4cd74a-0317-4668-80ea-beb998fe4876"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ccf0c9dd-f670-4e79-a896-4c83b89de7e0"
+                  name="lab1"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="190aba65-26a0-4928-a516-98cbb37650a8"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DCustomCompare OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)%2C(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)]) ParameterIdentifier%3Dlab1"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="d1f57cb9-b1d3-4e43-9aae-bf62ed6e1c19"
+                      LastKnownName="Lab"
+                      LastKnownLocation="Package10_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="9e807cc5-6fea-4b81-b903-c5272620b90c"
+                  name="lab2"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="4e0968c2-cfe8-4a4e-834d-f7cbc7b1b739"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DCustomCompare OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)%2C(Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2Fpackages%2FColorMine.1.1.3.0%2Flib%2FColorMine.dll&quot; Namespace%3DColorMine.ColorSpaces Type%3DLab)]) ParameterIdentifier%3Dlab2"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="d1f57cb9-b1d3-4e43-9aae-bf62ed6e1c19"
+                      LastKnownName="Lab"
+                      LastKnownLocation="Package10_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="791a9bcd-9ad1-4bde-b7f1-58cf84f21f2b"
+            name="DegToRad"
+            visibility="Private"
+            isLeaf="false"
+            isStatic="false"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="1a13693f-557a-47ac-bdea-168189704f68"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DDegToRad OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="5ce71580-f147-4b50-a058-e7189fe8de0f"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="41c8e357-ce83-4089-a5f6-2b5e0254a8f2">
+                    <propertyInstance
+                      Id="f5e80265-487f-4240-808d-05811506956a"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9508b5cc-0bb3-4560-9a77-32d43c96a638">
+                    <propertyInstance
+                      Id="b586debb-7d95-48c6-92e6-96b573e2376b"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fe13bebe-1a91-4403-a956-cf6fbf032e5b">
+                    <propertyInstance
+                      Id="07da1c29-9cf9-4792-b70d-7db4854ed92a"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f99bd76a-10e2-458f-bff1-c10f99000b3b">
+                    <propertyInstance
+                      Id="0f48044a-0a6e-4c3e-beae-20b228ef9073"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b168e0fd-b680-435e-bda4-f9324b90a3fc">
+                    <propertyInstance
+                      Id="d06664df-63ef-4177-958b-fc45a1ffb385"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="3d7f40cc-71a0-4809-8086-47cce9a2a4e1">
+                    <propertyInstance
+                      Id="ad1a1d1e-722b-4099-a986-baace47a908b"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="c8fd7488-5780-495d-8993-c7bfe2fbee42"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="cd84a3c2-1e16-459f-a2a9-cd24b7953f58"
+                  name="degrees"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="10d438e6-c687-4a50-9979-0ef2a231cf30"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3DCustomPixel Member%3D(Name%3DDegToRad OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Ddegrees"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <enumeration
+        Id="9aab00a5-2fc4-4ce0-be21-da9adda75793"
+        name="ComparisonMode"
+        isAbstract="false"
+        isLeaf="false">
+        <referencesInternal>
+          <reference
+            Id="c010c97a-d3f0-4f09-85fc-a83ad2bf9735"
+            handle="viewcode://./CodeSchema_Enum?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Classes Type%3D(Name%3DComparisonMode ParentType%3DCustomPixel)"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="9afb6ed5-ef0f-4c44-97c1-10fbf1e9ef7a"
+            name="enum"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3737912f-547a-47b7-b6f0-51e3c27110b6">
+                <propertyInstance
+                  Id="12827216-13ea-4bb9-abb0-536916a4a56e"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="71a37a0c-97ae-43b9-80ee-7de80ef2483d">
+                <propertyInstance
+                  Id="7809d333-aacc-4318-a51b-1ebf3b578335"
+                  name="BaseType"
+                  value="int" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="b293f4af-3db0-479b-88d1-c232349a6849">
+                <propertyInstance
+                  Id="bba403df-bd57-4a0e-bafd-6a52ac88d126"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+      </enumeration>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

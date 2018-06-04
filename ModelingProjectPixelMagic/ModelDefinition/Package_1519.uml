@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" xmlns:dm8="http://schemas.microsoft.com/dsltools/LogicalClassDesigner"
+  dslVersion="1.0.0.0"
+  Id="1331a1d4-41a6-464c-8ee7-71ef619dec95"
+  name="Utilities"
+  visibility="Private" xmlns="http://schemas.microsoft.com/dsltools/ModelStore">
+  <referencesInternal>
+    <reference
+      Id="a4bad742-9f86-4f45-8462-00d51fce91d6"
+      handle="viewcode://./CodeSchema_Namespace?Namespace%3DPixel_Magic.Utilities"
+      tag="ViewCode" />
+  </referencesInternal>
+  <packagedElements>
+    <packageHasNamedElement>
+      <class
+        Id="2a8dfc9f-8cd1-47b1-af37-43c0104a02c9"
+        name="BitmapConverter"
+        isAbstract="false"
+        isLeaf="false"
+        isActiveClass="false">
+        <referencesInternal>
+          <reference
+            Id="58f0c15f-5530-4d8e-9caa-fe23b2d971cd"
+            handle="viewcode://./CodeSchema_Class?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter"
+            tag="ViewCode" />
+        </referencesInternal>
+        <appliedStereotypesInternal>
+          <stereotypeInstance
+            Id="ee888455-2264-4633-b6f7-adfb1d3791ae"
+            name="class"
+            profile="CSharpProfile">
+            <propertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="34553f03-8812-48a2-b465-f0e998700c34">
+                <propertyInstance
+                  Id="a58bc6f5-3787-4604-b351-9d5e9f218e37"
+                  name="ClrAttributes" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="e8c09694-88b3-4a21-bcb5-3fb319ec76de">
+                <propertyInstance
+                  Id="282d84bb-224b-4307-a5d8-c0d7d37f5d97"
+                  name="IsPartial"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="a7cb7023-96db-479c-bbca-1341b0fac215">
+                <propertyInstance
+                  Id="b89c6027-81e3-430a-946e-58bc13a83d2d"
+                  name="IsStatic"
+                  value="True" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="3556b5b3-c8bc-4eae-9ac1-a21eace4e220">
+                <propertyInstance
+                  Id="c56c29b2-0c4f-49f8-be46-b40ed4c5897b"
+                  name="IsUnsafe"
+                  value="false" />
+              </stereotypeInstanceHasPropertyInstances>
+              <stereotypeInstanceHasPropertyInstances
+                Id="fd2e54c8-3531-4aa5-a50c-e85cfa111691">
+                <propertyInstance
+                  Id="0c75c708-d3e1-4a76-8550-c55e96499026"
+                  name="PackageVisibility"
+                  value="internal" />
+              </stereotypeInstanceHasPropertyInstances>
+            </propertyInstances>
+          </stereotypeInstance>
+        </appliedStereotypesInternal>
+        <ownedOperationsInternal>
+          <operation
+            Id="92c55a19-501f-4d5f-b020-7fb8b68864a9"
+            name="ToWpfBitmap"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="dbf85790-6d42-433e-87bf-8ee5461059c6"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="af64e4ea-3069-4eaa-85ff-bad700a43c52"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="342bc60c-fb87-4057-82d7-c9dbeeaff34b">
+                    <propertyInstance
+                      Id="bd6525cb-8045-49ed-811a-7b9bf847a9bd"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="9ecc9b20-e9a7-429e-868b-875581895d52">
+                    <propertyInstance
+                      Id="3b4e1ee5-785c-48c8-a288-06fbd09ac406"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="502d51a1-75be-431d-8a28-cc1357dc1aa5">
+                    <propertyInstance
+                      Id="8aeac9da-cacd-4e75-ac8e-830d4cfabfd0"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="18763c1c-a7a8-4666-a260-328bd07c12ac">
+                    <propertyInstance
+                      Id="b8520f67-332b-4add-910a-56a03387bb7e"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f961c5bc-08cd-4a9a-bc3a-931b1dfe2242">
+                    <propertyInstance
+                      Id="71836fde-949a-45ff-91d6-f064893251c1"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="064cfdcb-5180-4498-a0c3-ad92aff73a3d">
+                    <propertyInstance
+                      Id="7a362545-d3ee-4897-8845-817c4eb98353"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="094ef7ae-ea43-49d7-b1cc-aace62c6a49d"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="167c83ef-4b58-4116-b22c-b6aac0a749a0"
+                      LastKnownName="Image"
+                      LastKnownLocation="Package5_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="5bbabdd1-d0fa-4a5f-b71a-e6cdcccabec3"
+                  name="bitmap"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="36311895-97b2-455b-8d3c-ca1791e392bf"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dbitmap"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="e8ba46f9-1624-4464-b848-df7d452a3063"
+                      LastKnownName="Bitmap"
+                      LastKnownLocation="Package6_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="0496ac21-5597-4cde-a6b9-a4a233316ca1"
+                  name="height"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="72bbe924-fd7b-4f73-ad47-ab6624ef1b64"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dheight"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProjectPixelMagic.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="b8dccb62-d628-46cf-82b1-158d02f2858e"
+                  name="width"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="433f1e40-ee89-48d7-8665-0ef9dc29a5e9"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DInt32)]) ParameterIdentifier%3Dwidth"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <primitiveTypeMoniker
+                      Id="220a3521-e091-4221-bae9-3ef9018e845c"
+                      LastKnownName="Integer"
+                      LastKnownLocation="ModelingProjectPixelMagic.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="b40f3105-9512-42be-b78b-3fab03cda66c"
+            name="ToWpfBitmap"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="5601145e-8ac6-4575-8c61-bc8338d23ff5"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="61ab30ce-c0d3-492e-89d5-c8373c8fe62e"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="b23821ec-ce39-4371-9d3e-75a01768a0f0">
+                    <propertyInstance
+                      Id="a662f665-10d3-4441-adfe-13368e9428ca"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="f62091cc-79d3-4ebf-ba2c-cae1b4cfe3d5">
+                    <propertyInstance
+                      Id="b2110cdf-f26d-47cb-a922-b6ae57d77377"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="87ba6d82-1e80-4cfb-8a1c-ccea8bf02790">
+                    <propertyInstance
+                      Id="ed5688d9-9e84-4500-8c3b-5eeea8d907be"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="5069836c-13df-4d23-b53a-bf7120cbd946">
+                    <propertyInstance
+                      Id="57cbc2c4-081a-4f6f-90f7-58e21647aac9"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="0b60be6f-f472-4a01-a499-bd0a1683af66">
+                    <propertyInstance
+                      Id="ebd90f5e-c625-4f45-81e3-668f81a4e536"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="36aa30ec-d4a4-4d6b-a808-f27f23743206">
+                    <propertyInstance
+                      Id="2e62c39d-1c07-424d-92d4-c287acf6a6ad"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="17f221ad-b8e1-4af8-9a43-a7e6e7f8e9e0"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="167c83ef-4b58-4116-b22c-b6aac0a749a0"
+                      LastKnownName="Image"
+                      LastKnownLocation="Package5_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="8405ffdf-bccb-43cb-a2e0-771ad9b41558"
+                  name="bitmap"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="dd58e991-6ebb-4e45-bc2f-b51f2ae8e83f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dbitmap"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="e8ba46f9-1624-4464-b848-df7d452a3063"
+                      LastKnownName="Bitmap"
+                      LastKnownLocation="Package6_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="07c85553-a033-4214-9717-c5b5c09ff96e"
+                  name="height"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="a392fb82-f8b0-4fb1-beea-4b79d5bf8d2f"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dheight"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ce836402-a619-4c56-ae76-711e0816c938"
+                  name="width"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="89317b0e-1464-44cf-9e3d-e74a45614587"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToWpfBitmap OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dwidth"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+          <operation
+            Id="252e4f3b-318c-43e6-a71b-e03771720fe8"
+            name="ToBitmapSource"
+            isLeaf="false"
+            isStatic="true"
+            isAbstract="false"
+            concurrency="Sequential"
+            isQuery="false">
+            <referencesInternal>
+              <reference
+                Id="46011bb5-7d49-477c-8a7d-bde6f6c17288"
+                handle="viewcode://./CodeSchema_Method?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToBitmapSource OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)])"
+                tag="ViewCode" />
+            </referencesInternal>
+            <appliedStereotypesInternal>
+              <stereotypeInstance
+                Id="701613cc-774c-4c22-82bd-6a8ab2ce8fff"
+                name="method"
+                profile="CSharpProfile">
+                <propertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="d23dce55-42da-4725-b17a-566acb1cb435">
+                    <propertyInstance
+                      Id="a87b6a02-93c0-4963-88b5-500e88c360d6"
+                      name="ClrAttributes" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="99615146-3cdc-4adb-b4ed-370f381eb2fd">
+                    <propertyInstance
+                      Id="60258bfe-3717-4e61-8239-d4e8c8397981"
+                      name="IsPartial"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="78ef018c-878f-4d22-9332-4d8a7a956ad0">
+                    <propertyInstance
+                      Id="cf8ffe49-2317-402e-93c8-f40505302d59"
+                      name="IsUnsafe"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="e2adac34-fb20-40a9-b5a9-a33c6b2e4080">
+                    <propertyInstance
+                      Id="385564ab-062a-419a-988a-3e6df3f84d1b"
+                      name="Inheritance"
+                      value="none" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="2ae79226-e43f-402a-9ae2-3071121ae874">
+                    <propertyInstance
+                      Id="03ce1218-f2be-4da9-a8d3-beb8ee0c46d0"
+                      name="PackageVisibility"
+                      value="internal" />
+                  </stereotypeInstanceHasPropertyInstances>
+                  <stereotypeInstanceHasPropertyInstances
+                    Id="fea19b05-2a65-472d-b952-d5c30912aa27">
+                    <propertyInstance
+                      Id="77980ae0-8cda-46be-a5ab-d95fdd6583f6"
+                      name="params"
+                      value="false" />
+                  </stereotypeInstanceHasPropertyInstances>
+                </propertyInstances>
+              </stereotypeInstance>
+            </appliedStereotypesInternal>
+            <ownedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="41dfd42f-4562-40e9-b2f0-62543c21b7a4"
+                  direction="Return">
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="167c83ef-4b58-4116-b22c-b6aac0a749a0"
+                      LastKnownName="Image"
+                      LastKnownLocation="Package5_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="a11cad1d-f1d3-4be1-b160-8b95a2da1481"
+                  name="source"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="31f216e3-bef1-47e8-ad1d-83eba49b4169"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToBitmapSource OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dsource"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="e8ba46f9-1624-4464-b848-df7d452a3063"
+                      LastKnownName="Bitmap"
+                      LastKnownLocation="Package6_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="ed83a5f2-9666-4fd0-8925-86a5438740dd"
+                  name="height"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="63dbc9ed-75b9-4fd7-b662-66d27a717d0a"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToBitmapSource OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dheight"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+              <operationHasOwnedParameters>
+                <parameter
+                  Id="477b90d5-b462-4f37-849a-a6740b36b07a"
+                  name="width"
+                  direction="In">
+                  <referencesInternal>
+                    <reference
+                      Id="f609bf47-40cc-4cd0-81ba-126644a5a1e2"
+                      handle="viewcode://./CodeSchema_Parameter?Assembly%3D&quot;file:%2F%2F%2FS:%2FVisual Studio Projects%2FPixel Magic%2FPixel Magic%2Fbin%2FFinal%2FPixel Magic.exe&quot; Namespace%3DPixel_Magic.Utilities Type%3DBitmapConverter Member%3D(Name%3DToBitmapSource OverloadingParameters%3D[(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2FSystem.Drawing.dll&quot; Namespace%3DSystem.Drawing Type%3DBitmap)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)%2C(Assembly%3D&quot;file:%2F%2F%2FC:%2FProgram Files (x86)%2FReference Assemblies%2FMicrosoft%2FFramework%2F.NETFramework%2Fv4.5%2Fmscorlib.dll&quot; Namespace%3DSystem Type%3DDouble)]) ParameterIdentifier%3Dwidth"
+                      tag="ViewCode" />
+                  </referencesInternal>
+                  <type_NamedElement>
+                    <classMoniker
+                      Id="fd399a50-6f33-43bc-9171-1e708af12eb2"
+                      LastKnownName="Double"
+                      LastKnownLocation="Package1_1518.uml" />
+                  </type_NamedElement>
+                </parameter>
+              </operationHasOwnedParameters>
+            </ownedParameters>
+          </operation>
+        </ownedOperationsInternal>
+      </class>
+    </packageHasNamedElement>
+  </packagedElements>
+</package>

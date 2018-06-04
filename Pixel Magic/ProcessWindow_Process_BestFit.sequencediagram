@@ -1,0 +1,1331 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<SequenceDesignerModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" xmlns:dm1="http://schemas.microsoft.com/dsltools/Kernel" xmlns:dm2="http://schemas.microsoft.com/dsltools/Component" xmlns:dm3="http://schemas.microsoft.com/dsltools/Activity" xmlns:dm4="http://schemas.microsoft.com/dsltools/Interaction" xmlns:dm5="http://schemas.microsoft.com/dsltools/UseCase" xmlns:dm6="http://schemas.microsoft.com/dsltools/UmlModelLibrary" xmlns:dm7="http://schemas.microsoft.com/dsltools/UmlDiagrams" dslVersion="1.0.0.0" Id="cf66c3eb-07f0-4a2d-a0aa-13387c158d22" name="ProcessWindow_Process_BestFit" mode="DotNet" xmlns="http://schemas.microsoft.com/VisualStudio/TeamArchitect/SequenceDesigner">
+  <packagedElements>
+    <packageHasNamedElement>
+      <interaction Id="a8885f64-5221-47a7-aafe-518aca013eb9" name="ProcessWindow_Process_BestFit" collapseFragmentsFlag="false" isActiveClass="false" isAbstract="false" isLeaf="false" isReentrant="false">
+        <fragments>
+          <behaviorExecutionSpecification Id="6289c38f-c5d0-457b-b28e-e9332394e294" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="4dfc7a3e-f7b5-4b88-8e96-ba0d2187d7f8" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="d93fec22-6e4b-4278-8ed6-d5db5be75f08" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="f21f3f18-3605-4fbc-af48-8c9193464049" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="6ca41340-327a-4d9a-b653-122c74639d3a" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="7d8da3be-ff2e-495c-afdd-a594ca38269b" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="3138c6f3-213f-4d18-82eb-63bbd35f3f61" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="14624921-ce05-408e-9712-b77d83b01f07" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="bae2b276-c90d-479a-b30c-de21f0ada2ff" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a0c9c7fc-aa29-42bf-a137-84596ee3757e" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="630919ae-6f1a-4560-b27e-11082b68ac4e" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="d716843c-f78b-4ebf-a370-a7a3af53412a" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="d587db8f-004e-4894-afb7-3c1ae46ec2c7" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="db5ea964-a62c-4ba0-9dbb-7f9fb0c69456" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="e3833b09-be47-4d38-97e2-f4a2097b1531" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a503c2bf-185e-4b92-809d-8352904a2510" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="c2b1a131-b900-41d2-92a4-0b351d519aa2" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="fdf3e9dd-2bad-441e-b864-12485117387f" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="711b4d31-920c-41f9-b4d8-9422d3a15170" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="fd4cd51e-6ebb-4866-9ff0-cbefe949828e" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2d95f9f4-7503-4a0c-bc1a-26a286d358a9" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="b395925e-b127-4dd9-bef7-1025cee7403c" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="5fcacaab-a63e-42a8-b728-d3b08561c938" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="9b8d1835-3d23-45e5-9600-e5af698cc756" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="57cc5659-5250-4ee9-a5b2-762f72b0d4d3" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="c0893a05-2194-4d7b-813b-5c5833dcb829" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="6a9a2e4a-089d-4b24-94b3-3046f1459cf1" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="0581db2e-e7bc-4167-bc47-69e9b2ca1dfc" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="2c2c8950-7162-4bcd-b9ca-d4e4f2534910" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="34fc6f5b-6e13-43e2-ac57-607c11bb5f88" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="edea0800-0bea-4714-be28-f691fa35803f" LastKnownName="OperandOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="c132a23e-dad6-4d69-8948-2ac2eee60874" LastKnownName="MessageOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="beaed36d-ec22-44a9-a608-88fd0e93d138" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="28e68a64-fc22-42dc-8e80-aefc72a103e9" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b8957d0b-3dc1-48cb-88e1-679c1ad11d5e" LastKnownName="OperandOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="d93fec22-6e4b-4278-8ed6-d5db5be75f08" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="4ee3ab1c-f39e-45e0-90b5-54fa19ffac8c" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <lostFoundTarget Id="0d8d9380-2190-4d43-9328-f86f383f56e6" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="f21f3f18-3605-4fbc-af48-8c9193464049" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="2baaaf9b-a1dc-4426-9003-8d473d3d5d7b" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="e2f1bdde-ae17-44fe-8b35-c976508d49f3" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="ef833e45-1a27-41c1-9151-f9a69451719d" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="0e3944fb-9a6e-4704-919a-a1b07a4554d1" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="6ecf6fd3-30a1-4f87-a618-bae36de7850f" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="ef833e45-1a27-41c1-9151-f9a69451719d" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="47bfa8e2-9028-46c2-b40b-22f417297725" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6ca41340-327a-4d9a-b653-122c74639d3a" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0e3944fb-9a6e-4704-919a-a1b07a4554d1" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6ecf6fd3-30a1-4f87-a618-bae36de7850f" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7d8da3be-ff2e-495c-afdd-a594ca38269b" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="e2f1bdde-ae17-44fe-8b35-c976508d49f3" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="2d800005-5a99-42d9-abbe-2c9a88065961" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="c6384b13-d439-4a4f-aad5-090713355499" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="ce51f85a-322b-4651-a55d-5c241709832d" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="28ac2b0f-d2a6-44ff-9c0d-36e7859c0854" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="036d13ac-52f3-4ed6-9430-6ef37a10fc32" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="ba5a01fa-3414-4c20-b9c0-3d97d2dc7485" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="28ac2b0f-d2a6-44ff-9c0d-36e7859c0854" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="a89e721f-857e-4cb9-bff4-5b31d8a198c0" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="3138c6f3-213f-4d18-82eb-63bbd35f3f61" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="036d13ac-52f3-4ed6-9430-6ef37a10fc32" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ba5a01fa-3414-4c20-b9c0-3d97d2dc7485" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="14624921-ce05-408e-9712-b77d83b01f07" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="ce51f85a-322b-4651-a55d-5c241709832d" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="3b9f49c6-d224-47e5-8fe1-f6d1bd02aac0" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <combinedFragment Id="28b4c91c-5fc3-4f17-b5ea-1e0f775f35e3" name="CombinedFragment1" interactionOperator="Loop" customInteractionOperator="Loop">
+            <coveredLifelines>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="71491450-965b-4d5f-add6-d39a28c1cfb9" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                  <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+                  <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment Id="2776226a-665e-4a6a-8879-07bc492c1afd" name="CombinedFragment1" interactionOperator="Loop" customInteractionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                      <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+                      <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="239f8dd7-284b-49be-96ba-14130de7104e" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                          <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+                          <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+                        </coveredLifelines>
+                        <guard>
+                          <interactionConstraint Id="54b1a6e8-14f0-44bf-887d-3fa68656c721" guardText="for (int j = 0;j &lt; OriginalFirst.Height; j++)">
+                            <maxInt>
+                              <literalString Id="15707862-7c9f-414e-8d0e-0c94b6658f7f" name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString Id="677ff3c4-ca3c-4739-88fb-71fc25632a11" name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="a0c9c7fc-aa29-42bf-a137-84596ee3757e" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="e3833b09-be47-4d38-97e2-f4a2097b1531" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="7ec794d7-03b7-4eca-a548-23e1ce820f1f" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="9f1f543c-e46f-43e9-8493-e2afbdf0031c" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="b1df2e0d-797e-41e9-a8b8-799d49297b3d" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="a57b8c2e-def7-465f-85c8-9814e751eed9" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint Id="abbe4f72-0b1e-4e2d-919a-950172722077" guardText="for (int i = 0;i &lt; OriginalFirst.Width; i++)">
+                    <maxInt>
+                      <literalString Id="371be79a-f627-4805-8b7d-a62af927f7af" name="LiteralString1" />
+                    </maxInt>
+                    <minInt>
+                      <literalString Id="2c23be3e-b090-4ee2-a9ef-1bc291449d3a" name="LiteralString2" />
+                    </minInt>
+                  </interactionConstraint>
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="bae2b276-c90d-479a-b30c-de21f0ada2ff" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="a503c2bf-185e-4b92-809d-8352904a2510" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="9e703d5e-0bec-4c31-8bb6-1214a6b7686f" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="09ef620d-7927-42d9-afea-cae17deb1d0f" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="144403c8-bd73-481e-ba06-5e58aef841e6" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="61f5f430-0fae-4677-bc6e-25a848e302b7" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="144403c8-bd73-481e-ba06-5e58aef841e6" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="bae2b276-c90d-479a-b30c-de21f0ada2ff" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="9e703d5e-0bec-4c31-8bb6-1214a6b7686f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="7ec794d7-03b7-4eca-a548-23e1ce820f1f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="b1df2e0d-797e-41e9-a8b8-799d49297b3d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a0c9c7fc-aa29-42bf-a137-84596ee3757e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="895eb7af-2a97-4509-8c4f-50d67a843925" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="ea63d81e-ab3b-49aa-b974-421d624b3797" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="fe79b182-80f4-4c5e-9c02-c3745739a2db" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="036a4f31-a84b-4972-a7d2-03a232efddcf" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="433d1be1-a0c9-4a77-bf1a-72eca2079548" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="fe79b182-80f4-4c5e-9c02-c3745739a2db" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="f1bd1d1e-42a2-42ec-85f1-0ac78686a138" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="036a4f31-a84b-4972-a7d2-03a232efddcf" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="630919ae-6f1a-4560-b27e-11082b68ac4e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d716843c-f78b-4ebf-a370-a7a3af53412a" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="433d1be1-a0c9-4a77-bf1a-72eca2079548" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="ea63d81e-ab3b-49aa-b974-421d624b3797" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="517829eb-b518-4c76-8150-c0827d161e08" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="fb11f1ff-19c1-43e9-a75d-daeb98dc0304" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="c7b56ec5-b21b-4506-8911-7b1d41b8dd4b" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="87f62310-e6b8-4035-9943-0e8fe8d4ec47" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="ba47edb9-57a0-44c4-a849-fa94512832f6" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="601ab103-b492-4b67-893a-865247c84e34" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="87f62310-e6b8-4035-9943-0e8fe8d4ec47" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="87d6dc37-088f-4a50-ac0d-04810bb25a8b" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="d587db8f-004e-4894-afb7-3c1ae46ec2c7" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ba47edb9-57a0-44c4-a849-fa94512832f6" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="601ab103-b492-4b67-893a-865247c84e34" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="db5ea964-a62c-4ba0-9dbb-7f9fb0c69456" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="c7b56ec5-b21b-4506-8911-7b1d41b8dd4b" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="ef51ce7f-3701-4a10-a6fd-5d9b6f1bef58" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="e3833b09-be47-4d38-97e2-f4a2097b1531" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="9f1f543c-e46f-43e9-8493-e2afbdf0031c" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a57b8c2e-def7-465f-85c8-9814e751eed9" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="a503c2bf-185e-4b92-809d-8352904a2510" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="09ef620d-7927-42d9-afea-cae17deb1d0f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="cab491cb-0aa4-447c-9bd9-05619ba91439" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="61f5f430-0fae-4677-bc6e-25a848e302b7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="05d7846b-0049-4480-ad5e-33b5fe350181" LastKnownName="OriginalFirstPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <combinedFragment Id="fc965a60-0b1a-4d0d-889e-5988005722be" name="CombinedFragment2" interactionOperator="Loop" customInteractionOperator="Loop">
+            <coveredLifelines>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="7f72aece-8023-4152-bb6c-29e82070d911" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                  <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+                  <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment Id="20d18a3a-0edd-4ca6-9217-fdb701a85ae6" name="CombinedFragment1" interactionOperator="Loop" customInteractionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                      <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+                      <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="e8c17a24-40d0-4f0d-b38a-326a5dc741ea" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                          <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+                          <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+                        </coveredLifelines>
+                        <guard>
+                          <interactionConstraint Id="c693ad8f-fbcc-4e22-b4f1-1c777b4eb473" guardText="for (int j = 0;j &lt; OriginalSecond.Height; j++)">
+                            <maxInt>
+                              <literalString Id="f1115f5c-528a-4338-9647-e496c000b5fb" name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString Id="8dc3f20d-21aa-4c71-95d6-271451c6eecb" name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="fdf3e9dd-2bad-441e-b864-12485117387f" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="5fcacaab-a63e-42a8-b728-d3b08561c938" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="76b0fccb-59ca-4b2b-8158-a1ef7b9c7595" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="ad486a3a-4ecf-44d2-904b-1d584a1280c5" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="68c9115a-bb75-475f-9d98-9c61e0985dc7" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="7565ee30-f429-4464-b14e-95fc34bd130a" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint Id="b33b4189-f9c9-4095-a540-e004e6f3c19e" guardText="for (int i = 0;i &lt; OriginalSecond.Width; i++)">
+                    <maxInt>
+                      <literalString Id="0d4e4707-592e-4f75-a777-a035a25b7315" name="LiteralString1" />
+                    </maxInt>
+                    <minInt>
+                      <literalString Id="abc05127-0b1f-41cb-9b8d-c6d821550815" name="LiteralString2" />
+                    </minInt>
+                  </interactionConstraint>
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="c2b1a131-b900-41d2-92a4-0b351d519aa2" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="9b8d1835-3d23-45e5-9600-e5af698cc756" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="ec05f098-e3dd-4d75-b19c-76ede2850c31" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="7ab9514a-4cc5-4a76-960a-08cf48d1d8d8" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="5006d030-7631-4f6e-972a-a9393e00310e" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="86775f08-4faf-4240-af5d-1676260ad74d" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="ec05f098-e3dd-4d75-b19c-76ede2850c31" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="5006d030-7631-4f6e-972a-a9393e00310e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="c2b1a131-b900-41d2-92a4-0b351d519aa2" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="fdf3e9dd-2bad-441e-b864-12485117387f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="76b0fccb-59ca-4b2b-8158-a1ef7b9c7595" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="68c9115a-bb75-475f-9d98-9c61e0985dc7" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="d324e040-bbf4-4685-8380-549471903427" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="b1579f4b-d8c9-48ce-86cc-81acce7a39a2" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="fb0da5bf-74f0-44b1-bdcd-b673d354e424" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="7a364df5-a99c-43ee-a814-36339bd6e11f" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="5fa65dff-b03f-4891-8d84-d2d08f38913c" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="fb0da5bf-74f0-44b1-bdcd-b673d354e424" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="57f63693-939c-4d9b-a991-f1af27c336a7" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7a364df5-a99c-43ee-a814-36339bd6e11f" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="711b4d31-920c-41f9-b4d8-9422d3a15170" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="fd4cd51e-6ebb-4866-9ff0-cbefe949828e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="5fa65dff-b03f-4891-8d84-d2d08f38913c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="b1579f4b-d8c9-48ce-86cc-81acce7a39a2" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="87b5da69-c475-434d-b2fe-0f89937e3ab3" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="78751442-7cfc-48aa-a6f7-406972d36c8c" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="12f9aed2-af97-4dfb-a749-ddfc862c415f" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="55573973-0ed6-47c4-b84e-ad950e6aa80e" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="a34db443-a05a-48e2-b9a0-c1a535700432" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="94f506a9-8081-4f01-b94f-bf3e259a7a35" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="55573973-0ed6-47c4-b84e-ad950e6aa80e" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="5f9ded24-fc21-4b3b-8be3-cd95c0d26006" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2d95f9f4-7503-4a0c-bc1a-26a286d358a9" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="a34db443-a05a-48e2-b9a0-c1a535700432" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="94f506a9-8081-4f01-b94f-bf3e259a7a35" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="b395925e-b127-4dd9-bef7-1025cee7403c" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="12f9aed2-af97-4dfb-a749-ddfc862c415f" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="dfd17257-1721-418f-993d-0e0c25c4cbef" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="5fcacaab-a63e-42a8-b728-d3b08561c938" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="ad486a3a-4ecf-44d2-904b-1d584a1280c5" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="7565ee30-f429-4464-b14e-95fc34bd130a" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="9b8d1835-3d23-45e5-9600-e5af698cc756" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="7ab9514a-4cc5-4a76-960a-08cf48d1d8d8" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="73967468-e4d9-40f9-8d59-7ff5860f1130" LastKnownName="item : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="86775f08-4faf-4240-af5d-1676260ad74d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="4f687db8-4d26-43d4-9d54-29b7c016086c" LastKnownName="OriginalSecondPixels : List&lt;CustomPixel&gt;" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <combinedFragment Id="474e82c6-ef35-4549-a86e-cfd0433eefb3" name="CombinedFragment3" interactionOperator="Loop" customInteractionOperator="Loop">
+            <coveredLifelines>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </coveredLifelines>
+            <operands>
+              <interactionOperand Id="b2163d30-1752-43e5-9017-59b922050d21" name="InteractionOperand1">
+                <coveredLifelines>
+                  <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                  <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+                  <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+                </coveredLifelines>
+                <fragments>
+                  <combinedFragment Id="9a0eade8-ff75-4e6a-ba31-0c9d7503a00c" name="CombinedFragment1" interactionOperator="Loop" customInteractionOperator="Loop">
+                    <coveredLifelines>
+                      <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                      <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+                      <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+                    </coveredLifelines>
+                    <operands>
+                      <interactionOperand Id="9cc081aa-0430-4d07-9f11-be0d8295d8a6" name="InteractionOperand1">
+                        <coveredLifelines>
+                          <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                          <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+                          <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+                        </coveredLifelines>
+                        <fragments>
+                          <combinedFragment Id="a73e7ce2-9a38-47d3-a89d-23fabe5b26bb" name="CombinedFragment1" interactionOperator="Opt" customInteractionOperator="If">
+                            <coveredLifelines>
+                              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                            </coveredLifelines>
+                            <operands>
+                              <interactionOperand Id="ab040a06-ef0d-4f2f-b8f8-39ca4eec5b21" name="InteractionOperand1">
+                                <coveredLifelines>
+                                  <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+                                </coveredLifelines>
+                                <guard>
+                                  <interactionConstraint Id="e6e3310b-4960-4ffd-b5a1-c1195c2fa4f3" guardText="if (!(currentValue1 &lt; bestMatch1))" />
+                                </guard>
+                                <operandOccurrenceSpecifications>
+                                  <operandOccurrenceSpecificationMoniker Id="edea0800-0bea-4714-be28-f691fa35803f" LastKnownName="OperandOccurrenceSpecification" />
+                                  <operandOccurrenceSpecificationMoniker Id="beaed36d-ec22-44a9-a608-88fd0e93d138" LastKnownName="OperandOccurrenceSpecification" />
+                                </operandOccurrenceSpecifications>
+                              </interactionOperand>
+                            </operands>
+                          </combinedFragment>
+                        </fragments>
+                        <guard>
+                          <interactionConstraint Id="bf0a2ee2-2a77-4b77-999a-b6931e7cd86c" guardText="for (int i = 0;i &lt; _sampleSize; i++)">
+                            <maxInt>
+                              <literalString Id="04086d99-cb31-4a66-b2a0-2d0c2349c68d" name="LiteralString1" />
+                            </maxInt>
+                            <minInt>
+                              <literalString Id="e4b3e6f1-1580-4dd8-97a8-bd452eb75d09" name="LiteralString2" />
+                            </minInt>
+                          </interactionConstraint>
+                        </guard>
+                        <operandOccurrenceSpecifications>
+                          <operandOccurrenceSpecificationMoniker Id="c0893a05-2194-4d7b-813b-5c5833dcb829" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="28e68a64-fc22-42dc-8e80-aefc72a103e9" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="9cb4f628-1017-48ea-8891-a0039b1bf49f" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="96ca2691-3046-45f4-9288-96d0c376350d" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="876698e9-e378-4237-912b-8fb900d94598" LastKnownName="OperandOccurrenceSpecification" />
+                          <operandOccurrenceSpecificationMoniker Id="d7986c41-3007-48b4-8177-c372e6bcb30b" LastKnownName="OperandOccurrenceSpecification" />
+                        </operandOccurrenceSpecifications>
+                      </interactionOperand>
+                    </operands>
+                  </combinedFragment>
+                </fragments>
+                <guard>
+                  <interactionConstraint Id="e2651496-0e4e-4cca-aff9-e745184faaf5" guardText="for (int j = OriginalFirstPixels.Count/2;j &lt; OriginalFirstPixels.Count; j++)">
+                    <maxInt>
+                      <literalString Id="c63e2276-5383-455a-8776-c7eba4ab4976" name="LiteralString1" />
+                    </maxInt>
+                    <minInt>
+                      <literalString Id="43b645cc-fc55-4cd7-a7c3-24c5aa7a5c4c" name="LiteralString2" />
+                    </minInt>
+                  </interactionConstraint>
+                </guard>
+                <operandOccurrenceSpecifications>
+                  <operandOccurrenceSpecificationMoniker Id="57cc5659-5250-4ee9-a5b2-762f72b0d4d3" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="b8957d0b-3dc1-48cb-88e1-679c1ad11d5e" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="6a231ed2-cbc8-4a74-ad94-cbad0aba72ee" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="d9642db8-d75e-4ec5-a96d-f0f30c678532" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="f73f1bc9-0f31-46bc-bb65-22f547986c34" LastKnownName="OperandOccurrenceSpecification" />
+                  <operandOccurrenceSpecificationMoniker Id="cde5a58e-8109-45c8-b26e-815f701750ff" LastKnownName="OperandOccurrenceSpecification" />
+                </operandOccurrenceSpecifications>
+              </interactionOperand>
+            </operands>
+          </combinedFragment>
+          <operandOccurrenceSpecification Id="6a231ed2-cbc8-4a74-ad94-cbad0aba72ee" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="f73f1bc9-0f31-46bc-bb65-22f547986c34" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="57cc5659-5250-4ee9-a5b2-762f72b0d4d3" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="c0893a05-2194-4d7b-813b-5c5833dcb829" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="9cb4f628-1017-48ea-8891-a0039b1bf49f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="876698e9-e378-4237-912b-8fb900d94598" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="d0b40bbc-35a3-4041-ae4e-d82d4657c85e" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="3b07b576-0d67-4557-95c0-a2609fa4d277" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="a5d41f32-5ea7-4d81-928a-64fe78b1d56b" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="7b3d225d-830f-4a86-9e24-3b165ff75862" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="ccaef8ad-a90d-453a-9442-319f125f1750" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="07add69e-48a9-4e0e-a7b9-aa3f6fcf7b12" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="a5d41f32-5ea7-4d81-928a-64fe78b1d56b" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="7afefcb0-9a3b-44a8-af96-6060cdcacfdb" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="7b3d225d-830f-4a86-9e24-3b165ff75862" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="6a9a2e4a-089d-4b24-94b3-3046f1459cf1" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ccaef8ad-a90d-453a-9442-319f125f1750" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="8b6ed3b9-19ac-451e-a93e-ba9fa8c03a11" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="07add69e-48a9-4e0e-a7b9-aa3f6fcf7b12" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="0581db2e-e7bc-4167-bc47-69e9b2ca1dfc" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="3b07b576-0d67-4557-95c0-a2609fa4d277" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="97af0ff5-6b4b-442c-9ee6-2da4f79b2b57" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <behaviorExecutionSpecification Id="b41ca34d-c084-4ed8-93d0-8629cd5688c1" name="BehaviorExecutionSpecification">
+            <coveredLifelines>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </coveredLifelines>
+            <finish>
+              <executionOccurrenceSpecificationMoniker Id="1c1523b4-71d3-48ad-93be-0f5288021272" LastKnownName="ExecutionOccurrenceSpecification" />
+            </finish>
+            <start>
+              <executionOccurrenceSpecificationMoniker Id="9c08d452-6817-4c86-9e71-8d06d65b5de2" LastKnownName="ExecutionOccurrenceSpecification" />
+            </start>
+            <nestedOccurrences>
+              <messageOccurrenceSpecificationMoniker Id="ddd589a7-3bc4-4f93-82b3-538a6aa6f3e1" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="7cb0796b-94c7-4441-a140-91ea01fc140f" LastKnownName="MessageOccurrenceSpecification" />
+              <messageOccurrenceSpecificationMoniker Id="bab8f556-0e66-4654-9095-66a22fe1a94e" LastKnownName="MessageOccurrenceSpecification" />
+            </nestedOccurrences>
+          </behaviorExecutionSpecification>
+          <executionOccurrenceSpecification Id="9c08d452-6817-4c86-9e71-8d06d65b5de2" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="d4d68347-f905-47ff-9752-42303e7f956f" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="2c2c8950-7162-4bcd-b9ca-d4e4f2534910" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="ddd589a7-3bc4-4f93-82b3-538a6aa6f3e1" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="a2636949-f3d5-44d8-9f12-037914894fc6" name="LostFoundTarget" />
+          <messageOccurrenceSpecification Id="7cb0796b-94c7-4441-a140-91ea01fc140f" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="34fc6f5b-6e13-43e2-ac57-607c11bb5f88" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="bab8f556-0e66-4654-9095-66a22fe1a94e" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="1c1523b4-71d3-48ad-93be-0f5288021272" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="08343f73-fe13-4fb8-b793-d4478de152a5" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </executionOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="edea0800-0bea-4714-be28-f691fa35803f" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <messageOccurrenceSpecification Id="c132a23e-dad6-4d69-8948-2ac2eee60874" name="MessageOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </messageOccurrenceSpecification>
+          <lostFoundTarget Id="38134d20-f5a0-4e63-9995-b43cf36f437f" name="LostFoundTarget" />
+          <operandOccurrenceSpecification Id="beaed36d-ec22-44a9-a608-88fd0e93d138" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d7986c41-3007-48b4-8177-c372e6bcb30b" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="28e68a64-fc22-42dc-8e80-aefc72a103e9" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="96ca2691-3046-45f4-9288-96d0c376350d" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="cde5a58e-8109-45c8-b26e-815f701750ff" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" LastKnownName="OriginalFirstPixels[randomSelection1] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="d9642db8-d75e-4ec5-a96d-f0f30c678532" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" LastKnownName="OriginalFirstPixels[randomSelection2] : CustomPixel" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <operandOccurrenceSpecification Id="b8957d0b-3dc1-48cb-88e1-679c1ad11d5e" name="OperandOccurrenceSpecification">
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </operandOccurrenceSpecification>
+          <executionOccurrenceSpecification Id="4dfc7a3e-f7b5-4b88-8e96-ba0d2187d7f8" name="ExecutionOccurrenceSpecification">
+            <event>
+              <executionOccurrenceSpecificationReferencesEvent>
+                <executionEventMoniker Id="8eeaf894-30ec-4a50-9b9f-73222d9601fc" LastKnownName="ExecutionEvent" />
+              </executionOccurrenceSpecificationReferencesEvent>
+            </event>
+            <covered>
+              <lifelineMoniker Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" LastKnownName="this : ProcessWindow" />
+            </covered>
+          </executionOccurrenceSpecification>
+        </fragments>
+        <lifelines>
+          <lifeline Id="36465b13-e35b-4104-9bd5-48cc4ee658f3" name="this : ProcessWindow" isActor="false" lifelineDisplayName="this : ProcessWindow" referencedInstance="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic Type=ProcessWindow ObjectInstance=&quot;Object instance 1&quot;)" referencedType="Pixel_Magic‎.ProcessWindow">
+            <referencesInternal>
+              <reference Id="a7f5a5f8-7bde-4f0c-a432-ee400e84f7b3" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic Type=ProcessWindow)&quot;)" tag="DGQL" />
+              <reference Id="5171a82e-5bf9-408e-bf02-3a476bd7d518" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic Type=ProcessWindow)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="d93fec22-6e4b-4278-8ed6-d5db5be75f08" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="4dfc7a3e-f7b5-4b88-8e96-ba0d2187d7f8" LastKnownName="ExecutionOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="05d7846b-0049-4480-ad5e-33b5fe350181" name="OriginalFirstPixels : List&lt;CustomPixel&gt;" isActor="false" lifelineDisplayName="OriginalFirstPixels : List&lt;CustomPixel&gt;" referencedInstance="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]) ObjectInstance=&quot;Object instance 16&quot;)" referencedType="System‎.Collections‎.Generic‎.List‎&lt;CustomPixel‎&gt;">
+            <referencesInternal>
+              <reference Id="4d6c6c6d-b178-413c-bbb0-7598c91b47d2" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)" tag="DGQL" />
+              <reference Id="8217ee61-d3ec-4014-8142-69835082834e" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="ef833e45-1a27-41c1-9151-f9a69451719d" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="e2f1bdde-ae17-44fe-8b35-c976508d49f3" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="144403c8-bd73-481e-ba06-5e58aef841e6" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="b1df2e0d-797e-41e9-a8b8-799d49297b3d" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="87f62310-e6b8-4035-9943-0e8fe8d4ec47" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="c7b56ec5-b21b-4506-8911-7b1d41b8dd4b" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="a57b8c2e-def7-465f-85c8-9814e751eed9" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="61f5f430-0fae-4677-bc6e-25a848e302b7" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="4f687db8-4d26-43d4-9d54-29b7c016086c" name="OriginalSecondPixels : List&lt;CustomPixel&gt;" isActor="false" lifelineDisplayName="OriginalSecondPixels : List&lt;CustomPixel&gt;" referencedInstance="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1 GenericArguments=[(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]) ObjectInstance=&quot;Object instance 18&quot;)" referencedType="System‎.Collections‎.Generic‎.List‎&lt;CustomPixel‎&gt;">
+            <referencesInternal>
+              <reference Id="fd75cfad-c4c4-43ae-af32-3afa42718bcb" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)" tag="DGQL" />
+              <reference Id="6af2f161-33d0-4777-a169-5c672f8e91ca" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <executionOccurrenceSpecificationMoniker Id="28ac2b0f-d2a6-44ff-9c0d-36e7859c0854" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="ce51f85a-322b-4651-a55d-5c241709832d" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="5006d030-7631-4f6e-972a-a9393e00310e" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="68c9115a-bb75-475f-9d98-9c61e0985dc7" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="55573973-0ed6-47c4-b84e-ad950e6aa80e" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="12f9aed2-af97-4dfb-a749-ddfc862c415f" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="7565ee30-f429-4464-b14e-95fc34bd130a" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="86775f08-4faf-4240-af5d-1676260ad74d" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="cab491cb-0aa4-447c-9bd9-05619ba91439" name="item : CustomPixel" isActor="false" lifelineDisplayName="item : CustomPixel" referencedInstance="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel ObjectInstance=&quot;Object instance 34&quot;)" referencedType="Pixel_Magic‎.Classes‎.CustomPixel">
+            <referencesInternal>
+              <reference Id="53bfe083-0740-48e7-afd1-72c37af774fd" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)" tag="DGQL" />
+              <reference Id="6f2d843c-74b1-443e-91d0-dcb6ccad1db1" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="9e703d5e-0bec-4c31-8bb6-1214a6b7686f" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="7ec794d7-03b7-4eca-a548-23e1ce820f1f" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="fe79b182-80f4-4c5e-9c02-c3745739a2db" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="ea63d81e-ab3b-49aa-b974-421d624b3797" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="9f1f543c-e46f-43e9-8493-e2afbdf0031c" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="09ef620d-7927-42d9-afea-cae17deb1d0f" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="73967468-e4d9-40f9-8d59-7ff5860f1130" name="item : CustomPixel" isActor="false" lifelineDisplayName="item : CustomPixel" referencedInstance="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel ObjectInstance=&quot;Object instance 58&quot;)" referencedType="Pixel_Magic‎.Classes‎.CustomPixel">
+            <referencesInternal>
+              <reference Id="86b7edec-aaad-4edd-96fb-8d3789b8bd41" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)" tag="DGQL" />
+              <reference Id="f630d396-f348-4141-9882-9859a991f554" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="ec05f098-e3dd-4d75-b19c-76ede2850c31" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="76b0fccb-59ca-4b2b-8158-a1ef7b9c7595" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="fb0da5bf-74f0-44b1-bdcd-b673d354e424" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="b1579f4b-d8c9-48ce-86cc-81acce7a39a2" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="ad486a3a-4ecf-44d2-904b-1d584a1280c5" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="7ab9514a-4cc5-4a76-960a-08cf48d1d8d8" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="e17bb3e4-a110-4bc7-9aea-9b21294c15f6" name="OriginalFirstPixels[randomSelection2] : CustomPixel" isActor="false" lifelineDisplayName="OriginalFirstPixels[randomSelection2] : CustomPixel" referencedInstance="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit Statement=[1,23,5,1,1,5,1,2,2,2] ObjectInstance=&quot;Object instance 102&quot;)" referencedType="Pixel_Magic‎.Classes‎.CustomPixel">
+            <referencesInternal>
+              <reference Id="ec19c09d-920c-4a0f-8ede-2dc48638f08c" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)" tag="DGQL" />
+              <reference Id="f2688aea-c4dc-4e29-987c-18d63a1d2ad8" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="6a231ed2-cbc8-4a74-ad94-cbad0aba72ee" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="9cb4f628-1017-48ea-8891-a0039b1bf49f" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="a5d41f32-5ea7-4d81-928a-64fe78b1d56b" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="3b07b576-0d67-4557-95c0-a2609fa4d277" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="96ca2691-3046-45f4-9288-96d0c376350d" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d9642db8-d75e-4ec5-a96d-f0f30c678532" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+          <lifeline Id="dc2dfd3f-9696-4fbe-9f29-debdd15bd67b" name="OriginalFirstPixels[randomSelection1] : CustomPixel" isActor="false" lifelineDisplayName="OriginalFirstPixels[randomSelection1] : CustomPixel" referencedInstance="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit Statement=[1,23,5,1,1,5,1,5,2,2] ObjectInstance=&quot;Object instance 114&quot;)" referencedType="Pixel_Magic‎.Classes‎.CustomPixel">
+            <referencesInternal>
+              <reference Id="0fca1577-9a10-4611-a2c4-7ec931b76f90" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)" tag="DGQL" />
+              <reference Id="165caa4b-2ead-4559-b328-79464d67cc28" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)" tag="DGML" />
+            </referencesInternal>
+            <topLevelOccurrences>
+              <operandOccurrenceSpecificationMoniker Id="f73f1bc9-0f31-46bc-bb65-22f547986c34" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="876698e9-e378-4237-912b-8fb900d94598" LastKnownName="OperandOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="9c08d452-6817-4c86-9e71-8d06d65b5de2" LastKnownName="ExecutionOccurrenceSpecification" />
+              <executionOccurrenceSpecificationMoniker Id="1c1523b4-71d3-48ad-93be-0f5288021272" LastKnownName="ExecutionOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="d7986c41-3007-48b4-8177-c372e6bcb30b" LastKnownName="OperandOccurrenceSpecification" />
+              <operandOccurrenceSpecificationMoniker Id="cde5a58e-8109-45c8-b26e-815f701750ff" LastKnownName="OperandOccurrenceSpecification" />
+            </topLevelOccurrences>
+          </lifeline>
+        </lifelines>
+        <messages>
+          <message Id="c8a51b15-9fc5-4e19-9fac-40fb8e63c088" name="Process_BestFit" messageKind="Found" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="097f9b32-6023-48a9-bd39-18077c2f6c9a" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic Type=ProcessWindow)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit)&quot;)" tag="DGQL" />
+              <reference Id="01503b32-1a40-43e1-92c9-f210c10bb5f7" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <lostFoundTargetMoniker Id="0d8d9380-2190-4d43-9328-f86f383f56e6" LastKnownName="LostFoundTarget" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="f21f3f18-3605-4fbc-af48-8c9193464049" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="3d211b11-08dd-4de4-a55d-792f021ed51d" name="Create List‎&lt;CustomPixel‎&gt;" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new List&lt;CustomPixel&gt;()">
+            <referencesInternal>
+              <reference Id="d0976d9d-8ee5-467a-9103-6283a2a127ad" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="309beca4-9b3b-470a-bb5f-c9da4ea28f2c" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="6ca41340-327a-4d9a-b653-122c74639d3a" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0e3944fb-9a6e-4704-919a-a1b07a4554d1" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="e4d66da6-7c17-4c7c-bc2c-53e793aa4cde" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="6ecf6fd3-30a1-4f87-a618-bae36de7850f" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="7d8da3be-ff2e-495c-afdd-a594ca38269b" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="0b7957f8-6c15-4d30-9d38-b84068f31f1d" name="Create List‎&lt;CustomPixel‎&gt;" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new List&lt;CustomPixel&gt;()">
+            <referencesInternal>
+              <reference Id="414d53d3-3bfa-4ab4-8a18-7c21345cdba7" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=.ctor)&quot;)" tag="DGQL" />
+              <reference Id="90175ac9-5a83-4c6f-84cd-ede0b0989bf5" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=.ctor)" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="3138c6f3-213f-4d18-82eb-63bbd35f3f61" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="036d13ac-52f3-4ed6-9430-6ef37a10fc32" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="e4fc98a9-9deb-40fb-8a6e-cf5f45c6a4d9" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="ba5a01fa-3414-4c20-b9c0-3d97d2dc7485" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="14624921-ce05-408e-9712-b77d83b01f07" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="6976e2df-0712-4d49-a1cb-9a4250bfb12e" name="Create CustomPixel" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new CustomPixel(OriginalFirst.GetPixel(i, j), i, j)">
+            <referencesInternal>
+              <reference Id="dbc9d950-d810-4014-90e2-161d6484946e" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=.ctor OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/System.Drawing.dll&amp;quot; Namespace=System.Drawing Type=Color),(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System Type=Int32),(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System Type=Int32)]))&quot;)" tag="DGQL" />
+              <reference Id="4c209fe9-2596-4514-8765-b9e777decbd6" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/System.Drawing.dll&quot; Namespace=System.Drawing Type=Color),(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System Type=Int32),(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System Type=Int32)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="630919ae-6f1a-4560-b27e-11082b68ac4e" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="036a4f31-a84b-4972-a7d2-03a232efddcf" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="05d7f190-265b-4371-9f67-a43fbc6ba85f" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="433d1be1-a0c9-4a77-bf1a-72eca2079548" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="d716843c-f78b-4ebf-a370-a7a3af53412a" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="e03a8d56-0b17-419d-9516-c9a539c1d6da" name="Add" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="OriginalFirstPixels.Add(new CustomPixel(OriginalFirst.GetPixel(i, j), i, j))">
+            <referencesInternal>
+              <reference Id="a35dae8e-8a69-413c-9abb-1c530410242b" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=(Name=Add OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) ParameterIdentifier=0)]))&quot;)" tag="DGQL" />
+              <reference Id="30d87ea3-8388-40fe-8abb-5bd9179c7445" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=(Name=Add OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) ParameterIdentifier=0)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="d587db8f-004e-4894-afb7-3c1ae46ec2c7" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="ba47edb9-57a0-44c4-a849-fa94512832f6" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="be22b81d-c1f4-4df3-9cf5-0f1d5b563953" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="601ab103-b492-4b67-893a-865247c84e34" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="db5ea964-a62c-4ba0-9dbb-7f9fb0c69456" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="4fe921fa-ad0c-498c-b44d-b3c1532fe3a2" name="Create CustomPixel" messageKind="Complete" messageSort="CreateMessage" createSelfMessage="false" signatureText="new CustomPixel(OriginalSecond.GetPixel(i, j), i, j)">
+            <referencesInternal>
+              <reference Id="5eb8e3f7-514d-4641-93fd-fb9de7611206" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=.ctor OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/System.Drawing.dll&amp;quot; Namespace=System.Drawing Type=Color),(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System Type=Int32),(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System Type=Int32)]))&quot;)" tag="DGQL" />
+              <reference Id="f0587d75-9644-4c84-bec1-033372b96e99" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=.ctor OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/System.Drawing.dll&quot; Namespace=System.Drawing Type=Color),(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System Type=Int32),(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System Type=Int32)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="711b4d31-920c-41f9-b4d8-9422d3a15170" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="7a364df5-a99c-43ee-a814-36339bd6e11f" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c36ef34c-d422-454b-ac61-a1979acd3149" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="5fa65dff-b03f-4891-8d84-d2d08f38913c" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="fd4cd51e-6ebb-4866-9ff0-cbefe949828e" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="1878f60a-0ee4-4ea3-8a94-1e758d8f3492" name="Add" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="OriginalSecondPixels.Add(new CustomPixel(OriginalSecond.GetPixel(i, j), i, j))">
+            <referencesInternal>
+              <reference Id="43ccd913-c61a-42e8-87d3-7ca335815809" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=System.Collections.Generic)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1))&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=(Name=Add OverloadingParameters=[(Assembly=&amp;quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&amp;quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) ParameterIdentifier=0)]))&quot;)" tag="DGQL" />
+              <reference Id="501be3e5-5a5b-40c6-861e-2a6b0898d3ef" handle="(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) Member=(Name=Add OverloadingParameters=[(Assembly=&quot;$(FxReferenceAssembliesUri)/.NETFramework/v4.5/mscorlib.dll&quot; Namespace=System.Collections.Generic Type=(Name=List GenericParameterCount=1) ParameterIdentifier=0)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2d95f9f4-7503-4a0c-bc1a-26a286d358a9" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="a34db443-a05a-48e2-b9a0-c1a535700432" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="ebb18478-8af7-401b-a879-6acac5cd5419" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="94f506a9-8081-4f01-b94f-bf3e259a7a35" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="b395925e-b127-4dd9-bef7-1025cee7403c" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="ea77c7dd-8d06-462f-b8da-61fb72eeccbd" name="ComparePixLab" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="OriginalFirstPixels[randomSelection2].ComparePixLab(OriginalSecondPixels[j])">
+            <referencesInternal>
+              <reference Id="a109bac0-a1ec-4ce4-adfc-b19c0beea817" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=ComparePixLab OverloadingParameters=[(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]))&quot;)" tag="DGQL" />
+              <reference Id="a30651f8-1a2a-4bc1-ac08-1d7e4de44b70" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=ComparePixLab OverloadingParameters=[(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="6a9a2e4a-089d-4b24-94b3-3046f1459cf1" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="7b3d225d-830f-4a86-9e24-3b165ff75862" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="960be902-6b00-40c5-b87d-afe43bc81391" name="CustomCompare" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="8e5f6199-1801-44ea-aab7-549d227c7a84" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=CustomCompare OverloadingParameters=[(Assembly=&amp;quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&amp;quot; Namespace=ColorMine.ColorSpaces Type=Lab),(Assembly=&amp;quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&amp;quot; Namespace=ColorMine.ColorSpaces Type=Lab)]))&quot;)" tag="DGQL" />
+              <reference Id="70aaf86a-e842-4461-923b-08067a1ee8c7" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=CustomCompare OverloadingParameters=[(Assembly=&quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&quot; Namespace=ColorMine.ColorSpaces Type=Lab),(Assembly=&quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&quot; Namespace=ColorMine.ColorSpaces Type=Lab)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1abW/TQAz2T4n6AW3StC4d+wIrEkSqqGBbRSf4gNCUtqED0qT0Wlj59Tz3JGmS7oVStCotVnXJnfP4fGefHTvqqXQlkIl8EV9CXH9hNBCPo1BaeOLLCLQXciqXcg2EkXcS4zcVR9rANqUme/ISdAPcSHrgm4P6RL7LjLjn8hl8IZ4+kzp/Xfbec7YZZTmgTdEfgBZj1IHkWL6Cpw+6AbqDJzcYW+wZeIYY9x+g93CPcG/xbmXchz0ExVKLK3bkPN25kTF6ffSaBf6rAr8DzcyBShB23X3yGflA2QNQflJioh+r72Xklbxib8r1TlN9+GgBVxGh15SP4sqBNOQY1xM0N21Zv7Fon2QfdslXdg5ZA9zVYgm/B4qfasCULOhhRmuHGHPl3GVteqllhkBNQMu06qVa7kLGNXXrQ24uy87xFv0e57QcF/S94WLHdu8Tys9lG9jd+mFykkb02DDVs9V9RHvX6I8Gdo1ImwMZcy9WTouz293W6MttIAxPWERNqS+rL2+nxXbVly8wc2aBZW/N1ujKEfDJbuwKx9yDz32U13YJ2ozen0SJ1+j7wBellHE2SmRvelMaOYveGyDnegbXOIPLESSkteyZC2nD/dRS6uGPp90qxtNEF99ICYjMV31GTQfQh5u2Y7QjYGzm3rsHO2Am/2fd38Wb07oLZFn/SZSpfkQ9vHUGNF9S31TfrK5vrpr/PF0p/yn683oZkAMbWkr91moSaoYsj8yDPMtfVDTLetxYs7eQVubweB3z5AQ8ez/IYU+jT11FWEOHzxP+KZ8b1nEak/4+Jh2o1tbQmv0S4NxxDtuM3RGjqtVb8c3qai2hMWQnvUFjyKZjiGblVc/KM3tpdVuNt4VWt9vpR7tf3eb1rFafmjn+XzFDM8dNZY4NrT41huykN2gM2XQM0ay56llzZi+tPqvxttDqczv9KP7HqvFkw1VjfeV/kf8G6JGir3AuAAA=
+(Assembly="$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)" Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit Statement=[1,23,5,1,1,5,1,2,2,2] ObjectInstance="Object instance 102")
+OriginalFirstPixels[randomSelection2] : CustomPixel
+CustomCompare(labColor, o.labColor)</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="ccaef8ad-a90d-453a-9442-319f125f1750" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="8b6ed3b9-19ac-451e-a93e-ba9fa8c03a11" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="bedb0ca6-1c30-4b70-8249-df77ca0f3850" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="07add69e-48a9-4e0e-a7b9-aa3f6fcf7b12" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="0581db2e-e7bc-4167-bc47-69e9b2ca1dfc" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="70622a20-6a64-4f18-8d49-eb89bbc2588a" name="ComparePixLab" messageKind="Complete" messageSort="SynchCall" createSelfMessage="false" signatureText="OriginalFirstPixels[randomSelection1].ComparePixLab(OriginalSecondPixels[k])">
+            <referencesInternal>
+              <reference Id="8604cd4d-2070-485f-9245-ed9fae1fd9a8" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=ComparePixLab OverloadingParameters=[(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]))&quot;)" tag="DGQL" />
+              <reference Id="95d83a0a-4b5b-47ac-9bb8-e76aa25b7f10" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=ComparePixLab OverloadingParameters=[(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)]))" tag="DGML" />
+            </referencesInternal>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="2c2c8950-7162-4bcd-b9ca-d4e4f2534910" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="ddd589a7-3bc4-4f93-82b3-538a6aa6f3e1" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="c7290afd-ccff-4b9c-ad94-9cf7754813e7" name="CustomCompare" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <referencesInternal>
+              <reference Id="e4c862e9-a97a-42ad-93e0-148000d02140" handle="+ Id.Equals(&quot;Microsoft.Solution.ClassView&quot;) /&#xD;&#xA;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Namespace=Pixel_Magic.Classes)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel)&quot;)/&#xD;&#xA;&quot;Microsoft.Contains&quot;/&#xD;&#xA;+ Id.EqualsIgnoreCase(&quot;(Assembly=&amp;quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&amp;quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=CustomCompare OverloadingParameters=[(Assembly=&amp;quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&amp;quot; Namespace=ColorMine.ColorSpaces Type=Lab),(Assembly=&amp;quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&amp;quot; Namespace=ColorMine.ColorSpaces Type=Lab)]))&quot;)" tag="DGQL" />
+              <reference Id="8f60779d-0635-4c3f-b442-b31bb46c902e" handle="(Assembly=&quot;$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)&quot; Namespace=Pixel_Magic.Classes Type=CustomPixel Member=(Name=CustomCompare OverloadingParameters=[(Assembly=&quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&quot; Namespace=ColorMine.ColorSpaces Type=Lab),(Assembly=&quot;$(VsSolutionUri)/packages/ColorMine.1.1.3.0/lib/ColorMine.dll&quot; Namespace=ColorMine.ColorSpaces Type=Lab)]))" tag="DGML" />
+            </referencesInternal>
+            <generationState>H4sIAAAAAAAEAO1abW/TQAz2T4n2AW3StNKOgQQr0ohUUcG2ik7wAU1T+kIHpElpWqD8eh4/SZqke6EUrUqLFV1y59jnu8dnx656LG3py1g+iyc+7r8w6onLkS8NvPFkCNpLOZYLuQZHJO8kxDURR5rgrcuO7MoJ6BH4htKB3AzUR/JNpuR7IZ8g5+Ptc6nwarP3nrNNqcsBbYJ+D7QQoxY0h/IFMl3QI3C38OYnxsp7CpkBxt176B08AzwbfKqOu3gPQFFqfsWOnCU7j2SEXhe9ek7+KifvAJkZuGIOXXeXcpF8oO4eKD+oMcZH8V7kvJJX7E243kmCh4fW5yoC9OryUaqyLzU5xP0IrZq0o9yzxnYpe7BLtrIz6OrhaRaL5V1QvASBqGBBFzOqHULMlUkX0XQTywzANQYtRdVNUG5DxzWx9aA306VzvEW/wzlV4py+N5jvWPc+pv5MdwS7qx/GJ2lIj/UTnBX7ALa/5NxN8J5grLQZOEPuRfU0OLvudoe+3ARHxBMWECnzZfPlzbTYtvryOWZOLbDorekaq7ieJLvRFY64B4/7KK7tArQpvT+OEq/R98Cf11Lk0yiRfumjwsiZ996Ac2ZncIUzuBhBfFpLz5xPG+4lljIPfzh0yxhPYyy+ktInZ7bqUyLdBx7VpB2iPQaPZu6dO3h7zOT/jP1tshmtPecs4h9HmfJH1IMbZ8DyJfNN883y+uay+c/TpfKfvD+vlgE5sKFSKjdWE1NTzuIouldm8RcVy7IeNtbszrUVJVzeRzw5fZ6975TQ0+gRqwBraPF9LD/h+4h1nMWkv49J+4baCqjpLwHOLeewydgdMKoqbvkva9VqCYshW+kNFkPWHUMsKy97Vp7ay6rbcnwtrLrdTD/a/uo2q2et+rTM8f+KGZY5ritzrFn1aTFkK73BYsi6Y4hlzWXPmlN7WfVZjq+FVZ+b6UfhP1aNz9ZcNVaW/hf5b31hwLRwLgAA
+(Assembly="$(c45724a0-0655-4ded-ab2c-8f7f1262c5c5.OutputPathUri)" Namespace=Pixel_Magic Type=ProcessWindow Member=Process_BestFit Statement=[1,23,5,1,1,5,1,5,2,2] ObjectInstance="Object instance 114")
+OriginalFirstPixels[randomSelection1] : CustomPixel
+CustomCompare(labColor, o.labColor)</generationState>
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="7cb0796b-94c7-4441-a140-91ea01fc140f" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="a2636949-f3d5-44d8-9f12-037914894fc6" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+          <message Id="42b0cc14-12b4-4da1-9ff8-b9db0900b3b7" name="&lt;&lt;return&gt;&gt;" messageKind="Complete" messageSort="Reply" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="bab8f556-0e66-4654-9095-66a22fe1a94e" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <messageOccurrenceSpecificationMoniker Id="34fc6f5b-6e13-43e2-ac57-607c11bb5f88" LastKnownName="MessageOccurrenceSpecification" />
+            </receiveEvent>
+          </message>
+          <message Id="3c0dd0af-a491-48ff-8bba-62690e99c649" name="Continue" messageKind="Lost" messageSort="AsynchCall" createSelfMessage="false">
+            <sendEvent>
+              <messageOccurrenceSpecificationMoniker Id="c132a23e-dad6-4d69-8948-2ac2eee60874" LastKnownName="MessageOccurrenceSpecification" />
+            </sendEvent>
+            <receiveEvent>
+              <lostFoundTargetMoniker Id="38134d20-f5a0-4e63-9995-b43cf36f437f" LastKnownName="LostFoundTarget" />
+            </receiveEvent>
+          </message>
+        </messages>
+      </interaction>
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="4ee3ab1c-f39e-45e0-90b5-54fa19ffac8c" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="8eeaf894-30ec-4a50-9b9f-73222d9601fc" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="47bfa8e2-9028-46c2-b40b-22f417297725" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="2d800005-5a99-42d9-abbe-2c9a88065961" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="a89e721f-857e-4cb9-bff4-5b31d8a198c0" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="3b9f49c6-d224-47e5-8fe1-f6d1bd02aac0" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="f1bd1d1e-42a2-42ec-85f1-0ac78686a138" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="517829eb-b518-4c76-8150-c0827d161e08" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="87d6dc37-088f-4a50-ac0d-04810bb25a8b" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="ef51ce7f-3701-4a10-a6fd-5d9b6f1bef58" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="57f63693-939c-4d9b-a991-f1af27c336a7" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="87b5da69-c475-434d-b2fe-0f89937e3ab3" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="5f9ded24-fc21-4b3b-8be3-cd95c0d26006" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="dfd17257-1721-418f-993d-0e0c25c4cbef" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="7afefcb0-9a3b-44a8-af96-6060cdcacfdb" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="97af0ff5-6b4b-442c-9ee6-2da4f79b2b57" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="d4d68347-f905-47ff-9752-42303e7f956f" name="ExecutionEvent" />
+    </packageHasNamedElement>
+    <packageHasNamedElement>
+      <executionEvent Id="08343f73-fe13-4fb8-b793-d4478de152a5" name="ExecutionEvent" />
+    </packageHasNamedElement>
+  </packagedElements>
+</SequenceDesignerModel>
