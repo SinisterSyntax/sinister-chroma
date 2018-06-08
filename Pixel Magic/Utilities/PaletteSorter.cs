@@ -19,7 +19,7 @@ namespace Pixel_Magic.Utilities
         //public static string raw = "000000, FFFFFF";
         public static List<String> hexCodes;
         public static List<ColorPair> Colors = new List<ColorPair>();
-
+ 
 
 
 
@@ -40,6 +40,56 @@ namespace Pixel_Magic.Utilities
             }
 
             //Colors = Colors.Where((x, i) => i % 16 == 0).ToList();
+
+        }
+
+
+
+        public static List<Color> GetWebSafe(int take)
+        {
+            List<Color> list = new List<Color>();
+            var Converter = new ColorConverter();
+            //raw = raw.Replace("\t", "").Replace(" ", ",").Replace(System.Environment.NewLine, ",");
+            hexCodes = raw.Split(',').ToList();
+
+            foreach (string h in hexCodes)
+            {
+                Color c = (Color)Converter.ConvertFromString("#" + h.ToUpper());
+
+
+
+                list.Add(c);
+            }
+
+
+            var s = list.Batch((list.Count/take)).ToList();
+            list.Clear();
+            foreach (var item in s)
+            {
+                list.Add(item.First());
+            }
+            list.Add(Color.White);
+            return list;
+
+        }
+
+        public static List<Color> GetAllWebSafe()
+        {
+            List<Color> list = new List<Color>();
+            var Converter = new ColorConverter();
+            //raw = raw.Replace("\t", "").Replace(" ", ",").Replace(System.Environment.NewLine, ",");
+            hexCodes = raw.Split(',').ToList();
+
+            foreach (string h in hexCodes)
+            {
+                Color c = (Color)Converter.ConvertFromString("#" + h.ToUpper());
+
+
+
+                list.Add(c);
+            }
+
+            return list;
 
         }
 

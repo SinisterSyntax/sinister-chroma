@@ -12,6 +12,8 @@ namespace Pixel_Magic.Utilities
 {
     static class HistogramGenerator
     {
+        public static Random rnd = new Random(666);
+
 
         public static List<Color> GenerateMedianHistogram(Image Source,int paletteSize)
         {
@@ -611,8 +613,9 @@ namespace Pixel_Magic.Utilities
             buckets = buckets.OrderBy(d => d.Count).Reverse().ToList();
 
             ProcessWindow.WriteLine($"Take {paletteSize}");
-            //buckets = buckets.Take(paletteSize).ToList();
-            buckets = buckets.Where(r => r.Count > ((double)Source.PixelList.Count / 500)).ToList();
+            buckets = buckets.Take(paletteSize).ToList();
+            buckets = buckets.Where(r => r.Count > 100).ToList();
+            //buckets = buckets.Where(r => r.Count > ((double)Source.PixelList.Count / 500)).ToList();
 
             ProcessWindow.WriteLine("Averaging samples");
 
@@ -650,6 +653,19 @@ namespace Pixel_Magic.Utilities
 
             }
             ProcessWindow.WriteLine("Finished Generating Colors");
+            return colors;
+        }
+
+        public static List<Color> GenerateRandomSampleHistogram(Image Source, int paletteSize)
+        {
+            List<Color> colors = new List<Color>();
+
+            for (int i = 0; i < paletteSize; i++)
+            {
+                colors.Add(Source.PixelList[rnd.Next(0, Source.PixelList.Count)].Color);
+            }
+
+
             return colors;
         }
     }

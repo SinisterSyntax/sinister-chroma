@@ -13,6 +13,7 @@
         MinHeight="300"
         SnapsToDevicePixels="True">
 
+
     <DockPanel Margin="0,0,0,0"  UseLayoutRounding="True" >
 
 
@@ -24,7 +25,7 @@
             <StatusBarItem HorizontalAlignment="Right" VerticalAlignment="Top" Margin="-4,0,0,0" >
 
                 <ProgressBar x:Name="ProgressBar1" Height="10"
-                         VerticalAlignment="Center" Width="196"  Foreground="#FF00C5FF" HorizontalAlignment="Left" Style="{DynamicResource ProgressBarStyle1}" Margin="6,2,0,0" />
+                         VerticalAlignment="Center" Width="196"  Foreground="{DynamicResource ProgressBarBlue}" HorizontalAlignment="Left" Style="{DynamicResource ProgressBarStyle1}" Margin="6,2,0,0" />
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right" Width="100" Foreground="White" HorizontalContentAlignment="Right" VerticalAlignment="Center" >
 
@@ -35,6 +36,12 @@
             </StatusBarItem>
             <StatusBarItem>
                 <Button x:Name="btnUsePalette" Width="43" Height="10" Content="Palette Web" Click="btnUsePalette_Click" />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="btnDitherTest" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest_Click"  />
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="btnDitherTest2" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest2_Click"  />
             </StatusBarItem>
         </StatusBar>
 
@@ -47,9 +54,9 @@
                 <MenuItem Header="_File" Foreground="White" />
                 <MenuItem Header="_Open" Foreground="White">
                     <MenuItem x:Name="OpenPaletteMenuItem" Header="_Open Palette Image..."
-                              Click="OpenPaletteMenuItem_Click" />
+                              Click="OpenPalette" />
                     <MenuItem x:Name="OpenSourceMenuItem" Header="_Open Source Image..."
-                              Click="OpenSourceMenuItem_Click" />
+                              Click="OpenSource" />
 
                 </MenuItem>
                 <MenuItem Header="_Save">
@@ -128,62 +135,7 @@
 
 
 
-                    <xctk:ColorPicker x:Name="cp1"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
-                    <Separator x:Name="EmptySeperator2"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
-                        <Separator.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Separator.RenderTransform>
-                    </Separator>
-                    <xctk:ColorPicker x:Name="cp2"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
-                    <Separator x:Name="EmptySeperator3"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
-                        <Separator.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Separator.RenderTransform>
-                    </Separator>
-                    <xctk:ColorPicker x:Name="cp3"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
-                    <Separator x:Name="EmptySeperator4"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
-                        <Separator.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Separator.RenderTransform>
-                    </Separator>
-                    <xctk:ColorPicker x:Name="cp4"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
-                    <Separator x:Name="EmptySeperator5"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
-                        <Separator.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Separator.RenderTransform>
-                    </Separator>
-                    <xctk:ColorPicker x:Name="cp5"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
-                    <Separator x:Name="EmptySeperator6"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
-                        <Separator.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform/>
-                                <SkewTransform/>
-                                <RotateTransform Angle="90"/>
-                                <TranslateTransform/>
-                            </TransformGroup>
-                        </Separator.RenderTransform>
-                    </Separator>
-                    <xctk:ColorPicker x:Name="cp6"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+
                     <!--<Separator x:Name="EmptySeperator7"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -250,6 +202,137 @@
                     </Separator.RenderTransform>
                 </Separator>-->
                     <!--<xctk:ColorPicker x:Name="cp12" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>-->
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- Tool Version: 14.0.22307.0 -->
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- Tool Version: 14.0.22307.0 -->
+                    <Button x:Name="btnOpenPalette" Click="OpenPalette" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
+                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <DrawingBrush Stretch="UniformToFill">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <DrawingGroup.Children>
+                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
+                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
+                                                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
+                                                    <GeometryDrawing Brush="#E24541" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
+                                                </DrawingGroup.Children>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Viewbox>
+                    </Button>
+
+                    <Separator x:Name="EmptySeperator14"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
+
+                    <Button x:Name="btnOpenSource" Click="OpenSource" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
+                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <DrawingBrush Stretch="UniformToFill">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <DrawingGroup.Children>
+                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
+                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
+                                                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
+                                                    <GeometryDrawing Brush="#4475BB" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
+                                                </DrawingGroup.Children>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Viewbox>
+                    </Button>
+
+                    <Separator x:Name="Seperator1125" RenderTransformOrigin="0.5,0.5" Width="20" Background="{DynamicResource SeparatorColor1}" Margin="0,2" >
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
+
+
+
+
+                    <Button x:Name="btnStart" Style="{StaticResource ButtonStandard}" Click="Start" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Width="24">
+
+                        <Viewbox Width="12" Height="12" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="12" Height="12">
+                                <Rectangle.Fill>
+                                    <DrawingBrush Stretch="Uniform">
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <DrawingGroup.Children>
+                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6,4.9492L10,8.0002 6,11.0002z M5,2.9282L5,13.0002 11.658,8.0072z" />
+                                                    <GeometryDrawing Brush="#FF378A33" Geometry="F1M6,11L10,8 6,4.949z" />
+                                                </DrawingGroup.Children>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Viewbox>
+                    </Button>
+
+
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- Tool Version: 14.0.22307.0 -->
+                    <Button x:Name="btnStop" Style="{StaticResource ButtonStandard}" Visibility="Collapsed" Click="Stop" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Width="24">
+
+                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                            <Rectangle Width="16" Height="16">
+                                <Rectangle.Fill>
+                                    <DrawingBrush>
+                                        <DrawingBrush.Drawing>
+                                            <DrawingGroup>
+                                                <DrawingGroup.Children>
+                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M13,13L3,13 3,3 13,3z" />
+                                                    <GeometryDrawing Brush="#FFA1260D" Geometry="F1M12,12L4,12 4,4 12,4z" />
+                                                </DrawingGroup.Children>
+                                            </DrawingGroup>
+                                        </DrawingBrush.Drawing>
+                                    </DrawingBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Viewbox>
+                    </Button>
+
+                    <Separator x:Name="Seperator115" RenderTransformOrigin="0.5,0.5" Width="20" Background="{DynamicResource SeparatorColor1}" Margin="0,2" >
+                        <Separator.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="90"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Separator.RenderTransform>
+                    </Separator>
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- Tool Version: 14.0.22307.0 -->
+
+
                     <Separator x:Name="EmptySeperator15"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                         <Separator.RenderTransform>
                             <TransformGroup>
@@ -260,7 +343,7 @@
                             </TransformGroup>
                         </Separator.RenderTransform>
                     </Separator>
-                    <Button x:Name="btnGenerate" Content="Generate" HorizontalAlignment="Center" Click="btnGenerate_Click" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" Width="55" VerticalAlignment="Center" BorderBrush="White" Style="{DynamicResource DarkButton}" Background="{DynamicResource ButtonDarkBackground}"/>
+                    <Button x:Name="btnGenerate" Content="Generate" HorizontalAlignment="Center" Click="btnGenerate_Click" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" Width="55" VerticalAlignment="Center" BorderBrush="White" Style="{DynamicResource DarkButtons}" Background="{DynamicResource ButtonDarkBackground}"/>
                     <Separator x:Name="EmptySeperator13"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                         <Separator.RenderTransform>
                             <TransformGroup>
@@ -271,7 +354,7 @@
                             </TransformGroup>
                         </Separator.RenderTransform>
                     </Separator>
-                    <Button x:Name="btnGenerateGradient" Content="Gradient" Click="btnGenerateGradient_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" HorizontalAlignment="Center" Width="55" VerticalAlignment="Center" Style="{DynamicResource DarkButton}" BorderBrush="White"/>
+                    <Button Style="{StaticResource ButtonStandard}" x:Name="btnGenerateGradient" Content="Gradient" Click="btnGenerateGradient_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" HorizontalAlignment="Center" Width="55" VerticalAlignment="Center"  BorderBrush="White"/>
 
                     <Separator x:Name="Seperator1" RenderTransformOrigin="0.5,0.5" Width="20" Background="{DynamicResource SeparatorColor1}" Margin="0,2" >
                         <Separator.RenderTransform>
@@ -295,14 +378,7 @@
                         </Separator.RenderTransform>
                     </Separator>
 
-                    <Button Content="Break" Height="25" Click="Break_Click" Foreground="White" Grid.Column="1" Effect="{DynamicResource DropShadowTemplate}" Grid.RowSpan="2" FontSize="11" Width="38" BorderBrush="White" >
-                        <Button.Background>
-                            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                                <GradientStop Color="#FF918181"/>
-                                <GradientStop Color="#FF3E0000" Offset="1"/>
-                            </LinearGradientBrush>
-                        </Button.Background>
-                    </Button>
+
 
 
                 </WrapPanel>
@@ -315,7 +391,7 @@
                 <SolidColorBrush Color="#FF838383" />
             </Border.BorderBrush>
             <StackPanel x:Name="stackPanel" Orientation="Vertical" Width="200" DockPanel.Dock="Left" Background="{DynamicResource Gray1}" >
-                <TabControl Background="#FF272727" >
+                <TabControl x:Name="tabProcess" Background="#FF272727" >
 
 
 
@@ -345,8 +421,8 @@
                                 </TextBox.Background>
                             </TextBox>
 
-                            <Button Content="Start" HorizontalAlignment="Right" Margin="0,5,5,5"
-                    VerticalAlignment="Center" Click="RandomSortButton_Click" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Row="2" Grid.Column="1" Width="40" HorizontalContentAlignment="Center" BorderBrush="White" />
+                            <!--<Button Content="Start" HorizontalAlignment="Right" Margin="0,5,5,5"
+                    VerticalAlignment="Center" Click="RandomSortButton_Click" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Row="2" Grid.Column="1" Width="40" HorizontalContentAlignment="Center" BorderBrush="White" />-->
 
 
 
@@ -386,8 +462,8 @@
                      LostFocus="RefreshRateTextBox_LostFocus" PreviewTextInput="RefreshRateTextBox_PreviewTextInput" Background="{DynamicResource ButtonBackGround}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="1" Width="50" />
 
 
-                            <Button Content="Start" HorizontalAlignment="Right" Margin="5" Grid.Row="5"
-                    VerticalAlignment="Top" Click="BestFitButton_Click" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="1" Width="36" BorderBrush="White" />
+                            <!--<Button Content="Start" HorizontalAlignment="Right" Margin="5" Grid.Row="5"
+                    VerticalAlignment="Top" Click="BestFitButton_Click" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="1" Width="36" BorderBrush="White" />-->
 
 
 
@@ -433,8 +509,8 @@
                               Selected="ComboBoxItem_Selected" />
                             </ComboBox>
 
-                            <Button x:Name="ProcessButton" Content="Start" Click="ProcessButton_Click" Margin="5" Grid.Row="2"
-                    VerticalAlignment="Top" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="1" Width="36" HorizontalAlignment="Right" BorderBrush="White" />
+                            <!--<Button x:Name="ProcessButton" Content="Start" Click="ProcessButton_Click" Margin="5" Grid.Row="2"
+                    VerticalAlignment="Top" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="1" Width="36" HorizontalAlignment="Right" BorderBrush="White" />-->
                         </Grid>
 
 
@@ -445,7 +521,7 @@
 
 
 
-                <RichTextBox x:Name="ConsoleBox" ScrollViewer.VerticalScrollBarVisibility="Disabled"  Background="#FF272727" Foreground="White" IsReadOnly="True" TextOptions.TextFormattingMode="Display" FontSize="9" FontFamily="Lucida Console" VerticalAlignment="Bottom" Height="479">
+                <RichTextBox x:Name="ConsoleBox" ScrollViewer.VerticalScrollBarVisibility="Auto"  Background="#FF272727" Foreground="White" IsReadOnly="True" TextOptions.TextFormattingMode="Display" FontSize="9" FontFamily="Lucida Console" VerticalAlignment="Bottom" Height="200">
                     <FlowDocument>
                         <Paragraph>
                             <Run Text=""/>
@@ -469,15 +545,42 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <Canvas x:Name="CanvasPalette" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
-                        Grid.Column="0" Margin="15,15,15,15" 
+            <xctk:BusyIndicator Grid.Column="0" x:Name="bsyPalette" IsBusy="False" BusyContent="Processing Image..." >
+                <ContentControl >
+                    <Canvas x:Name="CanvasPalette" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
+                        Grid.Column="2" Margin="15,15,15,15" 
                         MouseLeftButtonDown="OpenPalette" Opacity="0" MouseEnter="ShowPalette" MouseLeave="HidePalette" />
+                </ContentControl>
+            </xctk:BusyIndicator>
 
             <GridSplitter Width="5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Background="#FF383838"/>
 
-            <Canvas x:Name="CanvasSource" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
-                        Grid.Column="2"  Background="Transparent" Margin="15,15,15,15"
-                        MouseLeftButtonDown="OpenSource"  Opacity="0" MouseEnter="ShowSource" MouseLeave="HideSource" />
+
+            <xctk:BusyIndicator Grid.Column="2" x:Name="bsySource" Background="#FF424242" IsBusy="False">
+                <ContentControl>
+                    <Canvas x:Name="CanvasSource" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
+                        Grid.Column="0"  Background="Transparent" Margin="15,15,15,15"
+                        MouseLeftButtonDown="OpenSource"  Opacity="0" MouseEnter="ShowSource" MouseLeave="HideSource" >
+
+                    </Canvas>
+                </ContentControl>
+                <xctk:BusyIndicator.BusyContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Background="#FF424242" Width="{Binding ActualWidth, ElementName=CanvasSource, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=CanvasSource, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ProgressBar HorizontalAlignment="Center" IsIndeterminate="True" Height="10" Width="150" VerticalAlignment="Center" Foreground="{DynamicResource ProgressBarBlue}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </xctk:BusyIndicator.BusyContentTemplate>
+
+                <xctk:BusyIndicator.ProgressBarStyle>
+
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Visible"/>
+                    </Style>
+                </xctk:BusyIndicator.ProgressBarStyle>
+
+
+            </xctk:BusyIndicator>
 
             <GridSplitter Height="5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Width="{Binding ActualWidth, ElementName=CanvasGrid, Mode=OneWay}" Background="#FF383838"/>
 
@@ -488,4 +591,69 @@
 
 
     </DockPanel>
+
+
+
+
 </Window>
+
+
+
+
+
+<!--<xctk:ColorPicker x:Name="cp1"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+<Separator x:Name="EmptySeperator2"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+    <Separator.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="90"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Separator.RenderTransform>
+</Separator>
+<xctk:ColorPicker x:Name="cp2"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+<Separator x:Name="EmptySeperator3"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+    <Separator.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="90"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Separator.RenderTransform>
+</Separator>
+<xctk:ColorPicker x:Name="cp3"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+<Separator x:Name="EmptySeperator4"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+    <Separator.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="90"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Separator.RenderTransform>
+</Separator>
+<xctk:ColorPicker x:Name="cp4"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+<Separator x:Name="EmptySeperator5"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+    <Separator.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="90"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Separator.RenderTransform>
+</Separator>
+<xctk:ColorPicker x:Name="cp5"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+<Separator x:Name="EmptySeperator6"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+    <Separator.RenderTransform>
+        <TransformGroup>
+            <ScaleTransform/>
+            <SkewTransform/>
+            <RotateTransform Angle="90"/>
+            <TranslateTransform/>
+        </TransformGroup>
+    </Separator.RenderTransform>
+</Separator>
+     <xctk:ColorPicker x:Name="cp6"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>-->

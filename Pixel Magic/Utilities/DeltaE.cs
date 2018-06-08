@@ -14,6 +14,7 @@ namespace Pixel_Magic.Utilities
         public static CIEDE2000ColorDifference CIE2000 = new CIEDE2000ColorDifference();
         public static CIE94ColorDifference CIE1994 = new CIE94ColorDifference();
         public static CIE76ColorDifference CIE1976 = new CIE76ColorDifference();
+
         public static Colorspace _COLORSPACE = Colorspace.CIE2000;
 
 
@@ -22,6 +23,7 @@ namespace Pixel_Magic.Utilities
             CIE2000 = 1,
             CIE1994 = 2,
             CIE1976 = 3
+
         }
 
         public static double StdDev(this IEnumerable<int> values)
@@ -42,6 +44,11 @@ namespace Pixel_Magic.Utilities
             return (int)ret;
         }
 
+
+        public static double DistanceRGB(int r1, int r2, int g1, int g2, int b1, int b2)
+        {
+            return Math.Abs(Math.Pow((r2 - r1), 2.0) + Math.Pow((g2 - g1), 2.0) + Math.Pow((b2 - b1), 2.0));
+        }
 
         static public double Distance(LabColor x, LabColor y)
         {

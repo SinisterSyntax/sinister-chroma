@@ -17,6 +17,10 @@ namespace Pixel_Magic.Classes
         public int x, y;
         public LabColor LAB;
         public Point3D Point;
+        public int D;
+        public int R;
+        public int G;
+        public int B;
 
         public static ComparisonMode CurrentMode = ComparisonMode.Colorspace;
         //private static readonly IColorSpaceComparison _comparer = new CieDe2000Comparison();
@@ -35,7 +39,64 @@ namespace Pixel_Magic.Classes
             this.x = x;
             this.y = y;
             Point = new Point3D(color.R, color.G, color.B); ;
+            D = ((color.R + color.G + color.B) / 3);
+            R = Color.R;
+            G = Color.G;
+            B = Color.B;
             LAB = converter.ToLab(new RGBColor(color.R / 255.00, color.G / 255.00, color.B / 255.00));
+        }
+
+        //public void SetGray(int d)
+        //{
+        //    D = d;
+        //    Color = Color.FromArgb(d, d, d);
+
+        //}
+
+        public void SetRed(double r)
+        {
+            if (r > 255.00) r = 255;
+            if (r < 0.0) r = 0;
+            R = (int)r;
+            //Color = Color.FromArgb((int)d, (int)d, (int)d);
+
+        }
+        public void SetGreen(double g)
+        {
+            if (g > 255.00) g = 255;
+            if (g < 0.0) g = 0;
+            G = (int)g;
+            //Color = Color.FromArgb((int)d, (int)d, (int)d);
+
+        }
+        public void SetBlue(double b)
+        {
+            if (b > 255.00) b = 255;
+            if (b < 0.0) b = 0;
+            B = (int)b;
+            //Color = Color.FromArgb((int)d, (int)d, (int)d);
+
+        }
+
+
+        public void SetGray(double d)
+        {
+            if (d > 255.00) d = 255;
+            if (d < 0.0) d = 0;
+            D = (int)d;
+            //Color = Color.FromArgb((int)d, (int)d, (int)d);
+
+        }
+
+        public void GrayGenerate()
+        {
+            Color = Color.FromArgb((int)D, (int)D, (int)D);
+        }
+
+        public void ColorGenerate()
+        {
+            Color = Color.FromArgb((int)R, (int)G, (int)B);
+            LAB = converter.ToLab(new RGBColor(Color.R / 255.00, Color.G / 255.00, Color.B / 255.00));
         }
 
         public int CompareTo(CustomPixel o)
