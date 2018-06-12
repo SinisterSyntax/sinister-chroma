@@ -29,18 +29,43 @@ using System.Drawing.Imaging;
 
 namespace Pixel_Magic
 {
-    public partial class ProcessWindow : Window
+    public partial class ProcessWindow : Window, INotifyPropertyChanged
     {
         
         private Image Palette;
         private Image Source;
         private Image Result;
 
-        enum Pattern
+
+        private bool Enabled = false;
+        
+        public bool UIEnabled { get { return Enabled; }
+            set {
+
+
+                Enabled = value;
+                OnPropertyChanged("UIEnabled");
+            } 
+        } 
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+
+        protected void OnPropertyChanged(string name)
         {
-            Fan,
-            Circular
+            PropertyChangedEventHandler handler = PropertyChanged;
+            if (handler != null)
+            {
+                handler(this, new PropertyChangedEventArgs(name));
+            }
         }
+
+
+        enum Pattern
+            {
+                Fan,
+                Circular
+            }
 
         private static readonly TaskFactory factory = new TaskFactory(CancellationToken.None,
         TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
@@ -68,6 +93,8 @@ namespace Pixel_Magic
         private static int _ditherPaletteSize = 8;
         private static bool _continuous = true;
         private static int _continuousRefreshRate = 10000;
+        private static int _continuousRatio = 5;
+        
 
         public static System.Windows.Controls.RichTextBox Console;
         public static System.Windows.Controls.ProgressBar Progress;
@@ -85,6 +112,7 @@ namespace Pixel_Magic
             DataContext = this;
             resizeTimer.Elapsed += ResizingDone;
             lblResolution.Text = "[0, 0]";
+            UIEnabled = true;
             ProcessWindow.WriteLine("Ready!");
             ProcessWindow.WriteLine("------");
         }
@@ -118,7 +146,7 @@ namespace Pixel_Magic
 
             CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
             {
-                GifFrames.Add(new Bitmap(Result.Working));
+                //GifFrames.Add(new Bitmap(Result.Working));
                 if (CanvasResult.Children.Count > 0)
                 {
                     CanvasResult.Children.Clear();
@@ -474,6 +502,7 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
 
             ProcessWindow.WriteLine("Finished!");
+            Stop(null,null);
         }
 
         public void Process_RandomSort()
@@ -605,7 +634,7 @@ namespace Pixel_Magic
             ProcessWindow.WriteLine("Starting Sampling");
 
             var s = Stopwatch.StartNew();
-            while (!_break && !(refreshCounter > Source.PixelList.Count*100))
+            while (!_break) // && !(refreshCounter > Source.PixelList.Count/_iterations)
             {
 
                 randomselection1 = rnd.Next(1, (Source.PixelList.Count));
@@ -705,6 +734,7 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
             ProcessWindow.WriteLine("Finished!");
             _break = false;
+            Stop(null, null);
 
         }
 
@@ -829,6 +859,7 @@ namespace Pixel_Magic
             }), null);
             Dispatcher.PushFrame(frame);
             ProcessWindow.WriteLine("Finished!");
+            Stop(null, null);
         }
 
         public void Process_BestFitCircular()
@@ -995,6 +1026,7 @@ namespace Pixel_Magic
             }), null);
             Dispatcher.PushFrame(frame);
             ProcessWindow.WriteLine("Finished!");
+            Stop(null,null);
         }
 
         public void Process_RandomSort_WithPreSort()
@@ -1404,6 +1436,7 @@ namespace Pixel_Magic
             
             ProcessWindow.WriteLine("Dithering");
             ProcessWindow.WriteLine("=========");
+            _break = false;
             PrepareImages();
 
             DispatcherFrame frame = new DispatcherFrame();
@@ -1771,7 +1804,8 @@ namespace Pixel_Magic
                     break;
                 }
             }
-
+            ProcessWindow.WriteLine("Finished!");
+            Stop(null, null);
         }
 
       
@@ -1789,7 +1823,8 @@ namespace Pixel_Magic
 
             Source.Resize(_rm);
             Palette.Resize(Source.Width,Source.Height);
-            
+
+            _continuousRefreshRate = (Source.Width * Source.Height) / _continuousRatio;
 
             ProcessWindow.WriteLine($"Scaled Resolution: ({Source.Width},{Source.Height})");
 
@@ -1809,7 +1844,7 @@ namespace Pixel_Magic
                     GifFrames.Add(new Bitmap(Palette.Working));
                 }
 
-     
+            _break = false;
         }
 
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
@@ -2386,7 +2421,7 @@ namespace Pixel_Magic
             }), null);
             Dispatcher.PushFrame(frame);
             ProcessWindow.WriteLine("Finished!");
-
+            Stop(null, null);
         }
 
         private void btnDitherTest_Click(object sender, RoutedEventArgs e)
@@ -2510,10 +2545,10 @@ namespace Pixel_Magic
             //colors = HistogramGenerator.GenerateHistogram(Palette, _ditherPaletteSize);
             //colors = PaletteSorter.GetWebSafe(32);
             //colors = PaletteSorter.GetAllWebSafe();
-            colors = new List<Color>();
-            colors.Add(Color.Black);
-            colors.Add(Color.White);
-            //colors = HistogramGenerator.GenerateRandomSampleHistogram(Palette, 16);
+            //colors = new List<Color>();
+           // colors.Add(Color.Black);
+            //colors.Add(Color.White);
+            colors = HistogramGenerator.GenerateRandomSampleHistogram(Palette, 16);
             ProcessWindow.WriteLine("Colors Aquired: " + colors.Count);
             //colors = new List<Color>();
             //colors.Add(Color.Black);
@@ -2684,80 +2719,129 @@ namespace Pixel_Magic
         private void Start(object sender, RoutedEventArgs e)
         {
             if (!ImagesPresent()) return;
-            Button startButton = sender as Button;
-            //startButton.IsEnabled = false;
-            startButton.Visibility = Visibility.Collapsed;
-            btnStop.Visibility = Visibility.Visible;
+            _break = false;
+            
+
+            var frame = new DispatcherFrame();
+            btnStop.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                btnStop.Visibility = Visibility.Visible;
+                frame.Continue = false;
+                return null;
+            }), null);
+            btnStart.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                btnStart.Visibility = Visibility.Collapsed;
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
 
             WriteLine("START");
+
+            PrepareImages();
+            Thread newThread;
 
             switch (tabProcess.SelectedIndex)
             {
                 case 0:
-                    if (!ImagesPresent()) return;
-                    PrepareImages();
-                    Thread randomSortThread;
 
                     ProgressBar1.Maximum = Convert.ToInt32(IterationsTextBox.Text);
                     ProgressBar1.Value = 0;
 
                     if (_continuous)
                     {
-                        randomSortThread = new Thread(Process_RandomSortContinuous);
+                        newThread = new Thread(Process_RandomSortContinuous);
 
                     }
                     else
                     {
-                        randomSortThread = new Thread(Process_RandomSort);
+                        newThread = new Thread(Process_RandomSort);
                     }
 
-                    randomSortThread.Start();
                     break;
+
                 case 1:
-                    if (!ImagesPresent()) return;
-                    PrepareImages();
-                    Thread newWindowThread2;
+                   
+                    
                     switch (_patternMode)
                     {
                         case Pattern.Fan:
-                            newWindowThread2 = new Thread(Process_BestFit);
+                            newThread = new Thread(Process_BestFit);
                             break;
                         case Pattern.Circular:
-                            newWindowThread2 = new Thread(Process_BestFitCircular);
+                            newThread = new Thread(Process_BestFitCircular);
                             break;
                         default:
-                            newWindowThread2 = new Thread(Process_BestFit);
+                            newThread = new Thread(Process_BestFit);
                             break;
                     }
-
-
-                    newWindowThread2.Start();
+           
+                    
                     break;
                 case 2:
-                    if (!ImagesPresent()) return;
-                    PrepareImages();
-                    Thread newWindowThread = new Thread(Process_Sort);
+                    
+                    newThread = new Thread(Process_Sort);
                     ProgressBar1.Maximum = Convert.ToInt32(IterationsTextBox.Text);
                     ProgressBar1.Value = 0;
-                    newWindowThread.Start();
+
+                    break;
+                case 3:
+                    if(Result != null) Palette = new Image(new Bitmap(Result._Original));
+                    newThread = new Thread(Process_Dither_Advanced);
                     break;
                 default:
+                    newThread = new Thread(Process_Sort);
                     break;
             }
+
+            LockUI();
+            newThread.Start();
+           
         }
-
-
+        
 
         private void Stop(object sender, RoutedEventArgs e)
         {
             _break = true;
-            Button stopButton = sender as Button;
-            //stopButton.IsEnabled = false;
-            stopButton.Visibility = Visibility.Collapsed;
-            btnStart.Visibility = Visibility.Visible;
+
+
+
+
+            var frame = new DispatcherFrame();
+            btnStop.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                btnStop.Visibility = Visibility.Collapsed;
+                frame.Continue = false;
+                return null;
+            }), null);
+            btnStart.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                btnStart.Visibility = Visibility.Visible;
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+
+
+            UnlockUI();
         } 
+        
 
+        private void LockUI()
+        {
 
+            UIEnabled = false;
+           
+
+        }
+
+        private void UnlockUI()
+        {
+
+            UIEnabled = true;
+
+        }
 
     }   
 
