@@ -29,7 +29,7 @@
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right" Width="100" Foreground="White" HorizontalContentAlignment="Right" VerticalAlignment="Center" >
 
-                <TextBlock Name="lblResolution" Foreground="White" Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+                <!--<TextBlock Name="lblResolution" Foreground="White" Margin="0,3,0,0" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>-->
             </StatusBarItem>
             <StatusBarItem>
                 <Button x:Name="DitherButton" Content="Start"  Click="DitherButton_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="36" HorizontalAlignment="Right" BorderBrush="White"/>
@@ -41,7 +41,7 @@
                 <Button x:Name="btnDitherTest" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest_Click"  />
             </StatusBarItem>
             <StatusBarItem>
-                <Button x:Name="btnDitherTest2" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest2_Click"  />
+                <Button Content="Button" Width="75" Background="#FFCD0000" Click="Button_Click"/>
             </StatusBarItem>
         </StatusBar>
 
@@ -49,8 +49,7 @@
 
 
         <StackPanel x:Name="stackPanel1"  DockPanel.Dock="Top">
-            <Menu IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Height="18" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="2"
-                  Width="1270" Panel.ZIndex="1" Background="{DynamicResource LightBackground}" Foreground="{x:Null}">
+            <Menu IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Height="18" Margin="0" VerticalAlignment="Top" Grid.ColumnSpan="2" Panel.ZIndex="1" Background="{DynamicResource LightBackground}" Foreground="{x:Null}" >
                 <MenuItem Header="_File" Foreground="White" />
                 <MenuItem Header="_Open" Foreground="White">
                     <MenuItem x:Name="OpenPaletteMenuItem" Header="_Open Palette Image..."
@@ -119,15 +118,30 @@
                     </Separator>
 
                     <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">Resolution:</Label>
-                    <Slider x:Name="sldResolution" Style="{DynamicResource DarkSlider}"   IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Width="100"   Maximum="1"  LargeChange="0.25" TickFrequency="0.25" TickPlacement="BottomRight" SmallChange="0.25" Value="{Binding _rm, ElementName=MainWindow, StringFormat={}{0}%}"   AutoToolTipPrecision="2"  AutoToolTipPlacement="BottomRight" Foreground="#FF8B8B8B" Effect="{DynamicResource DropShadowTemplate}" Cursor="Hand" RenderTransformOrigin="0.495,0.938" Margin="0" Height="24" >
-                    <Slider.ToolTip>
-                        <ToolTip Content="{Binding RelativeSource={RelativeSource Self},Path=PlacementTarget.Value}"
+
+
+                    <StackPanel Height="35">
+
+                        <TextBlock  Name="lblResolution" Text="{Binding Resolution , ElementName=MainWindow, Mode=OneWay}"  Foreground="Gainsboro"  Margin="0,0,0,-1" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+
+                        <Slider x:Name="sldResolution" Style="{DynamicResource DarkSlider}"   IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Width="100"   Maximum="1"  LargeChange="0.25" TickFrequency="0.25" TickPlacement="BottomRight" SmallChange="0.25" Value="{Binding _rm, ElementName=MainWindow, StringFormat={}{0}%}"   AutoToolTipPrecision="2"  AutoToolTipPlacement="BottomRight" Foreground="#FF8B8B8B" Effect="{DynamicResource DropShadowTemplate}" Cursor="Hand" RenderTransformOrigin="0.495,0.938" Margin="0,-5,0,0" Height="24" Padding="0,4,0,0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Center" ValueChanged="sldResolution_ValueChanged" >
+                                <Slider.ToolTip>
+                                    <ToolTip Content="{Binding RelativeSource={RelativeSource Self},Path=PlacementTarget.Value}"
                                 ContentStringFormat="Resolution: {0}%" />
-                    </Slider.ToolTip>
-                        <Slider.IsSnapToTickEnabled> true
-                        </Slider.IsSnapToTickEnabled>
+                                </Slider.ToolTip>
+                                <Slider.IsSnapToTickEnabled>true
+                                </Slider.IsSnapToTickEnabled>
+
+                            </Slider>
+
+
+
+
+                    </StackPanel>
                     
-                    </Slider>
+                    
+                    
+                    
                     <Separator x:Name="Seperator3" RenderTransformOrigin="0.5,0.5" Width="20" Background="{DynamicResource SeparatorColor1}" Margin="0,2" >
                         <Separator.RenderTransform>
                             <TransformGroup>
@@ -282,10 +296,10 @@
 
 
 
-                    <Button x:Name="btnStart" Style="{StaticResource ButtonStandard}" Click="Start" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Width="24">
-
-                        <Viewbox Width="12" Height="12" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-                            <Rectangle Width="12" Height="12">
+                    <Button x:Name="btnStart" Style="{StaticResource ButtonStandard}" Click="Start" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24">
+                        <StackPanel Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center" HorizontalAlignment="Center">
+                        <Viewbox Width="12" Height="12" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Rectangle Width="12" Height="12" Margin="0">
                                 <Rectangle.Fill>
                                     <DrawingBrush Stretch="Uniform">
                                         <DrawingBrush.Drawing>
@@ -300,12 +314,14 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </Viewbox>
+                            <TextBlock Text="Start" Foreground="White" Margin="3,-1,3,0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        </StackPanel>
                     </Button>
 
 
                     <!-- This file was generated by the AiToXaml tool.-->
                     <!-- Tool Version: 14.0.22307.0 -->
-                    <Button x:Name="btnStop" Style="{StaticResource ButtonStandard}" Visibility="Collapsed" Click="Stop" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Width="24">
+                    <Button x:Name="btnStop" Style="{StaticResource ButtonStandard}" Visibility="Collapsed" Click="Stop" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Padding="4">
 
                         <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
@@ -485,12 +501,12 @@
             <Border.BorderBrush>
                 <SolidColorBrush Color="#FF838383" />
             </Border.BorderBrush>
-            <StackPanel x:Name="stackPanel" Orientation="Vertical" Width="200" DockPanel.Dock="Left" Background="{DynamicResource Gray1}" >
-                <TabControl x:Name="tabProcess" Background="#FF272727" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"  >
+            <DockPanel x:Name="stackPanel" Width="200" VerticalAlignment="Stretch" DockPanel.Dock="Left" Background="{DynamicResource Gray1}" >
+                <TabControl DockPanel.Dock="Top" x:Name="tabProcess" Background="#FF272727" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"  >
 
 
 
-                    <TabItem Header="Random" BorderBrush="Black" Foreground="Black" Background="White" Style="{DynamicResource TabItemStyleDarkl}">
+                    <TabItem Header="Random" BorderBrush="Black" Foreground="#FFFFFF"  Style="{DynamicResource TabItemStyleDarkl}">
                         <Grid Margin="5" ShowGridLines="False" Height="{Binding Height, ElementName=stackPanel}">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="53*" />
@@ -638,14 +654,14 @@
 
 
 
-                <RichTextBox x:Name="ConsoleBox" ScrollViewer.VerticalScrollBarVisibility="Auto"  Background="#FF171700" Foreground="#FFC79A00" IsReadOnly="True" TextOptions.TextFormattingMode="Display" FontSize="9" FontFamily="Lucida Console" VerticalAlignment="Bottom" Height="200">
+                <RichTextBox  x:Name="ConsoleBox" ScrollViewer.VerticalScrollBarVisibility="Auto"  Background="#FF171700" Foreground="#FFC79A00" IsReadOnly="True" TextOptions.TextFormattingMode="Display" FontSize="9" FontFamily="Lucida Console">
                     <FlowDocument>
                         <Paragraph>
                             <Run Text=""/>
                         </Paragraph>
                     </FlowDocument>
                 </RichTextBox>
-            </StackPanel>
+            </DockPanel>
         </Border>
 
 
@@ -662,18 +678,43 @@
                 <ColumnDefinition Width="1*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
-            <xctk:BusyIndicator Grid.Row="0" Grid.Column="0" x:Name="bsyPalette" IsBusy="False" BusyContent="Processing Image..." >
+            <xctk:BusyIndicator Grid.Row="0"  Grid.Column="0" x:Name="bsyPalette"  BusyContent="Processing Image..." Foreground="White" Background="{DynamicResource Gray2}" IsBusy="False" Margin="5">
+                <xctk:BusyIndicator.OverlayStyle>
+                    <Style TargetType="Rectangle">
+                        <Setter Property="Fill" Value="{DynamicResource Gray2}"/>
+                    </Style>
+                </xctk:BusyIndicator.OverlayStyle>
+
                 <ContentControl >
                     <Canvas x:Name="CanvasPalette" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
                         Grid.Column="2" Margin="15,15,15,15" 
                         MouseLeftButtonDown="OpenPalette" Opacity="0" MouseEnter="ShowPalette" MouseLeave="HidePalette" />
                 </ContentControl>
+                <!--<xctk:BusyIndicator.BusyContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Background="#FF424242" Width="{Binding ActualWidth, ElementName=CanvasSource, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=CanvasSource, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ProgressBar HorizontalAlignment="Center" IsIndeterminate="True" Height="10" Width="150" VerticalAlignment="Center" Foreground="{DynamicResource ProgressBarBlue}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </xctk:BusyIndicator.BusyContentTemplate>-->
+
+                <xctk:BusyIndicator.ProgressBarStyle>
+
+                    <Style TargetType="ProgressBar">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"></Setter>
+                        <Setter Property="IsIndeterminate" Value="True"></Setter>
+                        <Setter Property="Height" Value="10"></Setter>
+                        <Setter Property="Width" Value="150"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                    </Style>
+                </xctk:BusyIndicator.ProgressBarStyle>
             </xctk:BusyIndicator>
 
-            <GridSplitter Width="5" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Background="#FF383838"/>
+            <GridSplitter Width="3" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Background="#424242"/>
 
 
-            <xctk:BusyIndicator Grid.Row="0" Grid.Column="2" x:Name="bsySource" Background="#FF424242" IsBusy="False">
+            <xctk:BusyIndicator Grid.Row="0" Grid.Column="2" x:Name="bsySource" BusyContent="Processing Image..." Foreground="White" Background="{DynamicResource Gray2}" IsBusy="False" Margin="5">
                 <ContentControl>
                     <Canvas x:Name="CanvasSource" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
                         Grid.Column="0"  Background="Transparent" Margin="15,15,15,15"
@@ -681,25 +722,36 @@
 
                     </Canvas>
                 </ContentControl>
-                <xctk:BusyIndicator.BusyContentTemplate>
+
+                <xctk:BusyIndicator.OverlayStyle>
+                    <Style TargetType="Rectangle">
+                        <Setter Property="Fill" Value="{DynamicResource Gray2}"/>
+                    </Style>
+                </xctk:BusyIndicator.OverlayStyle>
+                <!--<xctk:BusyIndicator.BusyContentTemplate>
                     <DataTemplate>
                         <StackPanel Margin="5" Background="#FF424242" Width="{Binding ActualWidth, ElementName=CanvasSource, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=CanvasSource, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <ProgressBar HorizontalAlignment="Center" IsIndeterminate="True" Height="10" Width="150" VerticalAlignment="Center" Foreground="{DynamicResource ProgressBarBlue}" />
                         </StackPanel>
                     </DataTemplate>
-                </xctk:BusyIndicator.BusyContentTemplate>
+                </xctk:BusyIndicator.BusyContentTemplate>-->
 
                 <xctk:BusyIndicator.ProgressBarStyle>
 
                     <Style TargetType="ProgressBar">
                         <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"></Setter>
+                        <Setter Property="IsIndeterminate" Value="True"></Setter>
+                        <Setter Property="Height" Value="10"></Setter>
+                        <Setter Property="Width" Value="150"></Setter>
+                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
                     </Style>
                 </xctk:BusyIndicator.ProgressBarStyle>
 
 
             </xctk:BusyIndicator>
 
-            <GridSplitter Height="5" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Width="{Binding ActualWidth, ElementName=CanvasGrid, Mode=OneWay}" Background="#FF383838"/>
+            <GridSplitter Height="3" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" HorizontalAlignment="Stretch"  Width="{Binding ActualWidth, ElementName=CanvasGrid, Mode=OneWay}" Background="#424242"/>
 
             <Canvas x:Name="CanvasResult" Background="Transparent" Margin="10,20,10,0" Grid.Row="2" Grid.ColumnSpan="3" MouseEnter="ShowResult" MouseLeave="HideResult" Opacity="0" />
             

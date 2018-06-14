@@ -17,6 +17,8 @@ namespace Pixel_Magic.Classes
         public Bitmap Original { get { return _Original; } }
         public Bitmap Working;
 
+        public static Random rnd = new Random();
+
 
         private int WidthOriginal { get; set; }
         private int HeightOriginal { get; set; }
@@ -149,6 +151,50 @@ namespace Pixel_Magic.Classes
             }), null);
             Dispatcher.PushFrame(frame);
             return list;
+        }
+
+        public List<CustomPixel> Shuffle()
+        {
+            Random r = new Random();
+            List<CustomPixel> test = new List<CustomPixel>();
+
+            foreach (CustomPixel p in PixelList)
+            {
+                test.Add(p);
+            }
+
+
+
+
+            int n = test.Count;
+            while (n > 1)
+            {
+                n--;
+                //int k = r.Next(n + 1);
+                CustomPixel value = test[k];
+                test[k] = test[n];
+                test[n] = value;
+            }
+            //int counter = 0;
+            //for (int i = 0; i < Width; i++)
+            //{
+            //    for (int j = 0; j < Height; j++)
+            //    {
+            //        test[counter].x = i;
+            //        test[counter].y = j;
+            //        counter++;
+            //    }
+            //}
+            return test;
+        }
+
+        public void ArrayToList()
+        {
+            PixelList.Clear();
+            foreach (CustomPixel p in Pixel2DArray)
+            {
+                PixelList.Add(p);
+            }
         }
 
     }
