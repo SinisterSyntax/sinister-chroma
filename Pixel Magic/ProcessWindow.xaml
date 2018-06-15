@@ -38,11 +38,11 @@
                 <Button x:Name="btnUsePalette" Width="43" Height="10" Content="Palette Web" Click="btnUsePalette_Click" />
             </StatusBarItem>
             <StatusBarItem>
-                <Button x:Name="btnDitherTest" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest_Click"  />
+                <Button x:Name="btnDitherTest" Width="43" Height="10" Content="Palette Web" Click="btnDitherTest2_Click"  />
             </StatusBarItem>
-            <StatusBarItem>
+            <!--<StatusBarItem>
                 <Button Content="Button" Width="75" Background="#FFCD0000" Click="Button_Click"/>
-            </StatusBarItem>
+            </StatusBarItem>-->
         </StatusBar>
 
 
@@ -157,7 +157,7 @@
 
 
 
-                    <!--<Separator x:Name="EmptySeperator7"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
+                    <Separator x:Name="EmptySeperator7"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -167,7 +167,7 @@
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <xctk:ColorPicker x:Name="cp7"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+                <xctk:ColorPicker x:Name="cp1"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
                 <Separator x:Name="EmptySeperator8"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -178,7 +178,7 @@
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <xctk:ColorPicker x:Name="cp8"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+                <xctk:ColorPicker x:Name="cp2"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
                 <Separator x:Name="EmptySeperator9"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -189,7 +189,7 @@
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <xctk:ColorPicker x:Name="cp9"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+                <xctk:ColorPicker x:Name="cp3"  MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
                 <Separator x:Name="EmptySeperator10"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -200,7 +200,7 @@
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <xctk:ColorPicker x:Name="cp10" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+                <xctk:ColorPicker x:Name="cp4" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
                 <Separator x:Name="EmptySeperator11"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -211,7 +211,7 @@
                         </TransformGroup>
                     </Separator.RenderTransform>
                 </Separator>
-                <xctk:ColorPicker x:Name="cp11" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+                <xctk:ColorPicker x:Name="cp5" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
                 <Separator x:Name="EmptySeperator12"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                     <Separator.RenderTransform>
                         <TransformGroup>
@@ -221,9 +221,9 @@
                             <TranslateTransform/>
                         </TransformGroup>
                     </Separator.RenderTransform>
-                </Separator>-->
-                    <!--<xctk:ColorPicker x:Name="cp12" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>-->
-                    <!-- This file was generated by the AiToXaml tool.-->
+                </Separator>
+                    <xctk:ColorPicker x:Name="cp6" MaxDropDownWidth="250" ColorMode="ColorCanvas" Background="#FFFFFF" BorderBrush="#FFACACAC" Width="{DynamicResource CP_Width}" Height="20"/>
+
                     <!-- Tool Version: 14.0.22307.0 -->
                     <!-- This file was generated by the AiToXaml tool.-->
                     <!-- Tool Version: 14.0.22307.0 -->
@@ -366,9 +366,9 @@
                             </TransformGroup>
                         </Separator.RenderTransform>
                     </Separator>-->
-                    <!--<Button x:Name="btnGenerate" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Content="Generate" HorizontalAlignment="Center" Click="btnGenerate_Click" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" Width="55" VerticalAlignment="Center" BorderBrush="White" Style="{DynamicResource DarkButtons}" Background="{DynamicResource ButtonDarkBackground}"/>-->
+                    <Button x:Name="btnGenerate" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Content="Generate" HorizontalAlignment="Center" Click="btnGenerate_Click" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" Width="55" VerticalAlignment="Center" BorderBrush="White" Style="{DynamicResource DarkButtons}" Background="{DynamicResource ButtonDarkBackground}"/>
 
-                    <Button x:Name="btnOpenPaletteDialog" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="OpenSource" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
+                    <Button x:Name="btnOpenPaletteDialog" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="OpenPaletteSelector" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
                         <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>

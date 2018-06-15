@@ -153,27 +153,27 @@ namespace Pixel_Magic.Classes
             return list;
         }
 
-        public List<CustomPixel> Shuffle()
+        public void Shuffle()
         {
-            Random r = new Random();
-            List<CustomPixel> test = new List<CustomPixel>();
+            //Random r = new Random();
+            //List<CustomPixel> test = new List<CustomPixel>();
 
-            foreach (CustomPixel p in PixelList)
-            {
-                test.Add(p);
-            }
-
-
+            //foreach (CustomPixel p in PixelList)
+            //{
+            //    test.Add(p);
+            //}
 
 
-            int n = test.Count;
+
+
+            int n = PixelList.Count;
             while (n > 1)
             {
                 n--;
-                //int k = r.Next(n + 1);
-                CustomPixel value = test[k];
-                test[k] = test[n];
-                test[n] = value;
+                int k = rnd.Next(n + 1);
+                CustomPixel value = PixelList[k];
+                PixelList[k] = PixelList[n];
+                PixelList[n] = value;
             }
             //int counter = 0;
             //for (int i = 0; i < Width; i++)
@@ -185,7 +185,7 @@ namespace Pixel_Magic.Classes
             //        counter++;
             //    }
             //}
-            return test;
+            //return test;
         }
 
         public void ArrayToList()

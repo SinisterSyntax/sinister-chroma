@@ -202,10 +202,17 @@
     </ApplicationDefinition>
     <Compile Include="Classes\ColorPair.cs" />
     <Compile Include="Classes\Image.cs" />
+    <Compile Include="PaletteSelectorWindow.xaml.cs">
+      <DependentUpon>PaletteSelectorWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\BitmapConverter.cs" />
     <Compile Include="Utilities\DeltaE.cs" />
     <Compile Include="Utilities\HistogramGenerator.cs" />
     <Compile Include="Utilities\PaletteSorter.cs" />
+    <Page Include="PaletteSelectorWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ProcessWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -246,7 +253,6 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
-    <None Include="WindowsFormApp2_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">
@@ -269,6 +275,10 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Samples\Output-6170.jpg" />
+    <Resource Include="Samples\Output-9166.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
