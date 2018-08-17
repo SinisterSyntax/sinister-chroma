@@ -10,7 +10,7 @@ using System.Windows.Threading;
 
 namespace Pixel_Magic.Classes
 {
-    class Image
+    public class Image
     {
 
         public readonly Bitmap _Original;
@@ -142,7 +142,7 @@ namespace Pixel_Magic.Classes
 
             }
             
-
+           
             ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
             { 
                 ProcessWindow.Progress.Value = 0;

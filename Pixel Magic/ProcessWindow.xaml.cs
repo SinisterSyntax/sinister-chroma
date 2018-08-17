@@ -32,21 +32,21 @@ namespace Pixel_Magic
 {
     public partial class ProcessWindow : Window, INotifyPropertyChanged
     {
-        
+
         private Image Palette;
         private Image Source;
         private Image Result;
 
 
         private bool Enabled = false;
-        
+
         public bool UIEnabled { get { return Enabled; }
             set {
 
 
                 Enabled = value;
                 OnPropertyChanged("UIEnabled");
-            } 
+            }
         }
 
         private int _DisplayWidth = 0;
@@ -120,10 +120,10 @@ namespace Pixel_Magic
 
 
         enum Pattern
-            {
-                Fan,
-                Circular
-            }
+        {
+            Fan,
+            Circular
+        }
 
         private static readonly TaskFactory factory = new TaskFactory(CancellationToken.None,
         TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
@@ -137,12 +137,14 @@ namespace Pixel_Magic
         private static string ImageDirectory = @"C:\Users\tsova\Documents\Projects\p";
         private static string SaveDirectory = @"C:\Users\tsova\Documents\Projects\s\";
         private static string PaletteDirectory = @"C:\Users\tsova\Documents\Projects\WindowsFormsApp2\WindowsFormsApp2";
+        private static string BatchDir = @"C:\Users\tsova\Documents\Projects\Batch\";
+       
 
         public static bool _break = false;
         public static double _ditherCenterWeight = 5; //5 for CIE1976
         public static double _ditherWeight = 1;
         public static int _ditherLimit = 1000;
-        public static double _rm { get; set; } = 0.5;
+        public static double _rm { get; set; } = 1;
         public static int _iterations { get; set; } = 100;
         public static int _refreshRate { get; set; } = 10;
         public static int _sampleSize { get; set; } = 100;
@@ -152,7 +154,7 @@ namespace Pixel_Magic
         private static bool _continuous = true;
         private static int _continuousRefreshRate = 10000;
         private static int _continuousRatio = 5;
-        
+
 
         public static System.Windows.Controls.RichTextBox Console;
         public static System.Windows.Controls.ProgressBar Progress;
@@ -160,7 +162,7 @@ namespace Pixel_Magic
 
         public ProcessWindow()
         {
-            
+
             InitializeComponent();
             PaletteSorter.GenerateWebColors();
             Console = ConsoleBox;
@@ -206,18 +208,18 @@ namespace Pixel_Magic
                 return null;
             }), null);
 
-            if(Result != null) CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
-            {
-                //GifFrames.Add(new Bitmap(Result.Working));
-                if (CanvasResult.Children.Count > 0)
-                {
-                    CanvasResult.Children.Clear();
-                    CanvasResult.Children.Insert(0,
-                        Result.Working.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
-                }
-                frame.Continue = false;
-                return null;
-            }), null);
+            if (Result != null) CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+             {
+                 //GifFrames.Add(new Bitmap(Result.Working));
+                 if (CanvasResult.Children.Count > 0)
+                 {
+                     CanvasResult.Children.Clear();
+                     CanvasResult.Children.Insert(0,
+                         Result.Working.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+                 }
+                 frame.Continue = false;
+                 return null;
+             }), null);
             Dispatcher.PushFrame(frame);
         }
 
@@ -257,7 +259,7 @@ namespace Pixel_Magic
                 Palette = new Image(new Bitmap(imageDialog.FileName));
                 ProcessWindow.WriteLine("Palette: " + imageDialog.FileName);
 
-                
+
                 CanvasPalette.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
                 {
                     CanvasPalette.Children.Clear();
@@ -278,7 +280,7 @@ namespace Pixel_Magic
                 Dispatcher.PushFrame(frame);
 
 
-                
+
             }, _tokenSource.Token,
                TaskCreationOptions.None,
                TaskScheduler.Default)//Note TaskScheduler.Default here
@@ -302,7 +304,7 @@ namespace Pixel_Magic
 
         private void OpenSourceImage()
         {
-            
+
             var imageDialog = new OpenFileDialog
             {
                 Filter =
@@ -329,12 +331,12 @@ namespace Pixel_Magic
 
 
 
-                
+
                 Source = new Image(new Bitmap(imageDialog.FileName));
                 ProcessWindow.WriteLine("Source: " + imageDialog.FileName);
 
 
-                
+
                 CanvasSource.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
                 {
                     CanvasSource.Children.Clear();
@@ -379,7 +381,24 @@ namespace Pixel_Magic
 
 
             //Source = task.Result;
-           
+
+
+        }
+
+        private void OpenImageSequence()
+        {
+            var videoDialog = new OpenFileDialog
+            {
+                InitialDirectory = ImageDirectory
+            };
+            bool? result = videoDialog.ShowDialog();
+
+            if (result != true) return;
+
+
+            
+
+
 
         }
 
@@ -396,13 +415,13 @@ namespace Pixel_Magic
 
         private void RandomSortButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            
+
+
         }
 
         private void BestFitButton_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
         //=====================================================================
@@ -410,11 +429,11 @@ namespace Pixel_Magic
         //=====================================================================
         //=====================================================================
 
-
+        
 
         public void Process_Sort()
         {
-            
+
             ProcessWindow.WriteLine("Sort:");
             WriteLine("=====");
             PrepareImages();
@@ -435,30 +454,41 @@ namespace Pixel_Magic
             //Dispatcher.PushFrame(frame);
 
             ProcessWindow.WriteLine("Sorting Palette");
-            Palette.PixelList.Sort();
 
-
-
-            
+            Task.Run(() =>
+            {
+                Palette.PixelList.Sort();
+                
+            });
 
             ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
             {
-                ProgressBar1.Value = (ProgressBar1.Maximum/6*3);
+                ProgressBar1.Value = (ProgressBar1.Maximum / 6 * 3);
                 frame.Continue = false;
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
+
 
             ProcessWindow.WriteLine("Sorting Source");
-            Source.PixelList.Sort();
+            Task.Run(() =>
+            {
+
+                Source.PixelList.Sort();
+
+                
+            });
 
             ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
             {
-                ProgressBar1.Value = (ProgressBar1.Maximum/6*4);
+                ProgressBar1.Value = (ProgressBar1.Maximum / 6 * 4);
                 frame.Continue = false;
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
+
+
+
 
 
 
@@ -502,12 +532,12 @@ namespace Pixel_Magic
                     Dispatcher.PushFrame(frame);
 
                     //Result = new Image(new Bitmap(ResultImage));
-                    
+
                     frame = new DispatcherFrame();
                     CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                         new DispatcherOperationCallback(delegate
                         {
-                            
+
                             CanvasResult.Children.Clear();
                             lock (_locker)
                             {
@@ -523,7 +553,7 @@ namespace Pixel_Magic
                     ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                         new DispatcherOperationCallback(delegate
                         {
-                            ProgressBar1.Value = i*2 + ProgressBar1.Maximum/6*4;
+                            ProgressBar1.Value = i * 2 + ProgressBar1.Maximum / 6 * 4;
                             frame.Continue = false;
                             return null;
                         }), null);
@@ -551,9 +581,8 @@ namespace Pixel_Magic
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
-
             
-
+            
             Result = new Image(new Bitmap(ResultImage));
 
             frame = new DispatcherFrame();
@@ -561,7 +590,7 @@ namespace Pixel_Magic
             {
                 lock (_locker)
                 {
-                    GifFrames.Add(new Bitmap(ResultImage)); ;
+                    GifFrames.Add(new Bitmap(ResultImage));
                     CanvasResult.Children.Clear();
                     CanvasResult.Children.Insert(0,
                         ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
@@ -580,7 +609,7 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
 
             ProcessWindow.WriteLine("Finished!");
-            Stop(null,null);
+            Stop(null, null);
         }
 
         public void Process_RandomSort()
@@ -593,13 +622,13 @@ namespace Pixel_Magic
             Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
             Bitmap SubtractFrom1 = new Bitmap(Source.Width, Source.Height);
 
-        
+
             int numberSwapped = 0;
             int randomselection;
-           
+
             //int size = OriginalFirst.Width*OriginalFirst.Height;
             CustomPixel save;
-
+            var sw = Stopwatch.StartNew();
             ProcessWindow.WriteLine("Starting Sampling");
             for (var j = 1; j <= _iterations; j++)
             {
@@ -607,7 +636,7 @@ namespace Pixel_Magic
                 {
                     randomselection = rnd.Next(1, (Source.PixelList.Count));
 
-                    if ((Math.Abs(DeltaE.Distance(Palette.PixelList[randomselection].LAB,Source.PixelList[i].LAB)) <
+                    if ((Math.Abs(DeltaE.Distance(Palette.PixelList[randomselection].LAB, Source.PixelList[i].LAB)) <
                          Math.Abs(DeltaE.Distance(Source.PixelList[i].LAB, Palette.PixelList[i].LAB)))
                         &&
                         (Math.Abs(DeltaE.Distance(Palette.PixelList[i].LAB, Source.PixelList[randomselection].LAB)) <
@@ -622,7 +651,17 @@ namespace Pixel_Magic
                 var readout = numberSwapped;
                 ProcessWindow.WriteLine("Pixels Swapped: " + readout);
                 numberSwapped = 0;
-               
+
+
+                //Task.Run(() =>{
+
+
+
+
+
+
+                //});
+
                 for (int p = 0; p < Source.PixelList.Count; p++)
                 {
                     ResultImage.SetPixel(Source.PixelList[p].x,
@@ -634,7 +673,7 @@ namespace Pixel_Magic
                 CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                     new DispatcherOperationCallback(delegate
                     {
-                        GifFrames.Add(new Bitmap(ResultImage));;
+                        GifFrames.Add(new Bitmap(ResultImage)); ;
                         CanvasResult.Children.Clear();
                         CanvasResult.Children.Insert(0,
                             ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
@@ -672,7 +711,7 @@ namespace Pixel_Magic
             frame = new DispatcherFrame();
             CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
             {
-                GifFrames.Add(new Bitmap(ResultImage));;
+                GifFrames.Add(new Bitmap(ResultImage)); ;
                 CanvasResult.Children.Clear();
                 CanvasResult.Children.Insert(0,
                     ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
@@ -691,10 +730,14 @@ namespace Pixel_Magic
             }), null);
             Dispatcher.PushFrame(frame);
 
+
+            WriteLine(sw.ElapsedMilliseconds.ToString());
         }
 
         public void Process_RandomSortContinuous()
         {
+
+            
             ProcessWindow.WriteLine("Random Sample Continuous:");
             ProcessWindow.WriteLine("==============");
             PrepareImages();
@@ -714,7 +757,7 @@ namespace Pixel_Magic
             ProcessWindow.WriteLine("Starting Sampling");
 
             var s = Stopwatch.StartNew();
-            while (!_break) // && !(refreshCounter > Source.PixelList.Count/_iterations)
+            while (!_break && !(refreshCounter > Source.PixelList.Count * _iterations)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
             {
 
                 randomselection1 = rnd.Next(1, (Source.PixelList.Count));
@@ -734,11 +777,11 @@ namespace Pixel_Magic
 
                 refreshCounter++;
 
-                
 
 
 
-                if(refreshCounter % _continuousRefreshRate == 0)
+
+                if (refreshCounter % _continuousRefreshRate == 0)
                 {
 
                     SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
@@ -757,8 +800,8 @@ namespace Pixel_Magic
                         CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                             new DispatcherOperationCallback(delegate
                             {
-                                        //GifFrames.Add(new Bitmap(ResultImage)); ;
-                                        CanvasResult.Children.Clear();
+                                //GifFrames.Add(new Bitmap(ResultImage)); ;
+                                CanvasResult.Children.Clear();
                                 CanvasResult.Children.Insert(0,
                                     newResult.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
@@ -774,10 +817,10 @@ namespace Pixel_Magic
             .ContinueWith(
                     t =>
                     {
-                                //finish...
-                                //if (OnFinishWorkEventHandler != null)
-                                //    OnFinishWorkEventHandler(this, EventArgs.Empty);
-                            }
+                        //finish...
+                        //if (OnFinishWorkEventHandler != null)
+                        //    OnFinishWorkEventHandler(this, EventArgs.Empty);
+                    }
                 , TaskScheduler.FromCurrentSynchronizationContext());
 
 
@@ -822,16 +865,112 @@ namespace Pixel_Magic
             _break = false;
             Stop(null, null);
 
+            
+
+        }
+
+        public void Process_RandomSort_Batch()
+        {
+            Random newR = new Random();
+            Image randPalette = GeneratePalette();
+
+            ProcessWindow.WriteLine("Random Sample Batch:");
+            ProcessWindow.WriteLine("==============");
+            //PrepareImages();
+            DispatcherFrame frame = new DispatcherFrame();
+
+            Bitmap final = new Bitmap(Source.Width, Source.Height);
+            //Bitmap SubtractFrom1 = new Bitmap(Source.Width, Source.Height);
+
+
+            int refreshCounter = 0;
+            int randomselection1;
+            int randomselection2;
+
+            //int size = OriginalFirst.Width*OriginalFirst.Height;
+            CustomPixel save;
+
+            //ProcessWindow.WriteLine("Starting Sampling");
+
+            //var s = Stopwatch.StartNew();
+            while (!(refreshCounter > 50000000)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
+            {
+
+                randomselection1 = newR.Next(1, (Source.PixelList.Count));
+                randomselection2 = newR.Next(1, (Source.PixelList.Count));
+
+                if ((Math.Abs(DeltaE.Distance(randPalette.PixelList[randomselection1].LAB, Source.PixelList[randomselection2].LAB)) <
+                         Math.Abs(DeltaE.Distance(Source.PixelList[randomselection2].LAB, randPalette.PixelList[randomselection2].LAB)))
+                        &&
+                        (Math.Abs(DeltaE.Distance(randPalette.PixelList[randomselection2].LAB, Source.PixelList[randomselection1].LAB)) <
+                         Math.Abs(DeltaE.Distance(Source.PixelList[randomselection2].LAB, randPalette.PixelList[randomselection2].LAB))))
+                {
+                    save = randPalette.PixelList[randomselection2];
+                    randPalette.PixelList[randomselection2] = randPalette.PixelList[randomselection1];
+                    randPalette.PixelList[randomselection1] = save;
+                }
+
+
+                refreshCounter++;
+
+            }
+
+            //ProcessWindow.WriteLine("======= " + s.ElapsedMilliseconds);
+            //ProcessWindow.WriteLine("Finalizing...");
+
+
+            for (int p = 0; p < Source.PixelList.Count; p++)
+            {
+                final.SetPixel(Source.PixelList[p].x,
+                    Source.PixelList[p].y,
+                    randPalette.PixelList[p].Color);
+            }
+
+
+
+            try
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.InitialDirectory = SaveDirectory;
+
+                dlg.FileName = Guid.NewGuid().ToString(); // Default file name
+                dlg.DefaultExt = ".png"; // Default file extension
+                dlg.Filter = "Image (.png)|*.png"; // Filter files by extension
+                var path = BatchDir + dlg.FileName + ".png";
+                final.Save(path);
+                //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                ProcessWindow.WriteLine("SAVED!");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.StackTrace);
+            }
+            
+
+
+            //ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            //{
+            //    ProgressBar1.Value = 0;
+            //    frame.Continue = false;
+            //    return null;
+            //}), null);
+            //Dispatcher.PushFrame(frame);
+            
+            //_break = false;
+            //Stop(null, null);
+
+
+
         }
 
         public void Process_RandomSortContinuous_Multithread()
         {
             //int worker = 0;
             //int io = 0;
-            
 
 
-            
+
+
 
             //ThreadPool.GetAvailableThreads(out worker, out io);
 
@@ -993,7 +1132,7 @@ namespace Pixel_Magic
 
 
             }
-            
+
             //{
             //    //Palette.Shuffle();
             //    foreach (var p in Palette.PixelList)
@@ -1369,17 +1508,17 @@ namespace Pixel_Magic
             double bestMatch2 = 9999999;
             var bestMatchIndex2 = 0;
             double currentValue2;
-            var k = Palette.PixelList.Count/2;
+            var k = Palette.PixelList.Count / 2;
 
 
             ProcessWindow.WriteLine("Starting Sampling");
-            for (int j = Palette.PixelList.Count/2; j < Palette.PixelList.Count; j++)
+            for (int j = Palette.PixelList.Count / 2; j < Palette.PixelList.Count; j++)
             {
                 for (int i = 0; i < _sampleSize; i++)
                 {
                     randomSelection2 = rnd.Next(0, 2) == 1 ? rnd.Next(j, Palette.PixelList.Count) : rnd.Next(0, k);
 
-                    currentValue2 = DeltaE.Distance(Palette.PixelList[randomSelection2].LAB,Source.PixelList[j].LAB);
+                    currentValue2 = DeltaE.Distance(Palette.PixelList[randomSelection2].LAB, Source.PixelList[j].LAB);
                     if (currentValue2 < bestMatch2)
                     {
                         bestMatch2 = currentValue2;
@@ -1403,7 +1542,7 @@ namespace Pixel_Magic
                 Palette.PixelList[j] = Palette.PixelList[bestMatchIndex2];
                 Palette.PixelList[bestMatchIndex2] = save2;
                 bestMatch2 = 9999999;
-                if (j%(ResultImage.Width*_refreshRate) == 0)
+                if (j % (ResultImage.Width * _refreshRate) == 0)
                 {
                     for (int i = 0; i < Source.PixelList.Count; i++)
                     {
@@ -1461,6 +1600,7 @@ namespace Pixel_Magic
 
         public void Process_BestFitCircular()
         {
+            var s = Stopwatch.StartNew();
             ProcessWindow.WriteLine("Best Fit Circular");
             ProcessWindow.WriteLine("========");
             PrepareImages();
@@ -1511,8 +1651,8 @@ namespace Pixel_Magic
                 x += dx;
                 y += dy;
             }
-            
-       
+
+
             for (int l = 0; l < spiralList.Count; l++)
             {
 
@@ -1573,26 +1713,43 @@ namespace Pixel_Magic
 
                 if (l % (ResultImage.Width * _refreshRate) == 0)
                 {
-                    for (int i = 0; i < Source.PixelList.Count; i++)
-                    {
+                   //Task.Run(() =>
+                    //{
+
+                        //lock (_locker)
+                        //{
+
+                            for (int i = 0; i < Source.PixelList.Count; i++)
+                            {
+
+
                         ResultImage.SetPixel(Source.PixelList[i].x,
                             Source.PixelList[i].y,
                             Palette.PixelList[i].Color);
+
+                        //ResultImage.SetPixel(0,
+                        //        0,
+                        //        Color.Violet);
+
                     }
 
-                    frame = new DispatcherFrame();
-                    CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                        new DispatcherOperationCallback(delegate
-                        {
-                            GifFrames.Add(new Bitmap(ResultImage));
+                            frame = new DispatcherFrame();
+                            CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                                new DispatcherOperationCallback(delegate
+                                {
+                            //GifFrames.Add(new Bitmap(ResultImage));
                             CanvasResult.Children.Clear();
-                            CanvasResult.Children.Insert(0,
-                                ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+                                    CanvasResult.Children.Insert(0,
+                                        ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
-                            frame.Continue = false;
-                            return null;
-                        }), null);
-                    Dispatcher.PushFrame(frame);
+                                    frame.Continue = false;
+                                    return null;
+                                }), null);
+                            Dispatcher.PushFrame(frame);
+                       // }
+
+                    //});
+
                 }
                 if (_break)
                 {
@@ -1600,8 +1757,7 @@ namespace Pixel_Magic
                     _break = false;
                     break;
                 }
-        }
-
+            }
             for (int i = 0; i < Source.PixelList.Count; i++)
             {
                 ResultImage.SetPixel(Source.PixelList[i].x,
@@ -1623,7 +1779,8 @@ namespace Pixel_Magic
             }), null);
             Dispatcher.PushFrame(frame);
             ProcessWindow.WriteLine("Finished!");
-            Stop(null,null);
+            WriteLine("* " + s.ElapsedMilliseconds);
+            Stop(null, null);
         }
 
         public void Process_RandomSort_WithPreSort()
@@ -1695,7 +1852,7 @@ namespace Pixel_Magic
                     _break = false;
                     break;
                 }
-                    
+
             }
 
             for (int p = 0; p < Source.PixelList.Count; p++)
@@ -1972,7 +2129,7 @@ namespace Pixel_Magic
                         var newError = distance3 + distance4;
 
 
-                        double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB,Source.Pixel2DArray[curX, curY].LAB);
+                        double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
                         double singleError2 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
                         double totalCurrentError = singleError1 + singleError2;
 
@@ -2003,7 +2160,7 @@ namespace Pixel_Magic
                 }
                 var readout = swapCount;
                 ProcessWindow.WriteLine("Swapped: " + readout);
-                
+
                 swapCount = 0;
                 frame = new DispatcherFrame();
                 CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
@@ -2027,12 +2184,12 @@ namespace Pixel_Magic
                     break;
                 }
             }
-            
+
         }
 
         public void Process_Dither_Advanced()
         {
-            
+
             ProcessWindow.WriteLine("Dithering");
             ProcessWindow.WriteLine("=========");
             _break = false;
@@ -2042,7 +2199,7 @@ namespace Pixel_Magic
             int swapCount = 0;
             int ditherCount = 0;
 
-            
+
             while (!_break)
             {
                 if (ditherCount >= _ditherLimit)
@@ -2171,9 +2328,9 @@ namespace Pixel_Magic
 
                             }
 
-                            
+
                         }
-                        avg1L = avg1L / 9 + (_ditherCenterWeight-1);
+                        avg1L = avg1L / 9 + (_ditherCenterWeight - 1);
                         avg1A = avg1A / 9 + (_ditherCenterWeight - 1) + 127;
                         avg1B = avg1B / 9 + (_ditherCenterWeight - 1) + 127;
                         LabColor lab1 = new LabColor(avg1L, avg1A, avg1B);
@@ -2196,7 +2353,7 @@ namespace Pixel_Magic
                                 avg2B += randomPointPaletteNeighbors[k].LAB.b;
                             }
 
-                            
+
                         }
                         avg2L = avg2L / 9 + (_ditherCenterWeight - 1);
                         avg2A = avg2A / 9 + (_ditherCenterWeight - 1) + 127;
@@ -2224,7 +2381,7 @@ namespace Pixel_Magic
 
                             }
 
-                            
+
                         }
                         avg3L = avg3L / 9 + (_ditherCenterWeight - 1);
                         avg3A = avg3A / 9 + (_ditherCenterWeight - 1) + 127;
@@ -2251,7 +2408,7 @@ namespace Pixel_Magic
 
                             }
 
-                            
+
                         }
                         avg4L = avg4L / 9 + (_ditherCenterWeight - 1);
                         avg4A = avg4A / 9 + (_ditherCenterWeight - 1) + 127;
@@ -2275,7 +2432,7 @@ namespace Pixel_Magic
                                 avg5A += sourceCurrentNeighbors[k].LAB.a;
                                 avg5B += sourceCurrentNeighbors[k].LAB.b;
                             }
-                            
+
                         }
                         avg5L = avg5L / 9 + (_ditherCenterWeight - 1);
                         avg5A = avg5A / 9 + (_ditherCenterWeight - 1) + 127;
@@ -2300,7 +2457,7 @@ namespace Pixel_Magic
                                 avg6A += sourceRandomPointNeighbors[k].LAB.a;
                                 avg6B += sourceRandomPointNeighbors[k].LAB.b;
                             }
-                            
+
                         }
                         avg6L = avg6L / 9 + (_ditherCenterWeight - 1);
                         avg6A = avg6A / 9 + (_ditherCenterWeight - 1) + 127;
@@ -2348,7 +2505,7 @@ namespace Pixel_Magic
                             Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB = save1;
                             swapCount++;
                         }
-                        
+
                     }
                 }
                 ditherCount++;
@@ -2361,8 +2518,8 @@ namespace Pixel_Magic
                     CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                         new DispatcherOperationCallback(delegate
                         {
-                        //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
-                        CanvasResult.Children.Clear();
+                            //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                            CanvasResult.Children.Clear();
                             CanvasResult.Children.Insert(0,
                                 ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
@@ -2394,7 +2551,7 @@ namespace Pixel_Magic
 
 
                 swapCount = 0;
-                
+
 
                 if (_break)
                 {
@@ -2412,9 +2569,12 @@ namespace Pixel_Magic
         //=====================================================================
         //=====================================================================
 
+
+            
+
         public void PrepareImages()
         {
-            
+
             ProcessWindow.WriteLine("Preparing images...");
             if (!ImagesPresent())
             {
@@ -2424,11 +2584,15 @@ namespace Pixel_Magic
             WriteLine($"Original Resolution: ({Source.Width},{Source.Height})");
 
             Source.Resize(_rm);
-            Palette.Resize(Source.Width,Source.Height);
+            Palette.Resize(Source.Width, Source.Height);
 
             _continuousRefreshRate = (Source.Width * Source.Height) / _continuousRatio;
 
             ProcessWindow.WriteLine($"Scaled Resolution: ({Source.Width},{Source.Height})");
+
+            if (Source.Width * Source.Height != Palette.Width * Palette.Height)
+                throw new Exception("ImageSizeMismatchExcecption");
+
 
             var frame = new DispatcherFrame();
             lblResolution.Dispatcher.BeginInvoke(DispatcherPriority.Background,
@@ -2442,20 +2606,20 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
 
             for (int i = 0; i < 5; i++)
-                {
-                    GifFrames.Add(new Bitmap(Palette.Working));
-                }
+            {
+                GifFrames.Add(new Bitmap(Palette.Working));
+            }
 
             _break = false;
         }
 
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
-            if (((ComboBoxItem) sender).Content.Equals("Colorspace"))
+            if (((ComboBoxItem)sender).Content.Equals("Colorspace"))
                 CustomPixel.CurrentMode = CustomPixel.ComparisonMode.Colorspace;
-            else if (((ComboBoxItem) sender).Content.Equals("Luminosity"))
+            else if (((ComboBoxItem)sender).Content.Equals("Luminosity"))
                 CustomPixel.CurrentMode = CustomPixel.ComparisonMode.Luminosity;
-            else if (((ComboBoxItem) sender).Content.Equals("ColorMine"))
+            else if (((ComboBoxItem)sender).Content.Equals("ColorMine"))
                 CustomPixel.CurrentMode = CustomPixel.ComparisonMode.ColorMine;
         }
 
@@ -2525,7 +2689,7 @@ namespace Pixel_Magic
 
         private void IterationsTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            _iterations = Convert.ToInt32(((TextBox) sender).Text);
+            _iterations = Convert.ToInt32(((TextBox)sender).Text);
         }
 
         private void IterationsTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -2540,12 +2704,12 @@ namespace Pixel_Magic
 
         private void SampleSizeTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            _sampleSize = Convert.ToInt32(((TextBox) sender).Text);
+            _sampleSize = Convert.ToInt32(((TextBox)sender).Text);
         }
 
         private void RefreshRateTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            _refreshRate = Convert.ToInt32(((TextBox) sender).Text);
+            _refreshRate = Convert.ToInt32(((TextBox)sender).Text);
         }
 
         private void RefreshRateTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
@@ -2567,7 +2731,7 @@ namespace Pixel_Magic
         {
             QuickSave();
         }
-      
+
         private void OpenSource(object sender, RoutedEventArgs e)
         {
             OpenSourceImage();
@@ -2580,7 +2744,7 @@ namespace Pixel_Magic
 
         private void ContinuousCheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            var continuous  = ((CheckBox)sender).IsChecked;
+            var continuous = ((CheckBox)sender).IsChecked;
 
             if (continuous != null && continuous == true)
             {
@@ -2592,7 +2756,7 @@ namespace Pixel_Magic
                 _iterations = 25;
                 IterationsTextBox.Text = _iterations.ToString();
             }
-            
+
         }
 
         private void Break_Click(object sender, RoutedEventArgs e)
@@ -2759,7 +2923,7 @@ namespace Pixel_Magic
             //Color c1 = System.Drawing.Color.FromArgb(cp1.SelectedColor.Value.A, cp1.SelectedColor.Value.R, cp1.SelectedColor.Value.G, cp1.SelectedColor.Value.B);
             //Color c2 = System.Drawing.Color.FromArgb(cp2.SelectedColor.Value.A, cp2.SelectedColor.Value.R, cp2.SelectedColor.Value.G, cp2.SelectedColor.Value.B);
 
-            
+
             //flagGraphics.FillRectangle(new LinearGradientBrush(new Rectangle(0, 0, w, h), c1, c2, 180f), 0,0,w,h  ) ; 
 
             //Palette = new Image(new Bitmap(flag));
@@ -2806,7 +2970,7 @@ namespace Pixel_Magic
                 dlg.FileName = "_00-" + newName; // Default file name
                 dlg.DefaultExt = ".png"; // Default file extension
                 dlg.Filter = "Image (.png)|*.png"; // Filter files by extension
-                Palette.Working.Save(PaletteDirectory +"/" + dlg.FileName + ".png");
+                Palette.Working.Save(PaletteDirectory + "/" + dlg.FileName + ".png");
             }
             catch (Exception)
             {
@@ -2833,7 +2997,8 @@ namespace Pixel_Magic
             }
 
             //var colors = GenerateHistogram(Source,_paletteSize);
-            var colors = HistogramGenerator.GenerateMedianHistogram(Source,_paletteSize);
+            //var colors = HistogramGenerator.GenerateMedianHistogram(Source, _paletteSize);
+            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 8);
             int paletteSize = colors.Count;
             int currentIndex = 0;
 
@@ -2847,7 +3012,7 @@ namespace Pixel_Magic
             }
 
             Palette = new Image(new Bitmap(flag));
-            
+
 
 
             var frame = new DispatcherFrame();
@@ -2864,7 +3029,45 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
         }
 
-        
+        public Image GeneratePalette()
+        {
+            //if (Source == null) return;
+            int w;
+            int h;
+
+
+            if (Source != null)
+            {
+                w = Source.Width;
+                h = Source.Height;
+            }
+            else
+            {
+                w = 500;
+                h = 500;
+            }
+
+            //var colors = GenerateHistogram(Source,_paletteSize);
+            //var colors = HistogramGenerator.GenerateMedianHistogram(Source, _paletteSize);
+            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 64);
+            int paletteSize = colors.Count;
+            int currentIndex = 0;
+
+            Bitmap flag = new Bitmap(w, h);
+            Graphics flagGraphics = Graphics.FromImage(flag);
+
+            foreach (Color c in colors)
+            {
+                flagGraphics.FillRectangle(new SolidBrush(c), (currentIndex * w / paletteSize), 0, w / paletteSize, h);
+                currentIndex++;
+            }
+
+            return new Image(new Bitmap(flag));
+
+
+
+      
+        }
 
 
         private void SaveGifMenuItem_Click(object sender, RoutedEventArgs e)
@@ -2945,7 +3148,7 @@ namespace Pixel_Magic
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
-            
+
         }
 
         private void HideSource(object sender, MouseEventArgs e)
@@ -2988,13 +3191,13 @@ namespace Pixel_Magic
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
-            
+
         }
 
         private void btnUsePalette_Click(object sender, RoutedEventArgs e)
         {
-            
-            Bitmap ResultImage = new Bitmap(Source.Width,Source.Height);
+
+            Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
             Result = new Image(new Bitmap(Source.Working));
             Result.PixelList = new List<CustomPixel>();
 
@@ -3054,17 +3257,17 @@ namespace Pixel_Magic
                 for (var x = 0; x < Palette.Width; x++)
                 {
                     int oldpixel = Palette.Pixel2DArray[x, y].D;
-                    
+
                     if (oldpixel < 128) Palette.Pixel2DArray[x, y].SetGray(0); else Palette.Pixel2DArray[x, y].SetGray(255);
                     //if (oldpixel.D < 128) newpixel.D = 0; else newpixel.D = 255;
 
 
 
-                    int quant_error =  (oldpixel - Palette.Pixel2DArray[x, y].D);
+                    int quant_error = (oldpixel - Palette.Pixel2DArray[x, y].D);
 
 
 
-                   
+
                     try
                     {
 
@@ -3089,9 +3292,9 @@ namespace Pixel_Magic
                         Palette.Pixel2DArray[x + 2, y + 2].SetGray(Palette.Pixel2DArray[x + 2, y + 2].D + w1 * quant_error);
                     }
                     catch
-                    { 
+                    {
                     }
-         
+
                 }
                 //var frame = new DispatcherFrame();
                 //CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
@@ -3122,8 +3325,8 @@ namespace Pixel_Magic
             CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                 new DispatcherOperationCallback(delegate
                 {
-                        //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
-                        CanvasResult.Children.Clear();
+                    //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                    CanvasResult.Children.Clear();
                     CanvasResult.Children.Insert(0,
                         ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
@@ -3135,9 +3338,6 @@ namespace Pixel_Magic
 
         }
 
-
-
-
         private void btnDitherTest2_Click(object sender, RoutedEventArgs e)
         {
 
@@ -3148,7 +3348,7 @@ namespace Pixel_Magic
             colors = PaletteSorter.GetWebSafe(32);
             //colors = PaletteSorter.GetAllWebSafe();
             //colors = new List<Color>();
-           // colors.Add(Color.Black);
+            // colors.Add(Color.Black);
             //colors.Add(Color.White);
             //colors = HistogramGenerator.GenerateRandomSampleHistogram(Palette, 5);
             ProcessWindow.WriteLine("Colors Aquired: " + colors.Count);
@@ -3185,7 +3385,7 @@ namespace Pixel_Magic
 
                     //Color select = colors.MinBy(h => DeltaE.DistanceCIE1976(converter.ToLab(new RGBColor(Palette.Pixel2DArray[x, y].R / 255.0, Palette.Pixel2DArray[x, y].G / 255.0, Palette.Pixel2DArray[x, y].B / 255.0)), converter.ToLab(new RGBColor(h.R/255.0, h.G/255.0, h.B/255.0))));
 
-                    Color select = colors.MinBy(h => DeltaE.DistanceRGB(Palette.Pixel2DArray[x, y].R, h.R , Palette.Pixel2DArray[x, y].G, h.G , Palette.Pixel2DArray[x, y].B, h.B ));
+                    Color select = colors.MinBy(h => DeltaE.DistanceRGB(Palette.Pixel2DArray[x, y].R, h.R, Palette.Pixel2DArray[x, y].G, h.G, Palette.Pixel2DArray[x, y].B, h.B));
 
                     //Color select = Color.Red; 
 
@@ -3203,60 +3403,60 @@ namespace Pixel_Magic
 
 
 
-                    
 
-                        try { Palette.Pixel2DArray[x + 1, y].SetRed(Palette.Pixel2DArray[x + 1, y].R + w1 * red_error); } catch { }
-                        try { Palette.Pixel2DArray[x, y + 1].SetRed(Palette.Pixel2DArray[x, y + 1].R + w3 * red_error); } catch { }
-                        try { Palette.Pixel2DArray[x - 1, y + 1].SetRed(Palette.Pixel2DArray[x - 1, y + 1].R + w2 * red_error); } catch { }
-                        try { Palette.Pixel2DArray[x + 1, y + 1].SetRed(Palette.Pixel2DArray[x + 1, y + 1].R + w4 * red_error); } catch { }
-                        try { Palette.Pixel2DArray[x + 1, y].SetGreen(Palette.Pixel2DArray[x + 1, y].G + w1 * green_error); } catch { }
-                        try { Palette.Pixel2DArray[x, y + 1].SetGreen(Palette.Pixel2DArray[x, y + 1].G + w3 * green_error); } catch { }
-                        try { Palette.Pixel2DArray[x - 1, y + 1].SetGreen(Palette.Pixel2DArray[x - 1, y + 1].G + w2 * green_error); } catch { }
-                        try { Palette.Pixel2DArray[x + 1, y + 1].SetGreen(Palette.Pixel2DArray[x + 1, y + 1].G + w4 * green_error); } catch { }
-                        try { Palette.Pixel2DArray[x + 1, y].SetBlue(Palette.Pixel2DArray[x + 1, y].B + w1 * blue_error); } catch { }
-                        try { Palette.Pixel2DArray[x, y + 1].SetBlue(Palette.Pixel2DArray[x, y + 1].B + w3 * blue_error); } catch { }
-                        try { Palette.Pixel2DArray[x - 1, y + 1].SetBlue(Palette.Pixel2DArray[x - 1, y + 1].B + w2 * blue_error); } catch { }
-                        try { Palette.Pixel2DArray[x + 1, y + 1].SetBlue(Palette.Pixel2DArray[x + 1, y + 1].B + w4 * blue_error);} catch { }
-                        //Palette.Pixel2DArray[x + 1, y].SetRed(Palette.Pixel2DArray[x + 1, y].R + (w7 * red_error));
-                        //Palette.Pixel2DArray[x + 2, y].SetRed(Palette.Pixel2DArray[x + 2, y].R + w5 * red_error);
-                        //Palette.Pixel2DArray[x - 2, y + 1].SetRed(Palette.Pixel2DArray[x - 2, y + 1].R + w2 * red_error);
-                        //Palette.Pixel2DArray[x - 1, y + 1].SetRed(Palette.Pixel2DArray[x - 1, y + 1].R + w4 * red_error);
-                        //Palette.Pixel2DArray[x, y + 1].SetRed(Palette.Pixel2DArray[x, y + 1].R + w8 * red_error);
-                        //Palette.Pixel2DArray[x + 1, y + 1].SetRed(Palette.Pixel2DArray[x + 1, y + 1].R + w4 * red_error);
-                        //Palette.Pixel2DArray[x + 2, y + 1].SetRed(Palette.Pixel2DArray[x + 2, y + 1].R + w2 * red_error);
-                        //Palette.Pixel2DArray[x - 2, y + 2].SetRed(Palette.Pixel2DArray[x - 2, y + 2].R + w1 * red_error);
-                        //Palette.Pixel2DArray[x - 1, y + 2].SetRed(Palette.Pixel2DArray[x - 1, y + 2].R + w2 * red_error);
-                        //Palette.Pixel2DArray[x, y + 2].SetRed(Palette.Pixel2DArray[x, y + 2].R + w4 * red_error);
-                        //Palette.Pixel2DArray[x + 1, y + 2].SetRed(Palette.Pixel2DArray[x + 1, y + 2].R + w2 * red_error);
-                        //Palette.Pixel2DArray[x + 2, y + 2].SetRed(Palette.Pixel2DArray[x + 2, y + 2].R + w1 * red_error);
 
-                        //Palette.Pixel2DArray[x + 1, y].SetGreen(Palette.Pixel2DArray[x + 1, y].G + (w7 * green_error));
-                        //Palette.Pixel2DArray[x + 2, y].SetGreen(Palette.Pixel2DArray[x + 2, y].G + w5 * green_error);
-                        //Palette.Pixel2DArray[x - 2, y + 1].SetGreen(Palette.Pixel2DArray[x - 2, y + 1].G + w2 * green_error);
-                        //Palette.Pixel2DArray[x - 1, y + 1].SetGreen(Palette.Pixel2DArray[x - 1, y + 1].G + w4 * green_error);
-                        //Palette.Pixel2DArray[x, y + 1].SetGreen(Palette.Pixel2DArray[x, y + 1].G + w8 * green_error);
-                        //Palette.Pixel2DArray[x + 1, y + 1].SetGreen(Palette.Pixel2DArray[x + 1, y + 1].G + w4 * green_error);
-                        //Palette.Pixel2DArray[x + 2, y + 1].SetGreen(Palette.Pixel2DArray[x + 2, y + 1].G + w2 * green_error);
-                        //Palette.Pixel2DArray[x - 2, y + 2].SetGreen(Palette.Pixel2DArray[x - 2, y + 2].G + w1 * green_error);
-                        //Palette.Pixel2DArray[x - 1, y + 2].SetGreen(Palette.Pixel2DArray[x - 1, y + 2].G + w2 * green_error);
-                        //Palette.Pixel2DArray[x, y + 2].SetGreen(Palette.Pixel2DArray[x, y + 2].G + w4 * green_error);
-                        //Palette.Pixel2DArray[x + 1, y + 2].SetGreen(Palette.Pixel2DArray[x + 1, y + 2].G + w2 * green_error);
-                        //Palette.Pixel2DArray[x + 2, y + 2].SetGreen(Palette.Pixel2DArray[x + 2, y + 2].G + w1 * green_error);
+                    try { Palette.Pixel2DArray[x + 1, y].SetRed(Palette.Pixel2DArray[x + 1, y].R + w1 * red_error); } catch { }
+                    try { Palette.Pixel2DArray[x, y + 1].SetRed(Palette.Pixel2DArray[x, y + 1].R + w3 * red_error); } catch { }
+                    try { Palette.Pixel2DArray[x - 1, y + 1].SetRed(Palette.Pixel2DArray[x - 1, y + 1].R + w2 * red_error); } catch { }
+                    try { Palette.Pixel2DArray[x + 1, y + 1].SetRed(Palette.Pixel2DArray[x + 1, y + 1].R + w4 * red_error); } catch { }
+                    try { Palette.Pixel2DArray[x + 1, y].SetGreen(Palette.Pixel2DArray[x + 1, y].G + w1 * green_error); } catch { }
+                    try { Palette.Pixel2DArray[x, y + 1].SetGreen(Palette.Pixel2DArray[x, y + 1].G + w3 * green_error); } catch { }
+                    try { Palette.Pixel2DArray[x - 1, y + 1].SetGreen(Palette.Pixel2DArray[x - 1, y + 1].G + w2 * green_error); } catch { }
+                    try { Palette.Pixel2DArray[x + 1, y + 1].SetGreen(Palette.Pixel2DArray[x + 1, y + 1].G + w4 * green_error); } catch { }
+                    try { Palette.Pixel2DArray[x + 1, y].SetBlue(Palette.Pixel2DArray[x + 1, y].B + w1 * blue_error); } catch { }
+                    try { Palette.Pixel2DArray[x, y + 1].SetBlue(Palette.Pixel2DArray[x, y + 1].B + w3 * blue_error); } catch { }
+                    try { Palette.Pixel2DArray[x - 1, y + 1].SetBlue(Palette.Pixel2DArray[x - 1, y + 1].B + w2 * blue_error); } catch { }
+                    try { Palette.Pixel2DArray[x + 1, y + 1].SetBlue(Palette.Pixel2DArray[x + 1, y + 1].B + w4 * blue_error); } catch { }
+                    //Palette.Pixel2DArray[x + 1, y].SetRed(Palette.Pixel2DArray[x + 1, y].R + (w7 * red_error));
+                    //Palette.Pixel2DArray[x + 2, y].SetRed(Palette.Pixel2DArray[x + 2, y].R + w5 * red_error);
+                    //Palette.Pixel2DArray[x - 2, y + 1].SetRed(Palette.Pixel2DArray[x - 2, y + 1].R + w2 * red_error);
+                    //Palette.Pixel2DArray[x - 1, y + 1].SetRed(Palette.Pixel2DArray[x - 1, y + 1].R + w4 * red_error);
+                    //Palette.Pixel2DArray[x, y + 1].SetRed(Palette.Pixel2DArray[x, y + 1].R + w8 * red_error);
+                    //Palette.Pixel2DArray[x + 1, y + 1].SetRed(Palette.Pixel2DArray[x + 1, y + 1].R + w4 * red_error);
+                    //Palette.Pixel2DArray[x + 2, y + 1].SetRed(Palette.Pixel2DArray[x + 2, y + 1].R + w2 * red_error);
+                    //Palette.Pixel2DArray[x - 2, y + 2].SetRed(Palette.Pixel2DArray[x - 2, y + 2].R + w1 * red_error);
+                    //Palette.Pixel2DArray[x - 1, y + 2].SetRed(Palette.Pixel2DArray[x - 1, y + 2].R + w2 * red_error);
+                    //Palette.Pixel2DArray[x, y + 2].SetRed(Palette.Pixel2DArray[x, y + 2].R + w4 * red_error);
+                    //Palette.Pixel2DArray[x + 1, y + 2].SetRed(Palette.Pixel2DArray[x + 1, y + 2].R + w2 * red_error);
+                    //Palette.Pixel2DArray[x + 2, y + 2].SetRed(Palette.Pixel2DArray[x + 2, y + 2].R + w1 * red_error);
 
-                        //Palette.Pixel2DArray[x + 1, y].SetBlue(Palette.Pixel2DArray[x + 1, y].B + (w7 * blue_error));
-                        //Palette.Pixel2DArray[x + 2, y].SetBlue(Palette.Pixel2DArray[x + 2, y].B + w5 * blue_error);
-                        //Palette.Pixel2DArray[x - 2, y + 1].SetBlue(Palette.Pixel2DArray[x - 2, y + 1].B + w2 * blue_error);
-                        //Palette.Pixel2DArray[x - 1, y + 1].SetBlue(Palette.Pixel2DArray[x - 1, y + 1].B + w4 * blue_error);
-                        //Palette.Pixel2DArray[x, y + 1].SetBlue(Palette.Pixel2DArray[x, y + 1].B + w8 * blue_error);
-                        //Palette.Pixel2DArray[x + 1, y + 1].SetBlue(Palette.Pixel2DArray[x + 1, y + 1].B + w4 * blue_error);
-                        //Palette.Pixel2DArray[x + 2, y + 1].SetBlue(Palette.Pixel2DArray[x + 2, y + 1].B + w2 * blue_error);
-                        //Palette.Pixel2DArray[x - 2, y + 2].SetBlue(Palette.Pixel2DArray[x - 2, y + 2].B + w1 * blue_error);
-                        //Palette.Pixel2DArray[x - 1, y + 2].SetBlue(Palette.Pixel2DArray[x - 1, y + 2].B + w2 * blue_error);
-                        //Palette.Pixel2DArray[x, y + 2].SetBlue(Palette.Pixel2DArray[x, y + 2].B + w4 * blue_error);
-                        //Palette.Pixel2DArray[x + 1, y + 2].SetBlue(Palette.Pixel2DArray[x + 1, y + 2].B + w2 * blue_error);
-                        //Palette.Pixel2DArray[x + 2, y + 2].SetBlue(Palette.Pixel2DArray[x + 2, y + 2].B + w1 * blue_error);
+                    //Palette.Pixel2DArray[x + 1, y].SetGreen(Palette.Pixel2DArray[x + 1, y].G + (w7 * green_error));
+                    //Palette.Pixel2DArray[x + 2, y].SetGreen(Palette.Pixel2DArray[x + 2, y].G + w5 * green_error);
+                    //Palette.Pixel2DArray[x - 2, y + 1].SetGreen(Palette.Pixel2DArray[x - 2, y + 1].G + w2 * green_error);
+                    //Palette.Pixel2DArray[x - 1, y + 1].SetGreen(Palette.Pixel2DArray[x - 1, y + 1].G + w4 * green_error);
+                    //Palette.Pixel2DArray[x, y + 1].SetGreen(Palette.Pixel2DArray[x, y + 1].G + w8 * green_error);
+                    //Palette.Pixel2DArray[x + 1, y + 1].SetGreen(Palette.Pixel2DArray[x + 1, y + 1].G + w4 * green_error);
+                    //Palette.Pixel2DArray[x + 2, y + 1].SetGreen(Palette.Pixel2DArray[x + 2, y + 1].G + w2 * green_error);
+                    //Palette.Pixel2DArray[x - 2, y + 2].SetGreen(Palette.Pixel2DArray[x - 2, y + 2].G + w1 * green_error);
+                    //Palette.Pixel2DArray[x - 1, y + 2].SetGreen(Palette.Pixel2DArray[x - 1, y + 2].G + w2 * green_error);
+                    //Palette.Pixel2DArray[x, y + 2].SetGreen(Palette.Pixel2DArray[x, y + 2].G + w4 * green_error);
+                    //Palette.Pixel2DArray[x + 1, y + 2].SetGreen(Palette.Pixel2DArray[x + 1, y + 2].G + w2 * green_error);
+                    //Palette.Pixel2DArray[x + 2, y + 2].SetGreen(Palette.Pixel2DArray[x + 2, y + 2].G + w1 * green_error);
+
+                    //Palette.Pixel2DArray[x + 1, y].SetBlue(Palette.Pixel2DArray[x + 1, y].B + (w7 * blue_error));
+                    //Palette.Pixel2DArray[x + 2, y].SetBlue(Palette.Pixel2DArray[x + 2, y].B + w5 * blue_error);
+                    //Palette.Pixel2DArray[x - 2, y + 1].SetBlue(Palette.Pixel2DArray[x - 2, y + 1].B + w2 * blue_error);
+                    //Palette.Pixel2DArray[x - 1, y + 1].SetBlue(Palette.Pixel2DArray[x - 1, y + 1].B + w4 * blue_error);
+                    //Palette.Pixel2DArray[x, y + 1].SetBlue(Palette.Pixel2DArray[x, y + 1].B + w8 * blue_error);
+                    //Palette.Pixel2DArray[x + 1, y + 1].SetBlue(Palette.Pixel2DArray[x + 1, y + 1].B + w4 * blue_error);
+                    //Palette.Pixel2DArray[x + 2, y + 1].SetBlue(Palette.Pixel2DArray[x + 2, y + 1].B + w2 * blue_error);
+                    //Palette.Pixel2DArray[x - 2, y + 2].SetBlue(Palette.Pixel2DArray[x - 2, y + 2].B + w1 * blue_error);
+                    //Palette.Pixel2DArray[x - 1, y + 2].SetBlue(Palette.Pixel2DArray[x - 1, y + 2].B + w2 * blue_error);
+                    //Palette.Pixel2DArray[x, y + 2].SetBlue(Palette.Pixel2DArray[x, y + 2].B + w4 * blue_error);
+                    //Palette.Pixel2DArray[x + 1, y + 2].SetBlue(Palette.Pixel2DArray[x + 1, y + 2].B + w2 * blue_error);
+                    //Palette.Pixel2DArray[x + 2, y + 2].SetBlue(Palette.Pixel2DArray[x + 2, y + 2].B + w1 * blue_error);
                     //}
-                    
+
                     //Palette.Pixel2DArray[x, y].ColorGenerate();
                 }
                 if (y % 10 == 0)
@@ -3265,8 +3465,8 @@ namespace Pixel_Magic
                     CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                         new DispatcherOperationCallback(delegate
                         {
-                        //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
-                        CanvasResult.Children.Clear();
+                            //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                            CanvasResult.Children.Clear();
                             CanvasResult.Children.Insert(0,
                                 ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
@@ -3303,8 +3503,6 @@ namespace Pixel_Magic
 
         }
 
-
-
         private ImageCodecInfo GetEncoder(ImageFormat format)
         {
             ImageCodecInfo[] codecs = ImageCodecInfo.GetImageDecoders();
@@ -3322,7 +3520,7 @@ namespace Pixel_Magic
         {
             if (!ImagesPresent()) return;
             _break = false;
-            
+
 
             var frame = new DispatcherFrame();
             btnStop.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
@@ -3341,7 +3539,7 @@ namespace Pixel_Magic
 
             WriteLine("START");
 
-            
+
             Thread newThread;
 
             switch (tabProcess.SelectedIndex)
@@ -3353,7 +3551,8 @@ namespace Pixel_Magic
 
                     if (_continuous)
                     {
-                        newThread = new Thread(Process_RandomSortContinuous);
+
+                            newThread = new Thread(Process_RandomSortContinuous);
 
                     }
                     else
@@ -3364,8 +3563,8 @@ namespace Pixel_Magic
                     break;
 
                 case 1:
-                   
-                    
+
+
                     switch (_patternMode)
                     {
                         case Pattern.Fan:
@@ -3378,18 +3577,18 @@ namespace Pixel_Magic
                             newThread = new Thread(Process_BestFit);
                             break;
                     }
-           
-                    
+
+
                     break;
                 case 2:
-                    
+
                     newThread = new Thread(Process_Sort);
                     ProgressBar1.Maximum = Convert.ToInt32(IterationsTextBox.Text);
                     ProgressBar1.Value = 0;
 
                     break;
                 case 3:
-                    if(Result != null) Palette = new Image(new Bitmap(Result._Original));
+                    if (Result != null) Palette = new Image(new Bitmap(Result._Original));
                     newThread = new Thread(Process_Dither_Advanced);
                     break;
                 default:
@@ -3398,10 +3597,12 @@ namespace Pixel_Magic
             }
 
             LockUI();
+
             newThread.Start();
-           
+
+            
+
         }
-        
 
         private void Stop(object sender, RoutedEventArgs e)
         {
@@ -3427,14 +3628,13 @@ namespace Pixel_Magic
 
 
             UnlockUI();
-        } 
-        
+        }
 
         private void LockUI()
         {
 
             UIEnabled = false;
-           
+
 
         }
 
@@ -3467,9 +3667,10 @@ namespace Pixel_Magic
         }
 
 
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-
+            
             //if (Result != null)
             //{
             //    var frame = new DispatcherFrame();
@@ -3485,6 +3686,7 @@ namespace Pixel_Magic
             //    }), null);
             //    Dispatcher.PushFrame(frame);
             //}
+            
         }
 
         private void OpenPaletteSelector(object sender, RoutedEventArgs e)
@@ -3493,7 +3695,63 @@ namespace Pixel_Magic
             PaletteSelectorWindow PSW = new PaletteSelectorWindow();
             PSW.Show();
         }
-    }   
+
+        private void Batch_Click(object sender, RoutedEventArgs e)
+        {
+            PrepareImages();
+
+            //Thread newThread;
+            //newThread = new Thread(Process_RandomSort_Batch);
+
+
+            Thread t1 = new Thread(Process_RandomSort_Batch);
+            Thread t2 = new Thread(Process_RandomSort_Batch);
+            Thread t3 = new Thread(Process_RandomSort_Batch);
+            Thread t4 = new Thread(Process_RandomSort_Batch);
+            Thread t5 = new Thread(Process_RandomSort_Batch);
+            Thread t6 = new Thread(Process_RandomSort_Batch);
+            Thread t7 = new Thread(Process_RandomSort_Batch);
+            Thread t8 = new Thread(Process_RandomSort_Batch);
+
+            t1.Start();
+            t2.Start();
+            t3.Start();
+            t4.Start();
+            t5.Start();
+            t6.Start();
+            t7.Start();
+            t8.Start();
+
+            //SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            //    for (int i = 0; i < 7; i++)
+            //    {
+
+
+            //        Task.Factory.StartNew(() =>
+            //        {
+            //            Process_RandomSort_Batch();
+
+
+            //        }, _tokenSource.Token,
+            //   TaskCreationOptions.None,
+            //   TaskScheduler.Default)//Note TaskScheduler.Default here
+            //.ContinueWith(
+            //        t =>
+            //        {
+            //        //finish...
+            //        //if (OnFinishWorkEventHandler != null)
+            //        //    OnFinishWorkEventHandler(this, EventArgs.Empty);
+            //    }
+            //    , TaskScheduler.FromCurrentSynchronizationContext());
+
+
+
+
+            //    }
+        }
+
+    }
+    
 
 
 
