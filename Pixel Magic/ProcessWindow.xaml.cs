@@ -19,23 +19,27 @@ using Colourful.Difference;
 using Microsoft.Win32;
 using Pixel_Magic.Classes;
 using Pixel_Magic.Utilities;
-using Xceed.Wpf.Toolkit;
 using Timer = System.Timers.Timer;
 using Image = Pixel_Magic.Classes.Image;
 using System.Threading.Tasks;
 using MoreLinq;
+using Xceed.Wpf.Toolkit;
 using Colourful.Conversion;
 using System.Drawing.Imaging;
 using System.Collections.Concurrent;
+using AnimatedGif;
 
 namespace Pixel_Magic
 {
     public partial class ProcessWindow : Window, INotifyPropertyChanged
     {
+        
 
         private Image Palette;
         private Image Source;
         private Image Result;
+
+        private List<KeyValuePair<Bitmap, int>> GifBuffer = new List<KeyValuePair<Bitmap, int>>();
 
 
         private bool Enabled = false;
@@ -127,10 +131,12 @@ namespace Pixel_Magic
 
         private static readonly TaskFactory factory = new TaskFactory(CancellationToken.None,
         TaskCreationOptions.None, TaskContinuationOptions.None, TaskScheduler.Default);
-        public static ColourfulConverter converter = new ColourfulConverter { WhitePoint = Illuminants.D65 };
+        public static ColourfulConverter converter = new ColourfulConverter { WhitePoint = Illuminants.D65};
 
-        private static Random rnd = new Random(666);
-        private static Pattern _patternMode = Pattern.Circular;
+        private static Random rnd = new Random();
+
+
+        private static Pattern _patternMode = Pattern.Fan;
         private static List<Bitmap> GifFrames = new List<Bitmap>();
         private static readonly Timer resizeTimer = new Timer(100) { Enabled = false };
         private static readonly Object _locker = new Object();
@@ -138,22 +144,41 @@ namespace Pixel_Magic
         private static string SaveDirectory = @"C:\Users\tsova\Documents\Projects\s\";
         private static string PaletteDirectory = @"C:\Users\tsova\Documents\Projects\WindowsFormsApp2\WindowsFormsApp2";
         private static string BatchDir = @"C:\Users\tsova\Documents\Projects\Batch\";
-       
+        private static string MutateDir = @"C:\Users\tsova\Documents\Projects\Batch\Mutate\";
+        private static string TargetDir = @"C:\Users\tsova\Documents\Projects\Batch\Output\Targets\";
+        private static string FramesDir = @"C:\Users\tsova\Documents\Projects\s\GIF\Frames\";
+
+
+
 
         public static bool _break = false;
-        public static double _ditherCenterWeight = 5; //5 for CIE1976
-        public static double _ditherWeight = 1;
-        public static int _ditherLimit = 1000;
+
+
+        //public static double _ditherCenterWeight = 5; //5 for CIE1976
+        //public static double _ditherWeight = 1;
+        //public static int _ditherLimit = 1000;
+
+        public static double _ditherCenterWeight { get; set; } = 1; //5 for CIE1976
+        public static double _ditherWeight { get; set; } = 0.01; //1 for CIE1976 //0.25 for CIE2000?
+        public static bool _ditherUpdate { get; set; } = false;
+        public static bool _ditherOrdered { get; set; } = false;
+        public static int _ditherIterations { get; set; } = 1000;
+
+        
+
         public static double _rm { get; set; } = 1;
         public static int _iterations { get; set; } = 100;
         public static int _refreshRate { get; set; } = 10;
         public static int _sampleSize { get; set; } = 100;
-        public static int _paletteSize = 4;
+        public static int _paletteSize = 16;
         private const int _sort_RefreshRate = 15000;
         private static int _ditherPaletteSize = 8;
         private static bool _continuous = true;
-        private static int _continuousRefreshRate = 10000;
+        private static int _continuousRefreshRate = int.MaxValue-1;
+        public static bool _displayUpdates { get; set; } = false;
         private static int _continuousRatio = 5;
+        public static bool _EnableThreshold = true;
+        public static float _Threshold = .00025f;
 
 
         public static System.Windows.Controls.RichTextBox Console;
@@ -163,7 +188,9 @@ namespace Pixel_Magic
         public ProcessWindow()
         {
 
+            System.Windows.FrameworkCompatibilityPreferences.KeepTextBoxDisplaySynchronizedWithTextProperty = false;
             InitializeComponent();
+
             PaletteSorter.GenerateWebColors();
             Console = ConsoleBox;
             Progress = ProgressBar1;
@@ -408,6 +435,47 @@ namespace Pixel_Magic
             return Palette.Working != null && Source.Working != null;
         }
 
+        public void PrepareImages()
+        {
+
+            ProcessWindow.WriteLine("Preparing images...");
+            if (!ImagesPresent())
+            {
+                ProcessWindow.WriteLine("Images not ready");
+                return;
+            }
+            WriteLine($"Original Resolution: ({Source.Width},{Source.Height})");
+
+            Source.Resize(_rm);
+            Palette.Resize(Source.Width, Source.Height);
+
+            _continuousRefreshRate = (Source.Width * Source.Height) / _continuousRatio;
+
+            ProcessWindow.WriteLine($"Scaled Resolution: ({Source.Width},{Source.Height})");
+
+            if (Source.Width * Source.Height != Palette.Width * Palette.Height)
+                throw new Exception("ImageSizeMismatchExcecption");
+
+
+            var frame = new DispatcherFrame();
+            lblResolution.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                new DispatcherOperationCallback(delegate
+                {
+                    //lblResolution.Text = $"[{Source.Width}, {Source.Height}]";
+
+                    frame.Continue = false;
+                    return null;
+                }), null);
+            Dispatcher.PushFrame(frame);
+
+            for (int i = 0; i < 5; i++)
+            {
+                GifFrames.Add(new Bitmap(Palette.Working));
+            }
+
+            _break = false;
+        }
+
         private void ProcessButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -429,7 +497,94 @@ namespace Pixel_Magic
         //=====================================================================
         //=====================================================================
 
-        
+        public void Process_Mutate(string path, Image mp, Image ms, int width, int height)
+        {
+
+            Image MutatePalette = new Image(mp.Original);
+            MutatePalette.Resize(width, height);
+            Random r1 = new Random();
+            //Source.Resize(0.5);
+
+            ProcessWindow.WriteLine("Start");
+
+            Bitmap ResultImage = new Bitmap(width, height);
+            CustomPixel save;
+            int refreshCounter = 0;
+            int randomselection1;
+            int randomselection2;
+            int swapped = 0;
+            
+            int max = ms.PixelList.Count;
+
+
+            while (refreshCounter < (width * height * 100))//  (width*height*81)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
+            {
+
+                randomselection1 = r1.Next(1, max);
+                randomselection2 = r1.Next(1, max);
+
+                if ((Math.Abs(DeltaE.Distance(MutatePalette.PixelList[randomselection1].LAB, ms.PixelList[randomselection2].LAB)) <
+                         Math.Abs(DeltaE.Distance(ms.PixelList[randomselection2].LAB, MutatePalette.PixelList[randomselection2].LAB)))
+                        &&
+                        (Math.Abs(DeltaE.Distance(MutatePalette.PixelList[randomselection2].LAB, ms.PixelList[randomselection1].LAB)) <
+                         Math.Abs(DeltaE.Distance(ms.PixelList[randomselection2].LAB, MutatePalette.PixelList[randomselection2].LAB))))
+                {
+                    save = MutatePalette.PixelList[randomselection2];
+                    MutatePalette.PixelList[randomselection2] = MutatePalette.PixelList[randomselection1];
+                    MutatePalette.PixelList[randomselection1] = save;
+                    swapped++;
+                }
+
+            
+                refreshCounter++;
+
+            }
+
+
+            for (int p = 0; p < ms.PixelList.Count; p++)
+            {
+                ResultImage.SetPixel(ms.PixelList[p].x,
+                    ms.PixelList[p].y,
+                    MutatePalette.PixelList[p].Color);
+            }
+
+            //ImageCodecInfo jpgEncoder = GetEncoder(ImageFormat.Jpeg);
+
+            //System.Drawing.Imaging.Encoder myEncoder = System.Drawing.Imaging.Encoder.Quality;
+
+            //EncoderParameter myEncoderParameter = new EncoderParameter(myEncoder, 100L);
+            //EncoderParameters myEncoderParameters = new EncoderParameters(1);
+            //myEncoderParameters.Param[0] = myEncoderParameter;
+
+
+
+            //DirectoryInfo dir = new DirectoryInfo(SaveDirectory);
+            //FileInfo[] files = dir.GetFiles("*" + "Output-" + "*.*");
+            //var last = files.OrderBy(f => f.CreationTime)
+            //            .ToList().Last();
+            //var num = last.Name.Substring(7, 4);
+
+            //string newName = (Convert.ToInt32(num) + 1).ToString("D4");
+
+            try
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.InitialDirectory = @"C:\Users\tsova\Documents\Projects\Batch\Output\";
+                dlg.FileName = Path.GetFileName(path) + "_" + r1.Next(0,100000); // Default file name
+                dlg.DefaultExt = ".png"; // Default file extension
+                //dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+                //Result._Original.Save(SaveDirectory + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                //Palette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                ResultImage.Save(@"C:\Users\tsova\Documents\Projects\Batch\Output\" + dlg.FileName + ".png");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.StackTrace);
+            }
+
+            ProcessWindow.WriteLine("Done, swapped: " + swapped + " - " + refreshCounter);
+
+        }
 
         public void Process_Sort()
         {
@@ -750,18 +905,36 @@ namespace Pixel_Magic
             int refreshCounter = 0;
             int randomselection1;
             int randomselection2;
+            int displayCounter = 0;
+            int swapped = 0;
 
             //int size = OriginalFirst.Width*OriginalFirst.Height;
             CustomPixel save;
 
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    GifBuffer.Add(Palette.Working);
+            //}
+            
+
+            ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                ProgressBar1.Maximum = _iterations * Source.PixelList.Count;
+                ProgressBar1.Value = 0;
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+
+            int count = Source.PixelList.Count;
             ProcessWindow.WriteLine("Starting Sampling");
 
-            var s = Stopwatch.StartNew();
+            Stopwatch s = Stopwatch.StartNew();
             while (!_break && !(refreshCounter > Source.PixelList.Count * _iterations)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
             {
 
-                randomselection1 = rnd.Next(1, (Source.PixelList.Count));
-                randomselection2 = rnd.Next(1, (Source.PixelList.Count));
+                randomselection1 = rnd.Next(1, (count));
+                randomselection2 = rnd.Next(1, (count));
 
                 if ((Math.Abs(DeltaE.Distance(Palette.PixelList[randomselection1].LAB, Source.PixelList[randomselection2].LAB)) <
                          Math.Abs(DeltaE.Distance(Source.PixelList[randomselection2].LAB, Palette.PixelList[randomselection2].LAB)))
@@ -772,69 +945,89 @@ namespace Pixel_Magic
                     save = Palette.PixelList[randomselection2];
                     Palette.PixelList[randomselection2] = Palette.PixelList[randomselection1];
                     Palette.PixelList[randomselection1] = save;
+                    swapped++;
                 }
 
 
                 refreshCounter++;
 
 
-
-
-
                 if (refreshCounter % _continuousRefreshRate == 0)
                 {
 
-                    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
-                    Task.Factory.StartNew(() =>
+                    ProcessWindow.WriteLine("Swapped: " + swapped);
+                    if (swapped < Source.PixelList.Count * _Threshold) break;
+                    swapped = 0;
+                    ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
                     {
-                        Bitmap newResult = new Bitmap(Source.Width, Source.Height);
 
-                        for (int p = 0; p < Source.PixelList.Count; p++)
+                        ProgressBar1.Value = refreshCounter;
+                        frame.Continue = false;
+                        return null;
+                    }), null);
+                    Dispatcher.PushFrame(frame);
+
+                    if (_displayUpdates)
+                    {
+
+                        displayCounter++;
+                        SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+                        Task.Factory.StartNew(() =>
                         {
-                            newResult.SetPixel(Source.PixelList[p].x,
-                                Source.PixelList[p].y,
-                                Palette.PixelList[p].Color);
-                        }
+                            Bitmap newResult = new Bitmap(Source.Width, Source.Height);
 
-                        var frame2 = new DispatcherFrame();
-                        CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                            new DispatcherOperationCallback(delegate
+                            for (int p = 0; p < count; p++)
                             {
+                                newResult.SetPixel(Source.PixelList[p].x,
+                                    Source.PixelList[p].y,
+                                    Palette.PixelList[p].Color);
+                            }
+
+                            var frame2 = new DispatcherFrame();
+                            CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                                new DispatcherOperationCallback(delegate
+                                {
                                 //GifFrames.Add(new Bitmap(ResultImage)); ;
                                 CanvasResult.Children.Clear();
-                                CanvasResult.Children.Insert(0,
-                                    newResult.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+                                    CanvasResult.Children.Insert(0,
+                                        newResult.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
-                                frame2.Continue = false;
-                                return null;
-                            }), null);
-                        Dispatcher.PushFrame(frame2);
+                                    frame2.Continue = false;
+                                    return null;
+                                }), null);
+                            //Dispatcher.PushFrame(frame2);
+
+                            if (refreshCounter % 2 == 0)
+                            {
+                                //GifBuffer.Add(newResult);
+                            }
 
 
-                    }, _tokenSource.Token,
-               TaskCreationOptions.None,
-               TaskScheduler.Default)//Note TaskScheduler.Default here
-            .ContinueWith(
-                    t =>
-                    {
+
+                        }, _tokenSource.Token,
+                   TaskCreationOptions.None,
+                   TaskScheduler.Default)//Note TaskScheduler.Default here
+                .ContinueWith(
+                        t =>
+                        {
                         //finish...
                         //if (OnFinishWorkEventHandler != null)
                         //    OnFinishWorkEventHandler(this, EventArgs.Empty);
                     }
-                , TaskScheduler.FromCurrentSynchronizationContext());
+                    , TaskScheduler.FromCurrentSynchronizationContext());
 
 
 
 
+                    }
                 }
-
             }
-
+            ProcessWindow.WriteLine("======= UI updated:" + displayCounter);
             ProcessWindow.WriteLine("======= " + s.ElapsedMilliseconds);
             ProcessWindow.WriteLine("Finalizing...");
+            
 
-
-            for (int p = 0; p < Source.PixelList.Count; p++)
+            for (int p = 0; p < count; p++)
             {
                 ResultImage.SetPixel(Source.PixelList[p].x,
                     Source.PixelList[p].y,
@@ -861,13 +1054,163 @@ namespace Pixel_Magic
                 return null;
             }), null);
             Dispatcher.PushFrame(frame);
-            ProcessWindow.WriteLine("Finished!");
+
+            ProcessWindow.WriteLine("Finished! : " + s.ElapsedMilliseconds);
             _break = false;
             Stop(null, null);
 
             
 
         }
+
+        //public void Process_MoverSort()
+        //{
+        //    ProcessWindow.WriteLine("MoverSort:");
+        //    ProcessWindow.WriteLine("==============");
+        //    PrepareImages();
+        //    DispatcherFrame frame = new DispatcherFrame();
+
+        //    Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
+        //    Bitmap SubtractFrom1 = new Bitmap(Source.Width, Source.Height);
+
+
+        //    int numberSwapped = 0;
+        //    CustomPixel current;
+        //    CustomPixel up;
+        //    CustomPixel down;
+        //    CustomPixel left;
+        //    CustomPixel right;
+
+        //    //int size = OriginalFirst.Width*OriginalFirst.Height;
+        //    CustomPixel save;
+        //    var sw = Stopwatch.StartNew();
+        //    ProcessWindow.WriteLine("Starting Sampling");
+        //    for (var j = 1; j <= _iterations; j++)
+        //    {
+
+        //        for (int x = 0; x < Source.Working.Width; x++)
+        //        {
+        //            for (int y = 0; y < Source.Working.Height; y++)
+        //            {
+
+        //                current = Source.Pixel2DArray[x, y];
+        //                up = Source.Pixel2DArray[x, y-1];
+        //                down = Source.Pixel2DArray[x, y + 1];
+        //                left = Source.Pixel2DArray[x-1, y];
+        //                right = Source.Pixel2DArray[x+1, y];
+
+        //                double diffUP = DeltaE.Distance(Palette.Pixel2DArray[x, y].LAB, Source.Pixel2DArray[x, y - 1].LAB);
+
+
+
+        //            }
+        //        }
+
+
+
+        //        for (int i = 0; i < Source.PixelList.Count; i++)
+        //        {//foreach pixel
+
+                    
+        //            up = Source.p
+
+        //            if ((Math.Abs(DeltaE.Distance(Palette.PixelList[up].LAB, Source.PixelList[i].LAB)) <
+        //                 Math.Abs(DeltaE.Distance(Source.PixelList[i].LAB, Palette.PixelList[i].LAB)))
+        //                &&
+        //                (Math.Abs(DeltaE.Distance(Palette.PixelList[i].LAB, Source.PixelList[up].LAB)) <
+        //                 Math.Abs(DeltaE.Distance(Source.PixelList[i].LAB, Palette.PixelList[i].LAB))))
+        //            {
+        //                save = Palette.PixelList[i];
+        //                numberSwapped++;
+        //                Palette.PixelList[i] = Palette.PixelList[up];
+        //                Palette.PixelList[up] = save;
+        //            }
+        //        }
+        //        var readout = numberSwapped;
+        //        ProcessWindow.WriteLine("Pixels Swapped: " + readout);
+        //        numberSwapped = 0;
+
+
+        //        //Task.Run(() =>{
+
+
+
+
+
+
+        //        //});
+
+        //        for (int p = 0; p < Source.PixelList.Count; p++)
+        //        {
+        //            ResultImage.SetPixel(Source.PixelList[p].x,
+        //                Source.PixelList[p].y,
+        //                Palette.PixelList[p].Color);
+        //        }
+
+        //        frame = new DispatcherFrame();
+        //        CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+        //            new DispatcherOperationCallback(delegate
+        //            {
+        //                GifFrames.Add(new Bitmap(ResultImage)); ;
+        //                CanvasResult.Children.Clear();
+        //                CanvasResult.Children.Insert(0,
+        //                    ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+        //                frame.Continue = false;
+        //                return null;
+        //            }), null);
+        //        Dispatcher.PushFrame(frame);
+
+
+        //        ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+        //            new DispatcherOperationCallback(delegate
+        //            {
+        //                ProgressBar1.Value++;
+        //                frame.Continue = false;
+        //                return null;
+        //            }), null);
+        //        Dispatcher.PushFrame(frame);
+
+        //        if (_break)
+        //        {
+        //            ProcessWindow.WriteLine("_____Break_____");
+        //            _break = false;
+        //            break;
+        //        }
+
+        //    }
+
+        //    for (int p = 0; p < Source.PixelList.Count; p++)
+        //    {
+        //        ResultImage.SetPixel(Source.PixelList[p].x,
+        //            Source.PixelList[p].y,
+        //            Palette.PixelList[p].Color);
+        //    }
+        //    frame = new DispatcherFrame();
+        //    CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+        //    {
+        //        GifFrames.Add(new Bitmap(ResultImage)); ;
+        //        CanvasResult.Children.Clear();
+        //        CanvasResult.Children.Insert(0,
+        //            ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+        //        frame.Continue = false;
+        //        return null;
+        //    }), null);
+        //    Dispatcher.PushFrame(frame);
+        //    Result = new Image(new Bitmap(ResultImage));
+
+        //    ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+        //    {
+        //        ProgressBar1.Value = 0;
+        //        frame.Continue = false;
+        //        return null;
+        //    }), null);
+        //    Dispatcher.PushFrame(frame);
+
+
+        //    WriteLine(sw.ElapsedMilliseconds.ToString());
+        //}
 
         public void Process_RandomSort_Batch()
         {
@@ -893,7 +1236,7 @@ namespace Pixel_Magic
             //ProcessWindow.WriteLine("Starting Sampling");
 
             //var s = Stopwatch.StartNew();
-            while (!(refreshCounter > 50000000)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
+            while (!(refreshCounter > 100000000)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
             {
 
                 randomselection1 = newR.Next(1, (Source.PixelList.Count));
@@ -934,9 +1277,9 @@ namespace Pixel_Magic
                 dlg.InitialDirectory = SaveDirectory;
 
                 dlg.FileName = Guid.NewGuid().ToString(); // Default file name
-                dlg.DefaultExt = ".png"; // Default file extension
-                dlg.Filter = "Image (.png)|*.png"; // Filter files by extension
-                var path = BatchDir + dlg.FileName + ".png";
+                dlg.DefaultExt = ".jpg"; // Default file extension
+                dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+                var path = BatchDir + dlg.FileName + ".jpg";
                 final.Save(path);
                 //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
                 ProcessWindow.WriteLine("SAVED!");
@@ -960,6 +1303,362 @@ namespace Pixel_Magic
             //Stop(null, null);
 
 
+
+        }
+
+        public void Process_RandomSort_Batch_FixedPalette()
+        {
+            Random newR = new Random();
+
+            var colors = HistogramGenerator.GenerateRandomColorPair(Source, Source.PixelList.Count/1000);
+
+            Bitmap final = new Bitmap(Source.Width, Source.Height);
+
+            foreach (CustomPixel p in Source.PixelList)
+            {
+
+
+                ColorPair bestMatch = colors.MinBy(x => DeltaE.Distance(x.LAB,p.LAB));
+
+                final.SetPixel(p.x, p.y, bestMatch.Color);
+
+            }
+
+       
+
+
+            try
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.InitialDirectory = SaveDirectory;
+
+                dlg.FileName = Guid.NewGuid().ToString(); // Default file name
+                dlg.DefaultExt = ".jpg"; // Default file extension
+                dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+                var path = BatchDir + dlg.FileName + ".jpg";
+                final.Save(path);
+                //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                ProcessWindow.WriteLine("SAVED!");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.StackTrace);
+            }
+
+
+
+
+
+
+
+            //ProcessWindow.WriteLine("Random Sample Batch Fixed Palette:");
+            //ProcessWindow.WriteLine("==============");
+            ////PrepareImages();
+            //DispatcherFrame frame = new DispatcherFrame();
+
+            //Bitmap final = new Bitmap(Source.Width, Source.Height);
+            ////Bitmap SubtractFrom1 = new Bitmap(Source.Width, Source.Height);
+
+
+            //int refreshCounter = 0;
+            //int randomselection1;
+            //int randomselection2;
+
+            ////int size = OriginalFirst.Width*OriginalFirst.Height;
+            //CustomPixel save;
+
+            ////ProcessWindow.WriteLine("Starting Sampling");
+
+            ////var s = Stopwatch.StartNew();
+            //while (!(refreshCounter > 100000000)) // && !(refreshCounter > Source.PixelList.Count/_iterations)
+            //{
+
+            //    randomselection1 = newR.Next(1, (Source.PixelList.Count));
+            //    randomselection2 = newR.Next(1, (Source.PixelList.Count));
+
+            //    if ((Math.Abs(DeltaE.Distance(randPalette.PixelList[randomselection1].LAB, Source.PixelList[randomselection2].LAB)) <
+            //             Math.Abs(DeltaE.Distance(Source.PixelList[randomselection2].LAB, randPalette.PixelList[randomselection2].LAB)))
+            //            &&
+            //            (Math.Abs(DeltaE.Distance(randPalette.PixelList[randomselection2].LAB, Source.PixelList[randomselection1].LAB)) <
+            //             Math.Abs(DeltaE.Distance(Source.PixelList[randomselection2].LAB, randPalette.PixelList[randomselection2].LAB))))
+            //    {
+            //        save = randPalette.PixelList[randomselection2];
+            //        randPalette.PixelList[randomselection2] = randPalette.PixelList[randomselection1];
+            //        randPalette.PixelList[randomselection1] = save;
+            //    }
+
+
+            //    refreshCounter++;
+
+            //}
+
+            ////ProcessWindow.WriteLine("======= " + s.ElapsedMilliseconds);
+            ////ProcessWindow.WriteLine("Finalizing...");
+
+
+            //for (int p = 0; p < Source.PixelList.Count; p++)
+            //{
+            //    final.SetPixel(Source.PixelList[p].x,
+            //        Source.PixelList[p].y,
+            //        randPalette.PixelList[p].Color);
+            //}
+
+
+
+            //try
+            //{
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+
+            //    dlg.FileName = Guid.NewGuid().ToString(); // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    var path = BatchDir + dlg.FileName + ".jpg";
+            //    final.Save(path);
+            //    //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+            //    ProcessWindow.WriteLine("SAVED!");
+            //}
+            //catch (Exception ex)
+            //{
+            //    WriteLine(ex.StackTrace);
+            //}
+
+
+
+            //ProgressBar1.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            //{
+            //    ProgressBar1.Value = 0;
+            //    frame.Continue = false;
+            //    return null;
+            //}), null);
+            //Dispatcher.PushFrame(frame);
+
+            //_break = false;
+            //Stop(null, null);
+
+
+
+        }
+
+        public void Process_RandomSort_Batch_MutatePalette(int v, bool positive)
+        {
+            Random newR = new Random();
+
+            //var colors = HistogramGenerator.GenerateRandomColorPair(Source, Source.PixelList.Count / 1000);
+
+            var colors = HistogramGenerator.GenerateRandomColorPair(Source, 64);
+
+
+
+            Bitmap final = new Bitmap(Source.Width, Source.Height);
+
+            var result = new List<ColorPair>();
+
+
+            foreach (ColorPair c in colors)
+            {
+                if (positive)
+                {
+                    try
+                    {
+                        result.Add(new ColorPair(Color.FromArgb(c.Color.R + v, c.Color.G + v, c.Color.B + v), converter.ToLab(new RGBColor((c.Color.R + v) / 255.00 , (c.Color.G + v) / 255.00, (c.Color.B + v) / 255.00))));
+                    }
+                    catch (ArgumentException e) { }
+                }
+                else
+                {
+
+                    try
+                    {
+                        result.Add(new ColorPair(Color.FromArgb(c.Color.R - v, c.Color.G - v, c.Color.B - v), converter.ToLab(new RGBColor((c.Color.R - v) / 255.00, (c.Color.G - v) / 255.00, (c.Color.B - v) / 255.00))));
+                    }
+                    catch (ArgumentException e) { }
+                }
+            }
+  
+
+
+            foreach (CustomPixel p in Source.PixelList)
+            {
+                ColorPair bestMatch = result.MinBy(x => DeltaE.Distance(x.LAB, p.LAB));
+
+                final.SetPixel(p.x, p.y, bestMatch.Color);
+            }
+            //GifBuffer.Add(final);
+            //=====
+            
+            //=====
+            try
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                dlg.InitialDirectory = SaveDirectory;
+
+                dlg.FileName = Guid.NewGuid().ToString(); // Default file name
+                dlg.DefaultExt = ".jpg"; // Default file extension
+                dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+                var path = BatchDir + dlg.FileName + ".jpg";
+                final.Save(path);
+                //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                ProcessWindow.WriteLine("SAVED!");
+            }
+            catch (Exception ex)
+            {
+                WriteLine(ex.StackTrace);
+            }
+
+
+
+            
+
+
+        }
+
+        public void GenerateByPalette(List<Color> colors)
+        {
+            
+
+            Bitmap final = new Bitmap(Source.Width, Source.Height);
+
+
+            //var colors = HistogramGenerator.GenerateMedianHistogram(Source, paletteSize);
+
+            //if(colors.Count != paletteSize)
+            //{
+            //    return;
+            //}
+
+            List<ColorPair> result = HistogramGenerator.GenerateLabValues(colors);
+ 
+
+            for (int i = 0; i < Source.PixelList.Count; i++)
+            {
+
+                ColorPair bestMatch = result.MinBy(x => DeltaE.Distance(x.LAB, Source.PixelList[i].LAB));
+
+
+                //Result.PixelList.Add(Source.PixelList[i]);
+                //Result.PixelList[i].Color = bestMatch.Color;
+                //Result.PixelList[i].LAB = bestMatch.LAB;
+                final.SetPixel(Source.PixelList[i].x,
+                    Source.PixelList[i].y,
+                    bestMatch.Color);
+            }
+
+
+            //GifBuffer.Add(final);
+            ProcessWindow.WriteLine("Finish === " + colors.Count);
+
+
+            //try
+            //{
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+
+            //    dlg.FileName = "G-" + colors.Count; // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    var path = BatchDir + dlg.FileName + ".jpg";
+            //    dlg.OverwritePrompt = false;
+            //    final.Save(path);
+            //    //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+            //    ProcessWindow.WriteLine("Finish === " + colors.Count);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Thread.Sleep(1000);
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+
+            //    dlg.FileName = "G-" + colors.Count; // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    var path = BatchDir + dlg.FileName + ".jpg";
+            //    dlg.OverwritePrompt = false;
+            //    final.Save(path);
+            //    WriteLine(ex.StackTrace);
+            //}
+
+            ProcessWindow.WriteLine("Finished!");
+
+        }
+
+        public void GenerateByPaletteOrder(List<Color> colors, int order)
+        {
+
+
+            Bitmap final = new Bitmap(Source.Width, Source.Height);
+
+
+            //var colors = HistogramGenerator.GenerateMedianHistogram(Source, paletteSize);
+
+            //if(colors.Count != paletteSize)
+            //{
+            //    return;
+            //}
+
+            List<ColorPair> result = HistogramGenerator.GenerateLabValues(colors);
+
+
+            for (int i = 0; i < Source.PixelList.Count; i++)
+            {
+
+                ColorPair bestMatch = result.MinBy(x => DeltaE.Distance(x.LAB, Source.PixelList[i].LAB));
+
+
+                //Result.PixelList.Add(Source.PixelList[i]);
+                //Result.PixelList[i].Color = bestMatch.Color;
+                //Result.PixelList[i].LAB = bestMatch.LAB;
+                final.SetPixel(Source.PixelList[i].x,
+                    Source.PixelList[i].y,
+                    bestMatch.Color);
+            }
+
+
+            if (order == 0)
+            {
+                for (int i = 0; i < 20; i++)
+                {
+                    final.Save(FramesDir + order + "_" + order + ".png");
+                }
+            }
+
+
+            final.Save(FramesDir + order + ".png");
+
+            GifBuffer.Add(new KeyValuePair<Bitmap, int>(final, order));
+            ProcessWindow.WriteLine("Finish === " + colors.Count);
+
+
+            //try
+            //{
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+
+            //    dlg.FileName = "G-" + colors.Count; // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    var path = BatchDir + dlg.FileName + ".jpg";
+            //    dlg.OverwritePrompt = false;
+            //    final.Save(path);
+            //    //randPalette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+            //    ProcessWindow.WriteLine("Finish === " + colors.Count);
+            //}
+            //catch (Exception ex)
+            //{
+            //    Thread.Sleep(1000);
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+
+            //    dlg.FileName = "G-" + colors.Count; // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    var path = BatchDir + dlg.FileName + ".jpg";
+            //    dlg.OverwritePrompt = false;
+            //    final.Save(path);
+            //    WriteLine(ex.StackTrace);
+            //}
+
+            //ProcessWindow.WriteLine("Finished!");
 
         }
 
@@ -1032,7 +1731,7 @@ namespace Pixel_Magic
                     //    }
                     Color save;
                     LabColor save1;
-                    CustomPixel l;
+                    //CustomPixel l;
                     //Test.TryTake(out CustomPixel p1);
                     //Test.TryTake(out CustomPixel p2);
 
@@ -1098,8 +1797,9 @@ namespace Pixel_Magic
             };
 
             ////Parallel.Invoke(action);
+            Stopwatch s1 = Stopwatch.StartNew();
 
-            for (int i = 0; i < 200; i++)
+            for (int i = 0; i <  _iterations; i++)
             {
                 //Palette.ArrayToList(); //Clears pixellist and puts 2darray into it
                 //Palette.Shuffle(); //shuffles
@@ -1110,25 +1810,25 @@ namespace Pixel_Magic
                 }
                 //Test.CompleteAdding();
                 //Task.Run(() => action );
-                Parallel.Invoke(action, action, action, action);
-
+                Parallel.Invoke(new ParallelOptions { MaxDegreeOfParallelism= 8},action, action, action, action, action, action, action, action);
+                WriteLine("Cycle: " + i);
                 //Palette.PixelList = Test.ToList();
                 Palette.ArrayToList();
                 Palette.Shuffle();
 
 
-                frame = new DispatcherFrame();
-                CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
-                {
+                //frame = new DispatcherFrame();
+                //CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+                //{
 
-                    CanvasResult.Children.Clear();
-                    CanvasResult.Children.Insert(0,
-                        ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+                //    CanvasResult.Children.Clear();
+                //    CanvasResult.Children.Insert(0,
+                //        ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
 
-                    frame.Continue = false;
-                    return null;
-                }), null);
-                Dispatcher.PushFrame(frame);
+                //    frame.Continue = false;
+                //    return null;
+                //}), null);
+                //Dispatcher.PushFrame(frame);
 
 
             }
@@ -1468,7 +2168,8 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
 
 
-            ProcessWindow.WriteLine("Finished!");
+            ProcessWindow.WriteLine("Finished! " + s1.ElapsedMilliseconds);
+            
             //_break = false;
             //Stop(null, null);
 
@@ -1610,6 +2311,11 @@ namespace Pixel_Magic
             Bitmap ResultImage = new Bitmap(Palette.Width, Palette.Height);
             Bitmap SubtractFrom1 = new Bitmap(Palette.Width, Palette.Height);
 
+            for (int i = 0; i < 15; i++)
+            {
+                //GifBuffer.Add(new Bitmap(Palette.Working));
+            }
+            
 
             frame = new DispatcherFrame();
             CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
@@ -1625,8 +2331,8 @@ namespace Pixel_Magic
             Dispatcher.PushFrame(frame);
 
 
-            List<System.Drawing.Point> usedList = new List<System.Drawing.Point>();
-            List<System.Drawing.Point> spiralList = new List<System.Drawing.Point>();
+            List<System.Drawing.Point> usedList = new List<System.Drawing.Point>(Source.Working.Width*Source.Working.Height);
+            List<System.Drawing.Point> spiralList = new List<System.Drawing.Point>(Source.Working.Width * Source.Working.Height);
 
             int X = Source.Width - 1;
             int Y = Source.Height - 1;
@@ -1680,16 +2386,25 @@ namespace Pixel_Magic
 
                     var n = rnd.Next(l, spiralList.Count - 1);
 
-                    double error = DeltaE.Distance(Palette.Pixel2DArray[spiralList[n].X, spiralList[n].Y].LAB, Source.Pixel2DArray[spiralList[l].X, spiralList[l].Y].LAB);
-
-
-                    if (error < bestError)
+                    try
                     {
-                        BEIx = spiralList[n].X;
-                        BEIy = spiralList[n].Y;
-                        bestError = error;
+
+                        double error = DeltaE.Distance(Palette.Pixel2DArray[spiralList[n].X, spiralList[n].Y].LAB, Source.Pixel2DArray[spiralList[l].X, spiralList[l].Y].LAB);
+
+                        if (error < bestError)
+                        {
+                            BEIx = spiralList[n].X;
+                            BEIy = spiralList[n].Y;
+                            bestError = error;
+
+                        }
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
 
                     }
+
+                    
 
                 }
 
@@ -1732,7 +2447,7 @@ namespace Pixel_Magic
                         //        Color.Violet);
 
                     }
-
+                    //GifBuffer.Add(new Bitmap(ResultImage));
                             frame = new DispatcherFrame();
                             CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                 new DispatcherOperationCallback(delegate
@@ -2199,10 +2914,415 @@ namespace Pixel_Magic
             int swapCount = 0;
             int ditherCount = 0;
 
+            int ditherMultiplier = _ditherOrdered ? 3 : 1;
+
+            var s = Stopwatch.StartNew();
+            while (!_break)
+            {
+                if (ditherCount >= _ditherIterations)
+                {
+                    ProcessWindow.WriteLine("_____Break_____");
+                    break;
+                }
+                for (int curX = 1; curX < Palette.Width; curX+= ditherMultiplier)
+                {
+                    for (int curY = 1; curY < Palette.Height; curY+= ditherMultiplier)
+                    {
+
+                        //var bestErrorIndex = Tuple.Create(curX, curY);
+                        int bestErrorX = curX;
+                        int bestErrorY = curY;
+                        //double bestError = 0; //set to original neighberhood vs originalsourceneighborhood
+                        //bool foundBetter = false;
+
+
+                        //If the starting pixel is an edge, just ignore and move on
+                        if (curX == 0 || curY == 0 || curX == Palette.Width - 1 || curY == Palette.Height - 1)
+                            continue;
+
+                        //Select pixels randomly, but dont pick edges
+                        //var randomPixelX = rnd.Next(1, Palette.Width - 1);// 0-500
+                        //var randomPixelY = rnd.Next(1, Palette.Height - 1);// 0-500
+                        var randomPixelX = rnd.Next(4, ((Palette.Width/ ditherMultiplier))) * ditherMultiplier - 3;// 0-500
+                        var randomPixelY = rnd.Next(4, ((Palette.Height/ ditherMultiplier))) * ditherMultiplier - 3;
+                        List<CustomPixel> currentPaletteNeighbors = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[curX - 1, curY - 1],//1
+                        Palette.Pixel2DArray[curX, curY - 1],//2
+                        Palette.Pixel2DArray[curX + 1, curY - 1],//3
+                        Palette.Pixel2DArray[curX - 1, curY],//4
+                        Palette.Pixel2DArray[curX, curY],//Center
+                        Palette.Pixel2DArray[curX + 1, curY],//6
+                        Palette.Pixel2DArray[curX - 1, curY + 1],//7
+                        Palette.Pixel2DArray[curX, curY + 1],//8
+                        Palette.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+
+                        List<CustomPixel> randomPointPaletteNeighbors = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        List<CustomPixel> sourceCurrentNeighbors = new List<CustomPixel>
+                    {
+                        Source.Pixel2DArray[curX - 1, curY - 1],//1
+                        Source.Pixel2DArray[curX, curY - 1],//2
+                        Source.Pixel2DArray[curX + 1, curY - 1],//3
+                        Source.Pixel2DArray[curX - 1, curY],//4
+                        Source.Pixel2DArray[curX, curY],//Center
+                        Source.Pixel2DArray[curX + 1, curY],//6
+                        Source.Pixel2DArray[curX - 1, curY + 1],//7
+                        Source.Pixel2DArray[curX, curY + 1],//8
+                        Source.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+                        List<CustomPixel> sourceRandomPointNeighbors = new List<CustomPixel>
+                    {
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Source.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Source.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Source.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        List<CustomPixel> currentPaletteNeighborsWITHCENTERSWAPPED = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[curX - 1, curY - 1],//1
+                        Palette.Pixel2DArray[curX, curY - 1],//2
+                        Palette.Pixel2DArray[curX + 1, curY - 1],//3
+                        Palette.Pixel2DArray[curX - 1, curY],//4
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Palette.Pixel2DArray[curX + 1, curY],//6
+                        Palette.Pixel2DArray[curX - 1, curY + 1],//7
+                        Palette.Pixel2DArray[curX, curY + 1],//8
+                        Palette.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+                        List<CustomPixel> RandomPaletteNeighborsWITHCENTERSWAPPED = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Palette.Pixel2DArray[curX, curY],//Center
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        //-128 to 128 ish
+                        double avg1L = 0;// 
+                        double avg1A = 0;// 
+                        double avg1B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg1L += currentPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg1A += currentPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg1B += currentPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg1L += currentPaletteNeighbors[k].LAB.L;
+                                avg1A += currentPaletteNeighbors[k].LAB.a;
+                                avg1B += currentPaletteNeighbors[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg1L = avg1L / (9 + (_ditherCenterWeight - 1));
+                        avg1A = avg1A / (9 + (_ditherCenterWeight - 1));
+                        avg1B = avg1B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab1 = new LabColor(avg1L, avg1A, avg1B);
+
+                        double avg2L = 0;// 
+                        double avg2A = 0;// 
+                        double avg2B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg2L += randomPointPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg2A += randomPointPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg2B += randomPointPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg2L += randomPointPaletteNeighbors[k].LAB.L;
+                                avg2A += randomPointPaletteNeighbors[k].LAB.a;
+                                avg2B += randomPointPaletteNeighbors[k].LAB.b;
+                            }
+
+
+                        }
+                        avg2L = avg2L / (9 + (_ditherCenterWeight - 1));
+                        avg2A = avg2A / (9 + (_ditherCenterWeight - 1));
+                        avg2B = avg2B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab2 = new LabColor(avg2L, avg2A, avg2B);
+
+
+
+                        double avg3L = 0;// 
+                        double avg3A = 0;// 
+                        double avg3B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
+                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
+                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
+                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
+                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg3L = avg3L / (9 + (_ditherCenterWeight - 1));
+                        avg3A = avg3A / (9 + (_ditherCenterWeight - 1));
+                        avg3B = avg3B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab3 = new LabColor(avg3L, avg3A, avg3B);
+
+
+                        double avg4L = 0;// 
+                        double avg4A = 0;// 
+                        double avg4B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
+                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
+                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
+                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
+                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg4L = avg4L / (9 + (_ditherCenterWeight - 1));
+                        avg4A = avg4A / (9 + (_ditherCenterWeight - 1));
+                        avg4B = avg4B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab4 = new LabColor(avg4L, avg4A, avg4B);
+
+                        double avg5L = 0;// 
+                        double avg5A = 0;// 
+                        double avg5B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg5L += sourceCurrentNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg5A += sourceCurrentNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg5B += sourceCurrentNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg5L += sourceCurrentNeighbors[k].LAB.L;
+                                avg5A += sourceCurrentNeighbors[k].LAB.a;
+                                avg5B += sourceCurrentNeighbors[k].LAB.b;
+                            }
+
+                        }
+                        avg5L = avg5L / (9 + (_ditherCenterWeight - 1));
+                        avg5A = avg5A / (9 + (_ditherCenterWeight - 1));
+                        avg5B = avg5B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab5 = new LabColor(avg5L, avg5A, avg5B);
+
+
+                        double avg6L = 0;// 
+                        double avg6A = 0;// 
+                        double avg6B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg6L += sourceRandomPointNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg6A += sourceRandomPointNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg6B += sourceRandomPointNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg6L += sourceRandomPointNeighbors[k].LAB.L;
+                                avg6A += sourceRandomPointNeighbors[k].LAB.a;
+                                avg6B += sourceRandomPointNeighbors[k].LAB.b;
+                            }
+
+                        }
+                        avg6L = avg6L / (9 + (_ditherCenterWeight - 1));
+                        avg6A = avg6A / (9 + (_ditherCenterWeight - 1));
+                        avg6B = avg6B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab6 = new LabColor(avg6L, avg6A, avg6B);
+
+
+
+
+
+
+                        var distance1 = DeltaE.Distance(lab1, lab5);
+                        var distance2 = DeltaE.Distance(lab2, lab6);
+                        var currentError = distance1 + distance2;
+
+                        var distance3 = DeltaE.Distance(lab3, lab5);
+                        var distance4 = DeltaE.Distance(lab4, lab6);
+                        var newError = distance3 + distance4;
+
+
+                        double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleError2 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double totalCurrentError = singleError1 + singleError2;
+
+
+                        double singleProposedError1 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleProposedError2 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double totalProposedError = singleProposedError1 + singleProposedError2;
+
+                        double finalSingleError = totalCurrentError - totalProposedError;
+                        //double finalSingleError = Math.Abs(totalProposedError - totalCurrentError);
+                        //add weight for single pixel, if distance is too much dont swap
+                        //if (Math.Abs(finalError) < 5) singleGate = true;
+                        double finalNeighborError = newError - currentError;
+
+                        //  is the neighborhood better?         
+                        if (newError < currentError && finalNeighborError < (finalSingleError * _ditherWeight))
+                        //if (finalNeighborError < finalSingleError * _ditherWeight)
+                        { 
+                            Color save = Palette.Pixel2DArray[curX, curY].Color;
+                            LabColor save1 = Palette.Pixel2DArray[curX, curY].LAB;
+
+                            Palette.Pixel2DArray[curX, curY].Color = Palette.Pixel2DArray[randomPixelX, randomPixelY].Color;
+                            Palette.Pixel2DArray[curX, curY].LAB = Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB;
+
+                            Palette.Pixel2DArray[randomPixelX, randomPixelY].Color = save;
+                            Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB = save1;
+                            swapCount++;
+                        }
+
+                    }
+                }
+                ditherCount++;
+                var readout = swapCount;
+                ProcessWindow.WriteLine("Swapped: " + readout);
+
+
+                if (_ditherUpdate)
+                {
+
+
+                    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+                    Task.Factory.StartNew(() =>
+                    {
+
+                        var frame2 = new DispatcherFrame();
+                        CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                            new DispatcherOperationCallback(delegate
+                            {
+                            //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                            CanvasResult.Children.Clear();
+                                CanvasResult.Children.Insert(0, ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                                frame2.Continue = false;
+                                return null;
+                            }), null);
+                        Dispatcher.PushFrame(frame2);
+                        Result = new Image(ConvertToBitmap(Palette.Pixel2DArray));
+
+                    }, _tokenSource.Token,
+                   TaskCreationOptions.None,
+                   TaskScheduler.Default)//Note TaskScheduler.Default here
+                .ContinueWith(
+                        t =>
+                        {
+
+                        }
+                    , TaskScheduler.FromCurrentSynchronizationContext());
+                }
+
+                swapCount = 0;
+
+                if (_break)
+                {
+                    ProcessWindow.WriteLine("_____Break_____");
+                    _break = false;
+                    break;
+                }
+            }
+
+            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            Task.Factory.StartNew(() => {
+
+                var frame2 = new DispatcherFrame();
+                CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                    new DispatcherOperationCallback(delegate
+                    {
+                            //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                            CanvasResult.Children.Clear();
+                        CanvasResult.Children.Insert(0,
+                            ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                        frame2.Continue = false;
+                        return null;
+                    }), null);
+                Dispatcher.PushFrame(frame2);
+                Result = new Image(ConvertToBitmap(Palette.Pixel2DArray));
+
+            }, _tokenSource.Token,
+           TaskCreationOptions.None,
+           TaskScheduler.Default)//Note TaskScheduler.Default here
+        .ContinueWith(
+                t =>
+                {
+
+                }
+            , TaskScheduler.FromCurrentSynchronizationContext());
+            s.Stop();
+            ProcessWindow.WriteLine("Finished! - " + s.ElapsedMilliseconds);
+            
+            Stop(null, null);
+        }
+
+        public void Process_Dither_Advanced_XYZ_Average()
+        {
+
+            ProcessWindow.WriteLine("Dithering");
+            ProcessWindow.WriteLine("=========");
+            _break = false;
+            PrepareImages();
+
+            DispatcherFrame frame = new DispatcherFrame();
+            int swapCount = 0;
+            int ditherCount = 0;
+
 
             while (!_break)
             {
-                if (ditherCount >= _ditherLimit)
+                if (ditherCount >= _ditherIterations)
                 {
                     ProcessWindow.WriteLine("_____Break_____");
                     break;
@@ -2308,191 +3428,191 @@ namespace Pixel_Magic
                         Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
                     };
 
-                        //-128 to 128 ish
-                        double avg1L = 0;// 
-                        double avg1A = 0;// 
-                        double avg1B = 0;// 
+
+  
+
+                        
+
+                        double a1x = 0;// 
+                        double a1y = 0;// 
+                        double a1z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(currentPaletteNeighbors[k].LAB);
                             if (k == 4)
                             {
-                                avg1L += currentPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
-                                avg1A += currentPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
-                                avg1B += currentPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                                a1x += p.X * _ditherCenterWeight;
+                                a1y += p.Y * _ditherCenterWeight;
+                                a1z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg1L += currentPaletteNeighbors[k].LAB.L;
-                                avg1A += currentPaletteNeighbors[k].LAB.a;
-                                avg1B += currentPaletteNeighbors[k].LAB.b;
-
+                                a1x += p.X;
+                                a1y += p.Y;
+                                a1z += p.Z;
                             }
-
-
                         }
-                        avg1L = avg1L / 9 + (_ditherCenterWeight - 1);
-                        avg1A = avg1A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg1B = avg1B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab1 = new LabColor(avg1L, avg1A, avg1B);
+                        a1x = a1x / (9 + (_ditherCenterWeight - 1));
+                        a1y = a1y / (9 + (_ditherCenterWeight - 1));
+                        a1z = a1z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab1 = converter.ToLab(new XYZColor(a1x, a1y, a1z));
 
-                        double avg2L = 0;// 
-                        double avg2A = 0;// 
-                        double avg2B = 0;// 
+
+                        double a2x = 0;// 
+                        double a2y = 0;// 
+                        double a2z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(randomPointPaletteNeighbors[k].LAB);
                             if (k == 4)
                             {
-                                avg2L += randomPointPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
-                                avg2A += randomPointPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
-                                avg2B += randomPointPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                                a2x += p.X * _ditherCenterWeight;
+                                a2y += p.Y * _ditherCenterWeight;
+                                a2z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg2L += randomPointPaletteNeighbors[k].LAB.L;
-                                avg2A += randomPointPaletteNeighbors[k].LAB.a;
-                                avg2B += randomPointPaletteNeighbors[k].LAB.b;
+                                a2x += p.X;
+                                a2y += p.Y;
+                                a2z += p.Z;
                             }
-
-
                         }
-                        avg2L = avg2L / 9 + (_ditherCenterWeight - 1);
-                        avg2A = avg2A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg2B = avg2B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab2 = new LabColor(avg2L, avg2A, avg2B);
+                        a2x = a2x / (9 + (_ditherCenterWeight - 1));
+                        a2y = a2y / (9 + (_ditherCenterWeight - 1));
+                        a2z = a2z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab2 = converter.ToLab(new XYZColor(a2x, a2y, a2z));
 
 
 
-                        double avg3L = 0;// 
-                        double avg3A = 0;// 
-                        double avg3B = 0;// 
+                        double a3x = 0;// 
+                        double a3y = 0;// 
+                        double a3z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB);
                             if (k == 4)
                             {
-                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
-                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
-                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                                a3x += p.X * _ditherCenterWeight;
+                                a3y += p.Y * _ditherCenterWeight;
+                                a3z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
-                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
-                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
-
+                                a3x += p.X;
+                                a3y += p.Y;
+                                a3z += p.Z;
                             }
-
-
                         }
-                        avg3L = avg3L / 9 + (_ditherCenterWeight - 1);
-                        avg3A = avg3A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg3B = avg3B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab3 = new LabColor(avg3L, avg3A, avg3B);
+                        a3x = a3x / (9 + (_ditherCenterWeight - 1));
+                        a3y = a3y / (9 + (_ditherCenterWeight - 1));
+                        a3z = a3z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab3 = converter.ToLab(new XYZColor(a3x, a3y, a3z));
 
 
-                        double avg4L = 0;// 
-                        double avg4A = 0;// 
-                        double avg4B = 0;// 
+                        double a4x = 0;// 
+                        double a4y = 0;// 
+                        double a4z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB);
                             if (k == 4)
                             {
-                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
-                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
-                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                                a4x += p.X * _ditherCenterWeight;
+                                a4y += p.Y * _ditherCenterWeight;
+                                a4z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
-                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
-                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
-
+                                a4x += p.X;
+                                a4y += p.Y;
+                                a4z += p.Z;
                             }
-
-
                         }
-                        avg4L = avg4L / 9 + (_ditherCenterWeight - 1);
-                        avg4A = avg4A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg4B = avg4B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab4 = new LabColor(avg4L, avg4A, avg4B);
+                        a4x = a4x / (9 + (_ditherCenterWeight - 1));
+                        a4y = a4y / (9 + (_ditherCenterWeight - 1));
+                        a4z = a4z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab4 = converter.ToLab(new XYZColor(a4x, a4y, a4z));
 
-                        double avg5L = 0;// 
-                        double avg5A = 0;// 
-                        double avg5B = 0;// 
+
+                        double a5x = 0;// 
+                        double a5y = 0;// 
+                        double a5z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(sourceCurrentNeighbors[k].LAB);
                             if (k == 4)
                             {
-                                avg5L += sourceCurrentNeighbors[k].LAB.L * _ditherCenterWeight;
-                                avg5A += sourceCurrentNeighbors[k].LAB.a * _ditherCenterWeight;
-                                avg5B += sourceCurrentNeighbors[k].LAB.b * _ditherCenterWeight;
+                                a5x += p.X * _ditherCenterWeight;
+                                a5y += p.Y * _ditherCenterWeight;
+                                a5z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg5L += sourceCurrentNeighbors[k].LAB.L;
-                                avg5A += sourceCurrentNeighbors[k].LAB.a;
-                                avg5B += sourceCurrentNeighbors[k].LAB.b;
+                                a5x += p.X;
+                                a5y += p.Y;
+                                a5z += p.Z;
                             }
-
                         }
-                        avg5L = avg5L / 9 + (_ditherCenterWeight - 1);
-                        avg5A = avg5A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg5B = avg5B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab5 = new LabColor(avg5L, avg5A, avg5B);
+                        a5x = a5x / (9 + (_ditherCenterWeight - 1));
+                        a5y = a5y / (9 + (_ditherCenterWeight - 1));
+                        a5z = a5z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab5 = converter.ToLab(new XYZColor(a5x, a5y, a5z));
 
 
-                        double avg6L = 0;// 
-                        double avg6A = 0;// 
-                        double avg6B = 0;// 
+                        double a6x = 0;// 
+                        double a6y = 0;// 
+                        double a6z = 0;// 
                         for (int k = 0; k < 9; k++)
                         {
+                            var p = converter.ToXYZ(sourceRandomPointNeighbors[k].LAB);
                             if (k == 4)
                             {
-                                avg6L += sourceRandomPointNeighbors[k].LAB.L * _ditherCenterWeight;
-                                avg6A += sourceRandomPointNeighbors[k].LAB.a * _ditherCenterWeight;
-                                avg6B += sourceRandomPointNeighbors[k].LAB.b * _ditherCenterWeight;
+                                a6x += p.X * _ditherCenterWeight;
+                                a6y += p.Y * _ditherCenterWeight;
+                                a6z += p.Z * _ditherCenterWeight;
                             }
                             else
                             {
-                                avg6L += sourceRandomPointNeighbors[k].LAB.L;
-                                avg6A += sourceRandomPointNeighbors[k].LAB.a;
-                                avg6B += sourceRandomPointNeighbors[k].LAB.b;
+                                a6x += p.X;
+                                a6y += p.Y;
+                                a6z += p.Z;
                             }
-
                         }
-                        avg6L = avg6L / 9 + (_ditherCenterWeight - 1);
-                        avg6A = avg6A / 9 + (_ditherCenterWeight - 1) + 127;
-                        avg6B = avg6B / 9 + (_ditherCenterWeight - 1) + 127;
-                        LabColor lab6 = new LabColor(avg6L, avg6A, avg6B);
+                        a6x = a6x / (9 + (_ditherCenterWeight - 1));
+                        a6y = a6y / (9 + (_ditherCenterWeight - 1));
+                        a6z = a6z / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab6 = converter.ToLab(new XYZColor(a6x, a6y, a6z));
 
 
 
 
 
 
-                        var distance1 = DeltaE.DistanceCIE1976(lab1, lab5);
-                        var distance2 = DeltaE.DistanceCIE1976(lab2, lab6);
+                        var distance1 = DeltaE.Distance(lab1, lab5);
+                        var distance2 = DeltaE.Distance(lab2, lab6);
                         var currentError = distance1 + distance2;
 
-                        var distance3 = DeltaE.DistanceCIE1976(lab3, lab5);
-                        var distance4 = DeltaE.DistanceCIE1976(lab4, lab6);
+                        var distance3 = DeltaE.Distance(lab3, lab5);
+                        var distance4 = DeltaE.Distance(lab4, lab6);
                         var newError = distance3 + distance4;
 
 
-                        double singleError1 = DeltaE.DistanceCIE1976(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
-                        double singleError2 = DeltaE.DistanceCIE1976(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleError2 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
                         double totalCurrentError = singleError1 + singleError2;
 
 
-                        double singleProposedError1 = DeltaE.DistanceCIE1976(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[curX, curY].LAB);
-                        double singleProposedError2 = DeltaE.DistanceCIE1976(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double singleProposedError1 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleProposedError2 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
                         double totalProposedError = singleProposedError1 + singleProposedError2;
 
-                        double finalSingleError = Math.Abs(totalProposedError - totalCurrentError);
+                        //double finalSingleError = Math.Abs(totalProposedError - totalCurrentError);
+                        double finalSingleError = totalProposedError - totalCurrentError;
                         //add weight for single pixel, if distance is too much dont swap
                         //if (Math.Abs(finalError) < 5) singleGate = true;
-                        double finalNeighborError = Math.Abs(newError - currentError);
+                        double finalNeighborError = newError - currentError;
 
-                        //if (newError < currentError)
+                        //  is the neighborhood better?         
                         if (newError < currentError && finalNeighborError < (finalSingleError * _ditherWeight))
                         {
                             Color save = Palette.Pixel2DArray[curX, curY].Color;
@@ -2518,7 +3638,7 @@ namespace Pixel_Magic
                     CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                         new DispatcherOperationCallback(delegate
                         {
-                            //GifFrames.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                            //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
                             CanvasResult.Children.Clear();
                             CanvasResult.Children.Insert(0,
                                 ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
@@ -2564,54 +3684,937 @@ namespace Pixel_Magic
             Stop(null, null);
         }
 
-        //=====================================================================
-        //=====================================================================
-        //=====================================================================
-        //=====================================================================
+        public void Process_Dither_Advanced_Grid()
+        {
 
+            ProcessWindow.WriteLine("Dithering_Grid");
+            ProcessWindow.WriteLine("=========");
+            _break = false;
+            PrepareImages();
+
+            DispatcherFrame frame = new DispatcherFrame();
+            int swapCount = 0;
+            int ditherCount = 0;
+
+            //int ditherMultiplier = _ditherOrdered ? 3 : 1;
+            int offset = 1;
+
+            var s = Stopwatch.StartNew();
+            while (!_break)
+            {
+                if (ditherCount >= _ditherIterations)
+                {
+                    ProcessWindow.WriteLine("_____Break_____");
+                    break;
+                }
+                for (int curX = 1; curX < Palette.Width; curX += 1)
+                {
+                    if (curX % 2 == 0)
+                    {
+                        offset = 2;
+                    }
+                    else
+                    {
+                        offset = 1;
+                    }
+
+                    for (int curY = offset; curY < Palette.Height; curY += 2)
+                    {
+                        
+
+                        //var bestErrorIndex = Tuple.Create(curX, curY);
+                        int bestErrorX = curX;
+                        int bestErrorY = curY;
+                        //double bestError = 0; //set to original neighberhood vs originalsourceneighborhood
+                        //bool foundBetter = false;
+
+
+                        //If the starting pixel is an edge, just ignore and move on
+                        if (curX == 0 || curY == 0 || curX == Palette.Width - 1 || curY == Palette.Height - 1)
+                            continue;
+
+                        //Select pixels randomly, but dont pick edges
+                        //var randomPixelX = rnd.Next(1, Palette.Width - 1);// 0-500
+                        //var randomPixelY = rnd.Next(1, Palette.Height - 1);// 0-500
+
+
+                        var randomPixelX = rnd.Next(1, Palette.Width - 1);
+                        var randomPixelY = 0;
+
+                        if (randomPixelX % 2 == 0)
+                        {
+                            randomPixelY = (rnd.Next(1, (Palette.Height-1) / 2) * 2);
+                        }
+                        else
+                        {
+                            randomPixelY = (rnd.Next(1, (Palette.Height-1) / 2) * 2) + 1;
+                        }
+
+
+                        //var randomPixelX = rnd.Next(1, Palette.Width - 1);
+                        //var randomPixelY = 0;
+
+                        //if (randomPixelX % 2 == 0)
+                        //{
+                        //    int r1 = rnd.Next(1, Palette.Height);
+                        //    while (r1 % 2 != 0)
+                        //    {
+                        //        r1 = rnd.Next(1, Palette.Height);
+                        //    }
+
+                        //    randomPixelY = r1;
+                        //}
+                        //else
+                        //{
+                        //    int r1 = rnd.Next(1, Palette.Height);
+                        //    while (r1 % 2 == 0)
+                        //    {
+                        //        r1 = rnd.Next(1, Palette.Height);
+                        //    }
+
+                        //    randomPixelY = r1;
+                        //}
+
+
+                        //Color save = Palette.Pixel2DArray[curX, curY].Color;
+                        //LabColor save1 = Palette.Pixel2DArray[curX, curY].LAB;
+                        //if (Palette.Pixel2DArray[curX, curY].Color != Color.GreenYellow)
+                        //{
+                        //    Palette.Pixel2DArray[curX, curY].Color = Color.Red;
+                        //}
+
+                        //Palette.Pixel2DArray[curX, curY].LAB = Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB;
+
+                        //Palette.Pixel2DArray[randomPixelX, randomPixelY].Color = Color.GreenYellow;
+                        //Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB = save1;
+                        //swapCount++;
+
+
+
+
+
+                        List<CustomPixel> currentPaletteNeighbors = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[curX - 1, curY - 1],//1
+                        Palette.Pixel2DArray[curX, curY - 1],//2
+                        Palette.Pixel2DArray[curX + 1, curY - 1],//3
+                        Palette.Pixel2DArray[curX - 1, curY],//4
+                        Palette.Pixel2DArray[curX, curY],//Center
+                        Palette.Pixel2DArray[curX + 1, curY],//6
+                        Palette.Pixel2DArray[curX - 1, curY + 1],//7
+                        Palette.Pixel2DArray[curX, curY + 1],//8
+                        Palette.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+
+                        List<CustomPixel> randomPointPaletteNeighbors = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        List<CustomPixel> sourceCurrentNeighbors = new List<CustomPixel>
+                    {
+                        Source.Pixel2DArray[curX - 1, curY - 1],//1
+                        Source.Pixel2DArray[curX, curY - 1],//2
+                        Source.Pixel2DArray[curX + 1, curY - 1],//3
+                        Source.Pixel2DArray[curX - 1, curY],//4
+                        Source.Pixel2DArray[curX, curY],//Center
+                        Source.Pixel2DArray[curX + 1, curY],//6
+                        Source.Pixel2DArray[curX - 1, curY + 1],//7
+                        Source.Pixel2DArray[curX, curY + 1],//8
+                        Source.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+                        List<CustomPixel> sourceRandomPointNeighbors = new List<CustomPixel>
+                    {
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Source.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Source.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Source.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Source.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Source.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        List<CustomPixel> currentPaletteNeighborsWITHCENTERSWAPPED = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[curX - 1, curY - 1],//1
+                        Palette.Pixel2DArray[curX, curY - 1],//2
+                        Palette.Pixel2DArray[curX + 1, curY - 1],//3
+                        Palette.Pixel2DArray[curX - 1, curY],//4
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY],//Center
+                        Palette.Pixel2DArray[curX + 1, curY],//6
+                        Palette.Pixel2DArray[curX - 1, curY + 1],//7
+                        Palette.Pixel2DArray[curX, curY + 1],//8
+                        Palette.Pixel2DArray[curX + 1, curY + 1]//9
+                    };
+
+                        List<CustomPixel> RandomPaletteNeighborsWITHCENTERSWAPPED = new List<CustomPixel>
+                    {
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+                        Palette.Pixel2DArray[curX, curY],//Center
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+                        Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+                        Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+                        Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+                    };
+
+                        //-128 to 128 ish
+                        double avg1L = 0;// 
+                        double avg1A = 0;// 
+                        double avg1B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg1L += currentPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg1A += currentPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg1B += currentPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg1L += currentPaletteNeighbors[k].LAB.L;
+                                avg1A += currentPaletteNeighbors[k].LAB.a;
+                                avg1B += currentPaletteNeighbors[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg1L = avg1L / (9 + (_ditherCenterWeight - 1));
+                        avg1A = avg1A / (9 + (_ditherCenterWeight - 1));
+                        avg1B = avg1B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab1 = new LabColor(avg1L, avg1A, avg1B);
+
+                        double avg2L = 0;// 
+                        double avg2A = 0;// 
+                        double avg2B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg2L += randomPointPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg2A += randomPointPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg2B += randomPointPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg2L += randomPointPaletteNeighbors[k].LAB.L;
+                                avg2A += randomPointPaletteNeighbors[k].LAB.a;
+                                avg2B += randomPointPaletteNeighbors[k].LAB.b;
+                            }
+
+
+                        }
+                        avg2L = avg2L / (9 + (_ditherCenterWeight - 1));
+                        avg2A = avg2A / (9 + (_ditherCenterWeight - 1));
+                        avg2B = avg2B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab2 = new LabColor(avg2L, avg2A, avg2B);
+
+
+
+                        double avg3L = 0;// 
+                        double avg3A = 0;// 
+                        double avg3B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
+                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
+                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg3L += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
+                                avg3A += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
+                                avg3B += currentPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg3L = avg3L / (9 + (_ditherCenterWeight - 1));
+                        avg3A = avg3A / (9 + (_ditherCenterWeight - 1));
+                        avg3B = avg3B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab3 = new LabColor(avg3L, avg3A, avg3B);
+
+
+                        double avg4L = 0;// 
+                        double avg4A = 0;// 
+                        double avg4B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L * _ditherCenterWeight;
+                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a * _ditherCenterWeight;
+                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg4L += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.L;
+                                avg4A += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.a;
+                                avg4B += RandomPaletteNeighborsWITHCENTERSWAPPED[k].LAB.b;
+
+                            }
+
+
+                        }
+                        avg4L = avg4L / (9 + (_ditherCenterWeight - 1));
+                        avg4A = avg4A / (9 + (_ditherCenterWeight - 1));
+                        avg4B = avg4B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab4 = new LabColor(avg4L, avg4A, avg4B);
+
+                        double avg5L = 0;// 
+                        double avg5A = 0;// 
+                        double avg5B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg5L += sourceCurrentNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg5A += sourceCurrentNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg5B += sourceCurrentNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg5L += sourceCurrentNeighbors[k].LAB.L;
+                                avg5A += sourceCurrentNeighbors[k].LAB.a;
+                                avg5B += sourceCurrentNeighbors[k].LAB.b;
+                            }
+
+                        }
+                        avg5L = avg5L / (9 + (_ditherCenterWeight - 1));
+                        avg5A = avg5A / (9 + (_ditherCenterWeight - 1));
+                        avg5B = avg5B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab5 = new LabColor(avg5L, avg5A, avg5B);
+
+
+                        double avg6L = 0;// 
+                        double avg6A = 0;// 
+                        double avg6B = 0;// 
+                        for (int k = 0; k < 9; k++)
+                        {
+                            if (k == 4)
+                            {
+                                avg6L += sourceRandomPointNeighbors[k].LAB.L * _ditherCenterWeight;
+                                avg6A += sourceRandomPointNeighbors[k].LAB.a * _ditherCenterWeight;
+                                avg6B += sourceRandomPointNeighbors[k].LAB.b * _ditherCenterWeight;
+                            }
+                            else
+                            {
+                                avg6L += sourceRandomPointNeighbors[k].LAB.L;
+                                avg6A += sourceRandomPointNeighbors[k].LAB.a;
+                                avg6B += sourceRandomPointNeighbors[k].LAB.b;
+                            }
+
+                        }
+                        avg6L = avg6L / (9 + (_ditherCenterWeight - 1));
+                        avg6A = avg6A / (9 + (_ditherCenterWeight - 1));
+                        avg6B = avg6B / (9 + (_ditherCenterWeight - 1));
+                        LabColor lab6 = new LabColor(avg6L, avg6A, avg6B);
+
+
+
+
+
+
+                        var distance1 = DeltaE.Distance(lab1, lab5);
+                        var distance2 = DeltaE.Distance(lab2, lab6);
+                        var currentError = distance1 + distance2;
+
+                        var distance3 = DeltaE.Distance(lab3, lab5);
+                        var distance4 = DeltaE.Distance(lab4, lab6);
+                        var newError = distance3 + distance4;
+
+
+                        double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleError2 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double totalCurrentError = singleError1 + singleError2;
+
+
+                        double singleProposedError1 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+                        double singleProposedError2 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+                        double totalProposedError = singleProposedError1 + singleProposedError2;
+
+                        double finalSingleError = totalCurrentError - totalProposedError;
+                        //double finalSingleError = Math.Abs(totalProposedError - totalCurrentError);
+                        //add weight for single pixel, if distance is too much dont swap
+                        //if (Math.Abs(finalError) < 5) singleGate = true;
+                        double finalNeighborError = newError - currentError;
+
+                        //  is the neighborhood better?         
+                        if (newError < currentError && finalNeighborError < (finalSingleError * _ditherWeight))
+                        //if (finalNeighborError < finalSingleError * _ditherWeight)
+                        {
+                            Color save = Palette.Pixel2DArray[curX, curY].Color;
+                            LabColor save1 = Palette.Pixel2DArray[curX, curY].LAB;
+
+                            Palette.Pixel2DArray[curX, curY].Color = Palette.Pixel2DArray[randomPixelX, randomPixelY].Color;
+                            Palette.Pixel2DArray[curX, curY].LAB = Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB;
+
+                            Palette.Pixel2DArray[randomPixelX, randomPixelY].Color = save;
+                            Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB = save1;
+                            swapCount++;
+                        }
+
+                    }
+                }
+                ditherCount++;
+                var readout = swapCount;
+                ProcessWindow.WriteLine("Swapped: " + readout);
+
+
+                if (_ditherUpdate)
+                {
+
+
+                    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+                    Task.Factory.StartNew(() =>
+                    {
+
+                        var frame2 = new DispatcherFrame();
+                        CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                            new DispatcherOperationCallback(delegate
+                            {
+                                //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                                CanvasResult.Children.Clear();
+                                CanvasResult.Children.Insert(0, ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                                frame2.Continue = false;
+                                return null;
+                            }), null);
+                        Dispatcher.PushFrame(frame2);
+                        Result = new Image(ConvertToBitmap(Palette.Pixel2DArray));
+
+                    }, _tokenSource.Token,
+                   TaskCreationOptions.None,
+                   TaskScheduler.Default)//Note TaskScheduler.Default here
+                .ContinueWith(
+                        t =>
+                        {
+
+                        }
+                    , TaskScheduler.FromCurrentSynchronizationContext());
+                }
+
+                swapCount = 0;
+
+                if (_break)
+                {
+                    ProcessWindow.WriteLine("_____Break_____");
+                    _break = false;
+                    break;
+                }
+            }
+
+            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+            Task.Factory.StartNew(() => {
+
+                var frame2 = new DispatcherFrame();
+                CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+                    new DispatcherOperationCallback(delegate
+                    {
+                        //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+                        CanvasResult.Children.Clear();
+                        CanvasResult.Children.Insert(0,
+                            ConvertToBitmap(Palette.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                        frame2.Continue = false;
+                        return null;
+                    }), null);
+                Dispatcher.PushFrame(frame2);
+                Result = new Image(ConvertToBitmap(Palette.Pixel2DArray));
+
+            }, _tokenSource.Token,
+           TaskCreationOptions.None,
+           TaskScheduler.Default)//Note TaskScheduler.Default here
+        .ContinueWith(
+                t =>
+                {
+
+                }
+            , TaskScheduler.FromCurrentSynchronizationContext());
+            s.Stop();
+            ProcessWindow.WriteLine("Finished! - " + s.ElapsedMilliseconds);
+
+            Stop(null, null);
+        }
+
+        //public void Process_Dither_Advanced_Grid_BW()
+        //{
+
+        //    ProcessWindow.WriteLine("Dithering_Grid");
+        //    ProcessWindow.WriteLine("=========");
+        //    _break = false;
+        //    PrepareImages();
+
+        //    CustomPixel black = new CustomPixel(Color.Black, 0, 0);
+        //    CustomPixel white = new CustomPixel(Color.White, 0, 0);
+
+        //    DispatcherFrame frame = new DispatcherFrame();
+        //    int swapCount = 0;
+        //    int ditherCount = 0;
 
             
 
-        public void PrepareImages()
-        {
+        //    int ditherMultiplier = _ditherOrdered ? 3 : 1;
+        //    int offset = 1;
 
-            ProcessWindow.WriteLine("Preparing images...");
-            if (!ImagesPresent())
-            {
-                ProcessWindow.WriteLine("Images not ready");
-                return;
-            }
-            WriteLine($"Original Resolution: ({Source.Width},{Source.Height})");
+        //    var s = Stopwatch.StartNew();
+        //    while (!_break)
+        //    {
+        //        if (ditherCount >= _ditherIterations)
+        //        {
+        //            ProcessWindow.WriteLine("_____Break_____");
+        //            break;
+        //        }
+        //        for (int curX = 1; curX < Source.Width; curX += ditherMultiplier)
+        //        {
+        //            for (int curY = 1; curY < Source.Height; curY += ditherMultiplier)
+        //            {
 
-            Source.Resize(_rm);
-            Palette.Resize(Source.Width, Source.Height);
-
-            _continuousRefreshRate = (Source.Width * Source.Height) / _continuousRatio;
-
-            ProcessWindow.WriteLine($"Scaled Resolution: ({Source.Width},{Source.Height})");
-
-            if (Source.Width * Source.Height != Palette.Width * Palette.Height)
-                throw new Exception("ImageSizeMismatchExcecption");
+        //                //var bestErrorIndex = Tuple.Create(curX, curY);
+        //                int bestErrorX = curX;
+        //                int bestErrorY = curY;
+        //                //double bestError = 0; //set to original neighberhood vs originalsourceneighborhood
+        //                //bool foundBetter = false;
 
 
-            var frame = new DispatcherFrame();
-            lblResolution.Dispatcher.BeginInvoke(DispatcherPriority.Background,
-                new DispatcherOperationCallback(delegate
-                {
-                    //lblResolution.Text = $"[{Source.Width}, {Source.Height}]";
+        //                //If the starting pixel is an edge, just ignore and move on
+        //                if (curX == 0 || curY == 0 || curX == Source.Width - 1 || curY == Source.Height - 1)
+        //                    continue;
 
-                    frame.Continue = false;
-                    return null;
-                }), null);
-            Dispatcher.PushFrame(frame);
+        //                //Select pixels randomly, but dont pick edges
+        //                //var randomPixelX = rnd.Next(1, Palette.Width - 1);// 0-500
+        //                //var randomPixelY = rnd.Next(1, Palette.Height - 1);// 0-500
+        //                var randomPixelX = rnd.Next(4, ((Source.Width / ditherMultiplier))) * ditherMultiplier - 3;// 0-500
+        //                var randomPixelY = rnd.Next(4, ((Source.Height / ditherMultiplier))) * ditherMultiplier - 3;
 
-            for (int i = 0; i < 5; i++)
-            {
-                GifFrames.Add(new Bitmap(Palette.Working));
-            }
 
-            _break = false;
-        }
+
+
+
+        //            //    List<CustomPixel> currentPaletteNeighbors = new List<
+        //            >
+        //            //{
+        //            //    Source.Pixel2DArray[curX - 1, curY - 1],//1
+        //            //    Source.Pixel2DArray[curX, curY - 1],//2
+        //            //    Source.Pixel2DArray[curX + 1, curY - 1],//3
+        //            //    Source.Pixel2DArray[curX - 1, curY],//4
+        //            //    Source.Pixel2DArray[curX, curY],//Center
+        //            //    Source.Pixel2DArray[curX + 1, curY],//6
+        //            //    Source.Pixel2DArray[curX - 1, curY + 1],//7
+        //            //    Source.Pixel2DArray[curX, curY + 1],//8
+        //            //    Source.Pixel2DArray[curX + 1, curY + 1]//9
+        //            //};
+
+
+        //            //    List<CustomPixel> randomPointPaletteNeighbors = new List<CustomPixel>
+        //            //{
+        //            //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+        //            //    Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+        //            //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+        //            //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+        //            //    Palette.Pixel2DArray[randomPixelX, randomPixelY],//Center
+        //            //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+        //            //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+        //            //    Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+        //            //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+        //            //};
+
+        //            List<CustomPixel> sourceCurrentNeighbors = new List<CustomPixel>
+        //            {
+        //                Palette.Pixel2DArray[curX - 1, curY - 1],//1
+        //                Palette.Pixel2DArray[curX, curY - 1],//2
+        //                Palette.Pixel2DArray[curX + 1, curY - 1],//3
+        //                Palette.Pixel2DArray[curX - 1, curY],//4
+        //                Palette.Pixel2DArray[curX, curY],//Center
+        //                Palette.Pixel2DArray[curX + 1, curY],//6
+        //                Palette.Pixel2DArray[curX - 1, curY + 1],//7
+        //                Palette.Pixel2DArray[curX, curY + 1],//8
+        //                Palette.Pixel2DArray[curX + 1, curY + 1]//9
+        //            };
+
+        //                //    List<CustomPixel> sourceRandomPointNeighbors = new List<CustomPixel>
+        //                //{
+        //                //    Source.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+        //                //    Source.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+        //                //    Source.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+        //                //    Source.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+        //                //    Source.Pixel2DArray[randomPixelX, randomPixelY],//Center
+        //                //    Source.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+        //                //    Source.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+        //                //    Source.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+        //                //    Source.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+        //                //};
+
+        //                List<CustomPixel> SourceBlack = new List<CustomPixel>
+        //            {
+        //                Source.Pixel2DArray[curX - 1, curY - 1],//1
+        //                Source.Pixel2DArray[curX, curY - 1],//2
+        //                Source.Pixel2DArray[curX + 1, curY - 1],//3
+        //                Source.Pixel2DArray[curX - 1, curY],//4
+        //                black,//Center
+        //                Source.Pixel2DArray[curX + 1, curY],//6
+        //                Source.Pixel2DArray[curX - 1, curY + 1],//7
+        //                Source.Pixel2DArray[curX, curY + 1],//8
+        //                Source.Pixel2DArray[curX + 1, curY + 1]//9
+        //            };
+
+        //                List<CustomPixel> SourceWhite = new List<CustomPixel>
+        //            {
+        //                Source.Pixel2DArray[curX - 1, curY - 1],//1
+        //                Source.Pixel2DArray[curX, curY - 1],//2
+        //                Source.Pixel2DArray[curX + 1, curY - 1],//3
+        //                Source.Pixel2DArray[curX - 1, curY],//4
+        //                white,//Center
+        //                Source.Pixel2DArray[curX + 1, curY],//6
+        //                Source.Pixel2DArray[curX - 1, curY + 1],//7
+        //                Source.Pixel2DArray[curX, curY + 1],//8
+        //                Source.Pixel2DArray[curX + 1, curY + 1]//9
+        //            };
+
+        //                //List<CustomPixel> RandomPaletteNeighborsWITHCENTERSWAPPED = new List<CustomPixel>
+        //                //{
+        //                //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY - 1],//1
+        //                //    Palette.Pixel2DArray[randomPixelX, randomPixelY - 1],//2
+        //                //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY - 1],//3
+        //                //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY],//4
+        //                //    Palette.Pixel2DArray[curX, curY],//Center
+        //                //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY],//6
+        //                //    Palette.Pixel2DArray[randomPixelX - 1, randomPixelY + 1],//7
+        //                //    Palette.Pixel2DArray[randomPixelX, randomPixelY + 1],//8
+        //                //    Palette.Pixel2DArray[randomPixelX + 1, randomPixelY + 1]//9
+        //                //};
+
+        //                //-128 to 128 ish
+        //                double avg1L = 0;// 
+        //                double avg1A = 0;// 
+        //                double avg1B = 0;// 
+        //                for (int k = 0; k < 9; k++)
+        //                {
+        //                    if (k == 4)
+        //                    {
+        //                        avg1L += sourceCurrentNeighbors[k].LAB.L * _ditherCenterWeight;
+        //                        avg1A += sourceCurrentNeighbors[k].LAB.a * _ditherCenterWeight;
+        //                        avg1B += sourceCurrentNeighbors[k].LAB.b * _ditherCenterWeight;
+        //                    }
+        //                    else
+        //                    {
+        //                        avg1L += sourceCurrentNeighbors[k].LAB.L;
+        //                        avg1A += sourceCurrentNeighbors[k].LAB.a;
+        //                        avg1B += sourceCurrentNeighbors[k].LAB.b;
+
+        //                    }
+
+
+        //                }
+        //                avg1L = avg1L / (9 + (_ditherCenterWeight - 1));
+        //                avg1A = avg1A / (9 + (_ditherCenterWeight - 1));
+        //                avg1B = avg1B / (9 + (_ditherCenterWeight - 1));
+        //                LabColor original = new LabColor(avg1L, avg1A, avg1B);
+
+        //                //double avg2L = 0;// 
+        //                //double avg2A = 0;// 
+        //                //double avg2B = 0;// 
+        //                //for (int k = 0; k < 9; k++)
+        //                //{
+        //                //    if (k == 4)
+        //                //    {
+        //                //        avg2L += randomPointPaletteNeighbors[k].LAB.L * _ditherCenterWeight;
+        //                //        avg2A += randomPointPaletteNeighbors[k].LAB.a * _ditherCenterWeight;
+        //                //        avg2B += randomPointPaletteNeighbors[k].LAB.b * _ditherCenterWeight;
+        //                //    }
+        //                //    else
+        //                //    {
+        //                //        avg2L += randomPointPaletteNeighbors[k].LAB.L;
+        //                //        avg2A += randomPointPaletteNeighbors[k].LAB.a;
+        //                //        avg2B += randomPointPaletteNeighbors[k].LAB.b;
+        //                //    }
+
+
+        //                //}
+        //                //avg2L = avg2L / (9 + (_ditherCenterWeight - 1));
+        //                //avg2A = avg2A / (9 + (_ditherCenterWeight - 1));
+        //                //avg2B = avg2B / (9 + (_ditherCenterWeight - 1));
+        //                //LabColor lab2 = new LabColor(avg2L, avg2A, avg2B);
+
+
+
+        //                double avg3L = 0;// 
+        //                double avg3A = 0;// 
+        //                double avg3B = 0;// 
+        //                for (int k = 0; k < 9; k++)
+        //                {
+        //                    if (k == 4)
+        //                    {
+        //                        avg3L += SourceBlack[k].LAB.L * _ditherCenterWeight;
+        //                        avg3A += SourceBlack[k].LAB.a * _ditherCenterWeight;
+        //                        avg3B += SourceBlack[k].LAB.b * _ditherCenterWeight;
+        //                    }
+        //                    else
+        //                    {
+        //                        avg3L += SourceBlack[k].LAB.L;
+        //                        avg3A += SourceBlack[k].LAB.a;
+        //                        avg3B += SourceBlack[k].LAB.b;
+
+        //                    }
+
+
+        //                }
+        //                avg3L = avg3L / (9 + (_ditherCenterWeight - 1));
+        //                avg3A = avg3A / (9 + (_ditherCenterWeight - 1));
+        //                avg3B = avg3B / (9 + (_ditherCenterWeight - 1));
+        //                LabColor blackswap = new LabColor(avg3L, avg3A, avg3B);
+
+
+        //                double avg4L = 0;// 
+        //                double avg4A = 0;// 
+        //                double avg4B = 0;// 
+        //                for (int k = 0; k < 9; k++)
+        //                {
+        //                    if (k == 4)
+        //                    {
+        //                        avg4L += SourceWhite[k].LAB.L * _ditherCenterWeight;
+        //                        avg4A += SourceWhite[k].LAB.a * _ditherCenterWeight;
+        //                        avg4B += SourceWhite[k].LAB.b * _ditherCenterWeight;
+        //                    }
+        //                    else
+        //                    {
+        //                        avg4L += SourceWhite[k].LAB.L;
+        //                        avg4A += SourceWhite[k].LAB.a;
+        //                        avg4B += SourceWhite[k].LAB.b;
+
+        //                    }
+
+
+        //                }
+        //                avg4L = avg4L / (9 + (_ditherCenterWeight - 1));
+        //                avg4A = avg4A / (9 + (_ditherCenterWeight - 1));
+        //                avg4B = avg4B / (9 + (_ditherCenterWeight - 1));
+        //                LabColor whiteswap = new LabColor(avg4L, avg4A, avg4B);
+
+        //                //double avg5L = 0;// 
+        //                //double avg5A = 0;// 
+        //                //double avg5B = 0;// 
+        //                //for (int k = 0; k < 9; k++)
+        //                //{
+        //                //    if (k == 4)
+        //                //    {
+        //                //        avg5L += sourceCurrentNeighbors[k].LAB.L * _ditherCenterWeight;
+        //                //        avg5A += sourceCurrentNeighbors[k].LAB.a * _ditherCenterWeight;
+        //                //        avg5B += sourceCurrentNeighbors[k].LAB.b * _ditherCenterWeight;
+        //                //    }
+        //                //    else
+        //                //    {
+        //                //        avg5L += sourceCurrentNeighbors[k].LAB.L;
+        //                //        avg5A += sourceCurrentNeighbors[k].LAB.a;
+        //                //        avg5B += sourceCurrentNeighbors[k].LAB.b;
+        //                //    }
+
+        //                //}
+        //                //avg5L = avg5L / (9 + (_ditherCenterWeight - 1));
+        //                //avg5A = avg5A / (9 + (_ditherCenterWeight - 1));
+        //                //avg5B = avg5B / (9 + (_ditherCenterWeight - 1));
+        //                //LabColor lab5 = new LabColor(avg5L, avg5A, avg5B);
+
+
+        //                //double avg6L = 0;// 
+        //                //double avg6A = 0;// 
+        //                //double avg6B = 0;// 
+        //                //for (int k = 0; k < 9; k++)
+        //                //{
+        //                //    if (k == 4)
+        //                //    {
+        //                //        avg6L += sourceRandomPointNeighbors[k].LAB.L * _ditherCenterWeight;
+        //                //        avg6A += sourceRandomPointNeighbors[k].LAB.a * _ditherCenterWeight;
+        //                //        avg6B += sourceRandomPointNeighbors[k].LAB.b * _ditherCenterWeight;
+        //                //    }
+        //                //    else
+        //                //    {
+        //                //        avg6L += sourceRandomPointNeighbors[k].LAB.L;
+        //                //        avg6A += sourceRandomPointNeighbors[k].LAB.a;
+        //                //        avg6B += sourceRandomPointNeighbors[k].LAB.b;
+        //                //    }
+
+        //                //}
+        //                //avg6L = avg6L / (9 + (_ditherCenterWeight - 1));
+        //                //avg6A = avg6A / (9 + (_ditherCenterWeight - 1));
+        //                //avg6B = avg6B / (9 + (_ditherCenterWeight - 1));
+        //                //LabColor lab6 = new LabColor(avg6L, avg6A, avg6B);
+
+
+
+
+
+
+        //                //var distance1 = DeltaE.Distance(lab1, lab5);
+        //                //var distance2 = DeltaE.Distance(lab2, lab6);
+        //                //var currentError = distance1 + distance2;
+
+        //                //var distance3 = DeltaE.Distance(lab3, lab5);
+        //                //var distance4 = DeltaE.Distance(lab4, lab6);
+        //                //var newError = distance3 + distance4;
+
+
+        //                //double singleError1 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+        //                //double singleError2 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+        //                //double totalCurrentError = singleError1 + singleError2;
+
+
+        //                //double singleProposedError1 = DeltaE.Distance(Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB, Source.Pixel2DArray[curX, curY].LAB);
+        //                //double singleProposedError2 = DeltaE.Distance(Palette.Pixel2DArray[curX, curY].LAB, Source.Pixel2DArray[randomPixelX, randomPixelY].LAB);
+        //                //double totalProposedError = singleProposedError1 + singleProposedError2;
+
+
+        //                //double originalError = DeltaE.Distance(lab1, lab5);
+
+        //                //double wbs = DeltaE.Distance(blackswap, lab);
+
+        //                double wbs = DeltaE.Distance(original, blackswap);
+        //                double wws = DeltaE.Distance(original, whiteswap);
+
+
+        //                if (wbs < wws)
+        //                {
+        //                    Source.Pixel2DArray[curX, curY].Color = Color.Black;
+        //                    Source.Pixel2DArray[curX, curY].LAB = new LabColor(0, 0, 0);
+        //                }
+        //                else
+        //                {
+        //                    Source.Pixel2DArray[curX, curY].Color = Color.White;
+        //                    Source.Pixel2DArray[curX, curY].LAB = new LabColor(100, 0, 0);
+        //                }
+
+        //                // finalSingleError = totalCurrentError - totalProposedError;
+        //                //double finalSingleError = Math.Abs(totalProposedError - totalCurrentError);
+        //                //add weight for single pixel, if distance is too much dont swap
+        //                //if (Math.Abs(finalError) < 5) singleGate = true;
+        //                //double finalNeighborError = newError - currentError;
+
+        //                //  is the neighborhood better?         
+        //                //if (newError < currentError && finalNeighborError < (finalSingleError * _ditherWeight))
+        //                ////if (finalNeighborError < finalSingleError * _ditherWeight)
+        //                //{
+        //                //    Color save = Palette.Pixel2DArray[curX, curY].Color;
+        //                //    LabColor save1 = Palette.Pixel2DArray[curX, curY].LAB;
+
+        //                //    Palette.Pixel2DArray[curX, curY].Color = Palette.Pixel2DArray[randomPixelX, randomPixelY].Color;
+        //                //    Palette.Pixel2DArray[curX, curY].LAB = Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB;
+
+        //                //    Palette.Pixel2DArray[randomPixelX, randomPixelY].Color = save;
+        //                //    Palette.Pixel2DArray[randomPixelX, randomPixelY].LAB = save1;
+        //                //    swapCount++;
+        //                //}
+
+        //            }
+        //        }
+        //        ditherCount++;
+        //        var readout = swapCount;
+        //        ProcessWindow.WriteLine("Swapped: " + readout);
+
+
+        //        if (_ditherUpdate)
+        //        {
+
+
+        //            SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+        //            Task.Factory.StartNew(() =>
+        //            {
+
+        //                var frame2 = new DispatcherFrame();
+        //                CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+        //                    new DispatcherOperationCallback(delegate
+        //                    {
+        //                        //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+        //                        CanvasResult.Children.Clear();
+        //                        CanvasResult.Children.Insert(0, ConvertToBitmap(Source.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+        //                        frame2.Continue = false;
+        //                        return null;
+        //                    }), null);
+        //                Dispatcher.PushFrame(frame2);
+        //                Result = new Image(ConvertToBitmap(Source.Pixel2DArray));
+
+        //            }, _tokenSource.Token,
+        //           TaskCreationOptions.None,
+        //           TaskScheduler.Default)//Note TaskScheduler.Default here
+        //        .ContinueWith(
+        //                t =>
+        //                {
+
+        //                }
+        //            , TaskScheduler.FromCurrentSynchronizationContext());
+        //        }
+
+        //        swapCount = 0;
+
+        //        if (_break)
+        //        {
+        //            ProcessWindow.WriteLine("_____Break_____");
+        //            _break = false;
+        //            break;
+        //        }
+        //    }
+
+        //    SynchronizationContext.SetSynchronizationContext(new SynchronizationContext());
+        //    Task.Factory.StartNew(() => {
+
+        //        var frame2 = new DispatcherFrame();
+        //        CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background,
+        //            new DispatcherOperationCallback(delegate
+        //            {
+        //                //GifBuffer.Add(ConvertToBitmap(Palette.Pixel2DArray));
+        //                CanvasResult.Children.Clear();
+        //                CanvasResult.Children.Insert(0,
+        //                    ConvertToBitmap(Source.Pixel2DArray).ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+        //                frame2.Continue = false;
+        //                return null;
+        //            }), null);
+        //        Dispatcher.PushFrame(frame2);
+        //        Result = new Image(ConvertToBitmap(Source.Pixel2DArray));
+
+        //    }, _tokenSource.Token,
+        //   TaskCreationOptions.None,
+        //   TaskScheduler.Default)//Note TaskScheduler.Default here
+        //.ContinueWith(
+        //        t =>
+        //        {
+
+        //        }
+        //    , TaskScheduler.FromCurrentSynchronizationContext());
+        //    s.Stop();
+        //    ProcessWindow.WriteLine("Finished! - " + s.ElapsedMilliseconds);
+
+        //    Stop(null, null);
+        //}
+
+
+        //=====================================================================
+        //=====================================================================
+        //=====================================================================
+        //=====================================================================
+
+
+
+
+
 
         private void ComboBoxItem_Selected(object sender, RoutedEventArgs e)
         {
@@ -2665,20 +4668,41 @@ namespace Pixel_Magic
 
             //string newName = (Convert.ToInt32(num) + 1).ToString("D4");
 
+
             try
             {
                 SaveFileDialog dlg = new SaveFileDialog();
                 dlg.InitialDirectory = SaveDirectory;
                 dlg.FileName = "Output-" + rnd.Next(5000, 10000); // Default file name
-                dlg.DefaultExt = ".jpg"; // Default file extension
-                dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
-                Result._Original.Save(SaveDirectory + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
-                Palette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+                dlg.DefaultExt = ".png"; // Default file extension
+                dlg.Filter = "Image (.png)|*.png"; // Filter files by extension
+                Result._Original.Save(SaveDirectory + dlg.FileName + ".png");
+                Palette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".png");
+
+
+      
+                
             }
             catch (Exception ex)
             {
                 WriteLine(ex.StackTrace);
             }
+
+
+            //try
+            //{
+            //    SaveFileDialog dlg = new SaveFileDialog();
+            //    dlg.InitialDirectory = SaveDirectory;
+            //    dlg.FileName = "Output-" + rnd.Next(5000, 10000); // Default file name
+            //    dlg.DefaultExt = ".jpg"; // Default file extension
+            //    dlg.Filter = "Image (.jpg)|*.jpg"; // Filter files by extension
+            //    Result._Original.Save(SaveDirectory + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+            //    Palette._Original.Save(SaveDirectory + "Y" + dlg.FileName + ".jpg", jpgEncoder, myEncoderParameters);
+            //}
+            //catch (Exception ex)
+            //{
+            //    WriteLine(ex.StackTrace);
+            //}
         }
 
         private Boolean TextBoxTextAllowed(String text)
@@ -2734,12 +4758,40 @@ namespace Pixel_Magic
 
         private void OpenSource(object sender, RoutedEventArgs e)
         {
-            OpenSourceImage();
+            string[] images = Directory.GetFiles(ImageDirectory);
+
+            int index = rnd.Next(0, images.Length);
+
+            Source = new Image(new Bitmap(images[index]));
+
+            CanvasSource.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                CanvasSource.Children.Clear();
+                CanvasSource.Children.Insert(0, Source.Working.ToBitmapSource(CanvasPalette.ActualHeight, CanvasPalette.ActualWidth));
+
+
+                return null;
+            }), null);
         }
 
         private void OpenPalette(object sender, RoutedEventArgs e)
         {
-            OpenPaletteImage();
+            string[] images = Directory.GetFiles(ImageDirectory);
+
+            int index = rnd.Next(0, images.Length);
+
+            Palette = new Image(new Bitmap(images[index]));
+
+
+            CanvasPalette.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                CanvasPalette.Children.Clear();
+                CanvasPalette.Children.Insert(0, Palette.Working.ToBitmapSource(CanvasPalette.ActualHeight, CanvasPalette.ActualWidth));
+
+
+                return null;
+            }), null);
+
         }
 
         private void ContinuousCheckBox_Checked(object sender, RoutedEventArgs e)
@@ -2791,6 +4843,9 @@ namespace Pixel_Magic
         {
             GifFrames = new List<Bitmap>();
             GifFrames.Add(new Bitmap(Palette.Working));
+
+            //GifBuffer = new List<Bitmap>();
+            //GifBuffer.Add(new Bitmap(Palette.Working));
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -2998,7 +5053,7 @@ namespace Pixel_Magic
 
             //var colors = GenerateHistogram(Source,_paletteSize);
             //var colors = HistogramGenerator.GenerateMedianHistogram(Source, _paletteSize);
-            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 8);
+            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, _paletteSize);
             int paletteSize = colors.Count;
             int currentIndex = 0;
 
@@ -3049,7 +5104,7 @@ namespace Pixel_Magic
 
             //var colors = GenerateHistogram(Source,_paletteSize);
             //var colors = HistogramGenerator.GenerateMedianHistogram(Source, _paletteSize);
-            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 64);
+            var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 256);
             int paletteSize = colors.Count;
             int currentIndex = 0;
 
@@ -3100,7 +5155,7 @@ namespace Pixel_Magic
                 gEnc.Frames.Add(BitmapFrame.Create(src));
                 NativeMethods.DeleteObject(bmp); // recommended, handle memory leak
             }
-            using (FileStream fs = new FileStream(@"C:\Users\tsova\Documents\Projects\s\Z.gif", FileMode.Create))
+            using (FileStream fs = new FileStream(@"C:\Users\tsova\Documents\Projects\s\GIF\" + rnd.Next(0, 10000)+ ".gif", FileMode.Create))
             {
                 gEnc.Save(fs);
             }
@@ -3200,6 +5255,18 @@ namespace Pixel_Magic
             Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
             Result = new Image(new Bitmap(Source.Working));
             Result.PixelList = new List<CustomPixel>();
+
+            for (int i = 0; i < 25; i++)
+            {
+                //GifBuffer.Add(Source.Working);
+            }
+
+
+            for (int i = 0; i < 25; i++)
+            {
+                //GifBuffer.Add(ResultImage);
+            }
+           
 
             var s = Stopwatch.StartNew();
             for (int i = 0; i < Source.PixelList.Count; i++)
@@ -3601,7 +5668,6 @@ namespace Pixel_Magic
             newThread.Start();
 
             
-
         }
 
         private void Stop(object sender, RoutedEventArgs e)
@@ -3648,6 +5714,11 @@ namespace Pixel_Magic
         private void sldResolution_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             UpdateResolution();
+        }
+
+        private void sldDitherWeight_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            //UpdateResolution();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -3750,18 +5821,413 @@ namespace Pixel_Magic
             //    }
         }
 
+        private void Batch_Click_Palette(object sender, RoutedEventArgs e)
+        {
+            PrepareImages();
+            Random rnd = new Random();
+
+            //Thread newThread;
+            //newThread = new Thread(Process_RandomSort_Batch);
+
+
+            for (int i = 0; i < 8; i++)
+            {
+                
+                Thread t1 = new Thread(() => Process_RandomSort_Batch_MutatePalette(rnd.Next(-15,15), true));
+                t1.Start();
+            }
+
+           
+        }
+
+        private void Sequence_Click(object sender, RoutedEventArgs e)
+        {
+
+            //var colors = HistogramGenerator.GenerateMedianHistogram(Source, 32);
+            var colors = PaletteSorter.GetAllWebSafe();
+            //var colors = PaletteSorter.GetRGBPalette();
+            //var colors = HistogramGenerator.GenerateRandomSampleHistogram(Source, 128);
+
+            //colors.AddRange(colors1);
+            //colors.AddRange(colors2);
+
+            WriteLine($"Colors : {colors.Count}");
+
+            for (int i = 0; i < 25; i++)
+            {
+                GifBuffer.Add(new KeyValuePair<Bitmap, int>(Source.Original, 0));
+            }
+
+            //colors = colors.RandomSubset(colors.Count).ToList();
+
+            //colors = colors.RandomSubset(colors.Count).ToList(); 
+
+            int counter = 1;
+
+            for (int i = 0; i < colors.Count; i++)
+            {
+                int scopey = i + 1;
+                int l = i;
+                Thread t1 = new Thread(() => GenerateByPaletteOrder(colors.Take(scopey).ToList(), l));
+                t1.Start();
+
+            }
+            for (int i = 216; i < 250; i++)
+            {
+                Source._Original.Save(FramesDir + i + ".png");
+            }
+            
+
+
+        }
+
+        private void Save_Buffer(object sender, RoutedEventArgs e)
+        {
+            Save_Gif();
+        }
+
+
+        public void Save_Gif()
+        {
+            //GifBuffer = GifBuffer.TakeEvery().ToList();
+
+            //for (int i = 0; i < 100; i++)
+            //{
+            //    GifBuffer.Prepend(GifBuffer.First());
+            //}
+
+            //for (int i = 0; i < 50; i++)
+            //{
+            //    GifBuffer.Add(GifBuffer.Last());
+            //}
+            GifBuffer = GifBuffer.OrderBy(x => x.Value).ToList();
+            
+
+            for (int i = 0; i < 12; i++)
+            {
+                GifBuffer.Prepend(GifBuffer.First());
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                GifBuffer.Add(GifBuffer.Last());
+            }
+
+            GifBuffer.Add(GifBuffer.Last());
+
+            using (var gif = AnimatedGif.AnimatedGif.Create(@"C:\Users\tsova\Documents\Projects\s\GIF\" + rnd.Next(0, 10000) + @".gif", 50, 0))
+            {
+                foreach (var bmpImage in GifBuffer)
+                {
+                    gif.AddFrame(bmpImage.Key, 50, GifQuality.Bit8);
+
+                }
+
+
+          
+                //for (int i = 0; i < 15; i++)
+                //{
+                //    gif.AddFrame(GifBuffer.Last());
+                //}
+
+
+                //GifBuffer.Reverse();
+                //foreach (System.Drawing.Bitmap bmpImage in GifBuffer)
+                //{
+                //    gif.AddFrame(bmpImage, -1, GifQuality.Bit8);
+
+                //}
+            }
+
+
+            //System.Windows.Media.Imaging.GifBitmapEncoder gEnc = new GifBitmapEncoder();
+
+            //foreach (System.Drawing.Bitmap bmpImage in GifBuffer)
+            //{
+
+            //    var bmp = bmpImage.GetHbitmap();
+            //    var src = System.Windows.Interop.Imaging.CreateBitmapSourceFromHBitmap(
+            //        bmp,
+            //        IntPtr.Zero,
+            //        Int32Rect.Empty,
+            //        BitmapSizeOptions.FromEmptyOptions());
+            //    gEnc.Frames.Add(BitmapFrame.Create(src));
+            //    NativeMethods.DeleteObject(bmp); // recommended, handle memory leak
+            //}
+            //using (FileStream fs = new FileStream(@"C:\Users\tsova\Documents\Projects\Batch\A.gif", FileMode.Create))
+            //{
+            //    gEnc.Save(fs);
+            //}
+
+            GifBuffer.Clear();
+        }
+
+        private void btnUsePaletteGen_Click(object sender, RoutedEventArgs e)
+        {
+            var colors = HistogramGenerator.GenerateMedianHistogramPair(Source, _paletteSize);
+            ProcessWindow.WriteLine("C: " + colors.Count);
+            Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
+            Result = new Image(new Bitmap(Source.Working));
+            Result.PixelList = new List<CustomPixel>();
+
+            Bitmap flag = new Bitmap(Source.Width, Source.Height);
+            Graphics flagGraphics = Graphics.FromImage(flag);
+            int paletteSize = colors.Count;
+            int currentIndex = 0;
+
+            foreach (ColorPair p in colors)
+            {
+
+                Color c = System.Drawing.Color.FromArgb(p.Color.A, p.Color.R, p.Color.G, p.Color.B);
+
+                flagGraphics.FillRectangle(new SolidBrush(c), (currentIndex * Source.Width / paletteSize), 0, Source.Width / paletteSize, Source.Height);
+                currentIndex++;
+            }
+
+            Palette = new Image(new Bitmap(flag));
+            var frame = new DispatcherFrame();
+            CanvasPalette.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+
+                CanvasPalette.Children.Clear();
+                CanvasPalette.Children.Insert(0,
+                    Palette.Working.ToBitmapSource(CanvasPalette.ActualHeight, CanvasPalette.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+
+
+
+            var s = Stopwatch.StartNew();
+            for (int i = 0; i < Source.PixelList.Count; i++)
+            {
+
+
+                Result.PixelList.Add(Source.PixelList[i]);
+                Result.PixelList[i].Color = colors.MinBy(x => DeltaE.Distance(x.LAB, Result.PixelList[i].LAB)).Color;
+                ResultImage.SetPixel(Result.PixelList[i].x,
+                    Result.PixelList[i].y,
+                    Result.PixelList[i].Color);
+            }
+            ProcessWindow.WriteLine("==========   " + s.ElapsedMilliseconds);
+
+            Result = new Image(new Bitmap(ResultImage));
+
+            frame = new DispatcherFrame();
+            CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                //GifFrames.Add(new Bitmap(ResultImage));
+                CanvasResult.Children.Clear();
+                CanvasResult.Children.Insert(0,
+                    ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+            ProcessWindow.WriteLine("Finished!");
+            Stop(null, null);
+        }
+
+        private void Mutate_Click(object sender, RoutedEventArgs e)
+        {
+            string[] targets = Directory.GetFiles(TargetDir);
+
+            foreach (string s in targets)
+            {
+
+
+
+                Image MutateSource = new Image(new Bitmap(s));
+
+                //Mutate 1 thread per image, 
+
+                //BASE IMAGE TO MUTATE AGAINST
+                //Source.Resize(_rm);
+                int w = MutateSource.Working.Width;
+                int h = MutateSource.Working.Height;
+
+
+                string[] files = Directory.GetFiles(MutateDir);
+
+                foreach (string f in files)
+                {
+                    string path = f.ToString();
+                    Image MutatePalette = new Image(new Bitmap(path));
+                    //Image MutateSource = new Image(Source.Original);
+                    int w1 = w;
+                    int h1 = h;
+
+
+                    //Process_Mutate(path, MutatePalette, MutateSource, w1, h1);
+                    Thread thread = new Thread(() => Process_Mutate(path, MutatePalette, MutateSource,  w1, h1));
+                    thread.Start();
+
+
+
+                }
+
+            }
+        }
+
+        private void btnUseRGBPalette_Click(object sender, RoutedEventArgs e)
+        {
+            List<ColorPair> colors = HistogramGenerator.GenerateLabValues(PaletteSorter.GetRandomPalette(64));
+            ProcessWindow.WriteLine("C: " + colors.Count);
+            Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
+            Result = new Image(new Bitmap(Source.Working));
+            Result.PixelList = new List<CustomPixel>();
+
+            Bitmap flag = new Bitmap(Source.Width, Source.Height);
+            Graphics flagGraphics = Graphics.FromImage(flag);
+            int paletteSize = colors.Count;
+            int currentIndex = 0;
+
+            foreach (ColorPair p in colors)
+            {
+
+                Color c = System.Drawing.Color.FromArgb(p.Color.A, p.Color.R, p.Color.G, p.Color.B);
+
+                flagGraphics.FillRectangle(new SolidBrush(c), (currentIndex * Source.Width / paletteSize), 0, Source.Width / paletteSize, Source.Height);
+                currentIndex++;
+            }
+
+            Palette = new Image(new Bitmap(flag));
+            var frame = new DispatcherFrame();
+            CanvasPalette.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+
+                CanvasPalette.Children.Clear();
+                CanvasPalette.Children.Insert(0,
+                    Palette.Working.ToBitmapSource(CanvasPalette.ActualHeight, CanvasPalette.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+
+
+
+            var s = Stopwatch.StartNew();
+            for (int i = 0; i < Source.PixelList.Count; i++)
+            {
+
+
+                Result.PixelList.Add(Source.PixelList[i]);
+                Result.PixelList[i].Color = colors.MinBy(x => DeltaE.Distance(x.LAB, Result.PixelList[i].LAB)).Color;
+                ResultImage.SetPixel(Result.PixelList[i].x,
+                    Result.PixelList[i].y,
+                    Result.PixelList[i].Color);
+            }
+            ProcessWindow.WriteLine("==========   " + s.ElapsedMilliseconds);
+
+            Result = new Image(new Bitmap(ResultImage));
+
+            frame = new DispatcherFrame();
+            CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                //GifFrames.Add(new Bitmap(ResultImage));
+                CanvasResult.Children.Clear();
+                CanvasResult.Children.Insert(0,
+                    ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+            ProcessWindow.WriteLine("Finished!");
+            Stop(null, null);
+
+        }
+
+        private void btnUseBWPalette_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            List<Color> bw = new List<Color>()
+            {
+                Color.White,
+                Color.Black
+            };
+
+            List<ColorPair> colors = HistogramGenerator.GenerateLabValues(bw);
+            ProcessWindow.WriteLine("C: " + colors.Count);
+            Bitmap ResultImage = new Bitmap(Source.Width, Source.Height);
+            Result = new Image(new Bitmap(Source.Working));
+            Result.PixelList = new List<CustomPixel>();
+
+            Bitmap flag = new Bitmap(Source.Width, Source.Height);
+            Graphics flagGraphics = Graphics.FromImage(flag);
+            int paletteSize = colors.Count;
+            int currentIndex = 0;
+
+            foreach (ColorPair p in colors)
+            {
+
+                Color c = System.Drawing.Color.FromArgb(p.Color.A, p.Color.R, p.Color.G, p.Color.B);
+
+                flagGraphics.FillRectangle(new SolidBrush(c), (currentIndex * Source.Width / paletteSize), 0, Source.Width / paletteSize, Source.Height);
+                currentIndex++;
+            }
+
+            Palette = new Image(new Bitmap(flag));
+            var frame = new DispatcherFrame();
+            CanvasPalette.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+
+                CanvasPalette.Children.Clear();
+                CanvasPalette.Children.Insert(0,
+                    Palette.Working.ToBitmapSource(CanvasPalette.ActualHeight, CanvasPalette.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+
+
+
+            var s = Stopwatch.StartNew();
+            for (int i = 0; i < Source.PixelList.Count; i++)
+            {
+
+
+                Result.PixelList.Add(Source.PixelList[i]);
+                Result.PixelList[i].Color = colors.MinBy(x => DeltaE.Distance(x.LAB, Result.PixelList[i].LAB)).Color;
+                ResultImage.SetPixel(Result.PixelList[i].x,
+                    Result.PixelList[i].y,
+                    Result.PixelList[i].Color);
+            }
+            ProcessWindow.WriteLine("==========   " + s.ElapsedMilliseconds);
+
+            Result = new Image(new Bitmap(ResultImage));
+
+            frame = new DispatcherFrame();
+            CanvasResult.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate
+            {
+                //GifFrames.Add(new Bitmap(ResultImage));
+                CanvasResult.Children.Clear();
+                CanvasResult.Children.Insert(0,
+                    ResultImage.ToBitmapSource(CanvasResult.ActualHeight, CanvasResult.ActualWidth));
+
+                frame.Continue = false;
+                return null;
+            }), null);
+            Dispatcher.PushFrame(frame);
+            ProcessWindow.WriteLine("Finished!");
+            Stop(null, null);
+        }
     }
-    
-
-
+   
 
 }
 
 
 public static class NativeMethods
-    {
-        [DllImport("gdi32.dll")] public static extern bool DeleteObject(IntPtr hObject);
-    }
+{
+    [DllImport("gdi32.dll")] public static extern bool DeleteObject(IntPtr hObject);
+}
 
 
     

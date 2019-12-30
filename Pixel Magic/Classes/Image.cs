@@ -55,7 +55,18 @@ namespace Pixel_Magic.Classes
 
         public void Resize(double factor)
         {
+            
+
+            if(Working.Height == HeightOriginal * (float)factor && Working.Width == WidthOriginal * (float)factor)
+            {
+                ProcessWindow.WriteLine("<-->");
+                return;
+            }
+
+            
+
             ProcessWindow.WriteLine("Resizing...");
+
             Working.SetResolution(WidthOriginal * (float)factor, HeightOriginal * (float)factor);
 
             Bitmap newImage = new Bitmap(Convert.ToInt32(WidthOriginal * factor), Convert.ToInt32(HeightOriginal * factor));
@@ -78,6 +89,13 @@ namespace Pixel_Magic.Classes
 
         public void Resize(int w, int h)
         {
+
+            if (Working.Height == h && Working.Width == w)
+            {
+                ProcessWindow.WriteLine("<-->");
+                return;
+            }
+
             ProcessWindow.WriteLine("Resizing...");
             Working.SetResolution(w, h);
 
@@ -132,19 +150,22 @@ namespace Pixel_Magic.Classes
                 {
                     list.Add(new CustomPixel(b.GetPixel(i, j), i, j));
                 }
-                ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
+                if (i % 100 == 0)
                 {
-                    ProcessWindow.Progress.Value = i;
-                    frame.Continue = false;
-                    return null;
-                }), null);
-                Dispatcher.PushFrame(frame);
+                    ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
+                    {
+                        ProcessWindow.Progress.Value = i;
+                        frame.Continue = false;
+                        return null;
+                    }), null);
+                    Dispatcher.PushFrame(frame);
+                }
 
             }
-            
-           
+
+
             ProcessWindow.Progress.Dispatcher.BeginInvoke(DispatcherPriority.Send, new DispatcherOperationCallback(delegate
-            { 
+            {
                 ProcessWindow.Progress.Value = 0;
                 frame.Continue = false;
                 return null;

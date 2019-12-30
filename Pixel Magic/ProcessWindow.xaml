@@ -1,7 +1,8 @@
-﻿<Window x:Class="Pixel_Magic.ProcessWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="Pixel_Magic.ProcessWindow"
         SizeChanged="UpdateWindowSize"
         Background="#FF424242"
         Title="WindowsFormApp2" Height="720" Width="950"
@@ -35,10 +36,31 @@
                 <Button x:Name="DitherButton" Content="Start"  Click="DitherButton_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="36" HorizontalAlignment="Right" BorderBrush="White"/>
             </StatusBarItem>
             <StatusBarItem>
-                <Button x:Name="btnUsePalette" Width="43" Height="10" Content="Palette Web" Click="btnUsePalette_Click" />
+                <Button x:Name="btnUsePalette" Content="Palette Web" Click="btnUsePalette_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="78" HorizontalAlignment="Right" BorderBrush="White"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="btnUsePaletteBiased" Content="Palette Gen" Click="btnUsePaletteGen_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="78" HorizontalAlignment="Right" BorderBrush="White"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="btnUseRGBPalette" Content="RGB" Click="btnUseRGBPalette_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="35" HorizontalAlignment="Right" BorderBrush="White"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="btnUseBWPalette" Content="BW" Click="btnUseBWPalette_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="35" HorizontalAlignment="Right" BorderBrush="White"/>
             </StatusBarItem>
             <StatusBarItem>
                 <Button x:Name="DitherButton_Copy" Content="Batch"  Click="Batch_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="36" HorizontalAlignment="Right" BorderBrush="White" RenderTransformOrigin="2.111,0.25"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="BP" Content="B P"  Click="Batch_Click_Palette" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="36" HorizontalAlignment="Right" BorderBrush="White" RenderTransformOrigin="2.111,0.25"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="Sequence" Content="Expand"  Click="Sequence_Click" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="50" HorizontalAlignment="Right" BorderBrush="White" RenderTransformOrigin="2.111,0.25"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="Mutate" Content="Mutate"  Click="Mutate_Click" Background="IndianRed" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="50" HorizontalAlignment="Right" BorderBrush="White" RenderTransformOrigin="2.111,0.25"/>
+            </StatusBarItem>
+            <StatusBarItem>
+                <Button x:Name="GifSave" Content="Buffer"  Click="Save_Buffer" Background="#ffaa00" Foreground="White" Height="20" Effect="{DynamicResource DropShadowTemplate}"  Margin="5,0" Width="50" HorizontalAlignment="Right" BorderBrush="White" RenderTransformOrigin="2.111,0.25"/>
             </StatusBarItem>
             <!--<StatusBarItem>
                 <Button Content="Button" Width="75" Background="#FFCD0000" Click="Button_Click"/>
@@ -58,11 +80,8 @@
                               Click="OpenSource" />
 
                 </MenuItem>
-                <MenuItem Header="_Save" Template="{DynamicResource DarkMenuItem}">
-                    <MenuItem.Foreground>
-                        <SolidColorBrush Color="White"/>
-                    </MenuItem.Foreground>
-          
+                <MenuItem Header="_Save" Template="{DynamicResource DarkMenuItem}" Foreground="White">
+
                     <MenuItem x:Name="_SavePalette" Header="_Save Palette..."
                               Click="QuickSavePaletteMenuItem_Click" Foreground="Black" BorderBrush="{x:Null}" Background="#FF424242" />
                     <MenuItem x:Name="ResetFramesMenuItem" Header="_Reset Gif Frames..."
@@ -82,22 +101,19 @@
 
                 </MenuItem>
             </Menu>
-            <Border BorderThickness="0,0,0,1">
-                <Border.BorderBrush>
-                    <SolidColorBrush Color="#FF838383"/>
-                </Border.BorderBrush>
+            <Border BorderThickness="0,0,0,1" BorderBrush="#FF838383">
                 <Border.Background>
                     <SolidColorBrush Color="{DynamicResource Tone2}"/>
                 </Border.Background>
                 <WrapPanel   Orientation="Horizontal" MaxWidth="{Binding ActualWidth, ElementName=MainWindow, Mode=OneWay}" MinHeight="35" Background="#FF424242" >
 
 
-                    <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40">Colorspace:</Label>
+                    <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="40" Content="Colorspace:"/>
 
 
 
-                    <ComboBox Name="DifferenceComboBox"  IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
-                      Width="75" SelectedIndex="0" Height="22" Foreground="Black" BorderBrush="{DynamicResource ButtonBackGround}" Effect="{DynamicResource DropShadowTemplate}" Background="{DynamicResource ButtonBackGround}" >
+                    <ComboBox x:Name="DifferenceComboBox"  IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
+                      Width="75" SelectedIndex="2" Height="22" Foreground="Black" BorderBrush="{DynamicResource ButtonBackGround}" Effect="{DynamicResource DropShadowTemplate}" Background="{DynamicResource ButtonBackGround}" >
                         <ComboBoxItem Content="CIE2000" HorizontalAlignment="Left" Width="75"
                               Selected="Select_CIE2000" />
                         <ComboBoxItem Content="CIE1994" HorizontalAlignment="Left" Width="75"
@@ -118,19 +134,20 @@
                         </Separator.RenderTransform>
                     </Separator>
 
-                    <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center">Resolution:</Label>
+                    <Label Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Content="Resolution:"/>
 
 
                     <StackPanel Height="35">
 
-                        <TextBlock  Name="lblResolution" Text="{Binding Resolution , ElementName=MainWindow, Mode=OneWay}"  Foreground="Gainsboro"  Margin="0,0,0,-1" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+                        <TextBlock  x:Name="lblResolution" Text="{Binding Resolution, ElementName=MainWindow, Mode=OneWay}"  Foreground="Gainsboro"  Margin="0,0,0,-1" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
 
-                        <Slider x:Name="sldResolution" Style="{DynamicResource DarkSlider}"   IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Width="100"   Maximum="1"  LargeChange="0.25" TickFrequency="0.25" TickPlacement="BottomRight" SmallChange="0.25" Value="{Binding _rm, ElementName=MainWindow, StringFormat={}{0}%}"   AutoToolTipPrecision="2"  AutoToolTipPlacement="BottomRight" Foreground="#FF8B8B8B" Effect="{DynamicResource DropShadowTemplate}" Cursor="Hand" RenderTransformOrigin="0.495,0.938" Margin="0,-5,0,0" Height="24" Padding="0,4,0,0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Center" ValueChanged="sldResolution_ValueChanged" >
+                        <Slider x:Name="sldResolution" Style="{DynamicResource DarkSlider}"   IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Width="100"   Maximum="1"  LargeChange="0.25" TickFrequency="0.25" TickPlacement="BottomRight" SmallChange="0.25" Value="{Binding _rm, ElementName=MainWindow, StringFormat=\{0\}%}"   AutoToolTipPrecision="2"  AutoToolTipPlacement="BottomRight" Foreground="#FF8B8B8B" Effect="{DynamicResource DropShadowTemplate}" Cursor="Hand" RenderTransformOrigin="0.495,0.938" Margin="0,-5,0,0" Height="24" Padding="0,4,0,0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Center" ValueChanged="sldResolution_ValueChanged" >
                             <Slider.ToolTip>
-                                <ToolTip Content="{Binding RelativeSource={RelativeSource Self},Path=PlacementTarget.Value}"
+                                <ToolTip Content="{Binding PlacementTarget.Value, RelativeSource={RelativeSource Self}}"
                                 ContentStringFormat="Resolution: {0}%" />
                             </Slider.ToolTip>
-                            <Slider.IsSnapToTickEnabled>true
+                            <Slider.IsSnapToTickEnabled>
+                                <System:Boolean>true</System:Boolean>
                             </Slider.IsSnapToTickEnabled>
 
                         </Slider>
@@ -227,21 +244,26 @@
 
                     <!-- Tool Version: 14.0.22307.0 -->
                     <!-- This file was generated by the AiToXaml tool.-->
+
+
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- This file was generated by the AiToXaml tool.-->
+                    <!-- Tool Version: 14.0.22307.0 -->
+
+
                     <!-- Tool Version: 14.0.22307.0 -->
                     <Button x:Name="btnOpenPalette" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="OpenPalette" Style="{StaticResource ButtonStandard}" Width="24" Height="24" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" >
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush Stretch="UniformToFill">
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
-                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
-                                                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
-                                                    <GeometryDrawing Brush="#E24541" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
+                                                <GeometryDrawing Brush="#E24541" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -262,19 +284,17 @@
                     </Separator>
 
                     <Button x:Name="btnOpenSource" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="OpenSource" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush Stretch="UniformToFill">
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
-                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
-                                                    <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
-                                                    <GeometryDrawing Brush="#4475BB" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M1.9998,-0.000199999999999534L1.9998,1.9998 -0.000199999999999978,1.9998 -0.000199999999999978,5.9998 1.9998,5.9998 1.9998,7.9998 3.9998,7.9998 3.9998,15.9998 15.9998,15.9998 15.9998,4.0008 7.9998,4.0008 7.9998,1.9998 6.0008,1.9998 6.0008,-0.000199999999999534z" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M14,12.5938L12.5,11.4508 10.5,12.9998 8,9.5938 6,11.8048 6,12.0838 6,13.9998 14,13.9998 14,12.7188z M15,4.9998L15,14.9998 5,14.9998 5,7.9998 6,7.9998 6,9.9688 6,10.0838 8,7.8728 10.687,11.3598 12.5,9.9998 14,10.9998 14,10.8908 14,5.9998 8,5.9998 8,4.9998z M10,8.1958C10,7.5348 10.535,6.9998 11.195,6.9998 11.855,6.9998 12.391,7.5348 12.391,8.1958 12.391,8.8558 11.855,9.3908 11.195,9.3908 10.535,9.3908 10,8.8558 10,8.1958" />
+                                                <GeometryDrawing Brush="#FFF0EFF1" Geometry="F1M10,8.1953C10,8.8553 10.535,9.3903 11.195,9.3903 11.855,9.3903 12.391,8.8553 12.391,8.1953 12.391,7.5353 11.855,7.0003 11.195,7.0003 10.535,7.0003 10,7.5353 10,8.1953 M6,6.0003L14,6.0003 14,10.8903 14,11.0003 12.5,10.0003 10.687,11.3593 8,7.8733 6,10.0843 6,9.9683z M12.5,11.4513L14,12.5933 14,12.7183 14,14.0003 6,14.0003 6,12.0843 6,11.8043 8,9.5933 10.5,13.0003z" />
+                                                <GeometryDrawing Brush="#4475BB" Geometry="F1M7,5L5,5 5,7 3.018,7 3.018,5 1,5 1,3.018 3.018,3.018 3.018,1 5,1 5,3.018 7,3.018z" />
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -299,42 +319,37 @@
 
                     <Button x:Name="btnStart" Style="{StaticResource ButtonStandard}" Click="Start" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24">
                         <StackPanel Orientation="Horizontal" Margin="4,0" VerticalAlignment="Center" HorizontalAlignment="Center">
-                            <Viewbox Width="12" Height="12" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="12" Height="12" HorizontalAlignment="Center" VerticalAlignment="Center">
                                 <Rectangle Width="12" Height="12" Margin="0">
                                     <Rectangle.Fill>
                                         <DrawingBrush Stretch="Uniform">
                                             <DrawingBrush.Drawing>
                                                 <DrawingGroup>
-                                                    <DrawingGroup.Children>
-                                                        <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6,4.9492L10,8.0002 6,11.0002z M5,2.9282L5,13.0002 11.658,8.0072z" />
-                                                        <GeometryDrawing Brush="#FF378A33" Geometry="F1M6,11L10,8 6,4.949z" />
-                                                    </DrawingGroup.Children>
+                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M6,4.9492L10,8.0002 6,11.0002z M5,2.9282L5,13.0002 11.658,8.0072z" />
+                                                    <GeometryDrawing Brush="#FF378A33" Geometry="F1M6,11L10,8 6,4.949z" />
                                                 </DrawingGroup>
                                             </DrawingBrush.Drawing>
                                         </DrawingBrush>
                                     </Rectangle.Fill>
                                 </Rectangle>
                             </Viewbox>
-                            <TextBlock Text="Start" Foreground="White" Margin="3,-1,3,0" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                            <TextBlock Text="Start" Foreground="White" Margin="3,-1,3,0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                         </StackPanel>
                     </Button>
 
 
-                    <!-- This file was generated by the AiToXaml tool.-->
                     <!-- Tool Version: 14.0.22307.0 -->
                     <Button x:Name="btnStop" Style="{StaticResource ButtonStandard}" Visibility="Collapsed" Click="Stop" Background="{x:Null}" Foreground="{x:Null}" BorderBrush="{x:Null}" Height="24" Padding="4">
 
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M13,13L3,13 3,3 13,3z" />
-                                                    <GeometryDrawing Brush="#FFA1260D" Geometry="F1M12,12L4,12 4,4 12,4z" />
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M13,13L3,13 3,3 13,3z" />
+                                                <GeometryDrawing Brush="#FFA1260D" Geometry="F1M12,12L4,12 4,4 12,4z" />
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -353,10 +368,6 @@
                             </TransformGroup>
                         </Separator.RenderTransform>
                     </Separator>
-                    <!-- This file was generated by the AiToXaml tool.-->
-                    <!-- Tool Version: 14.0.22307.0 -->
-
-
                     <!--<Separator x:Name="EmptySeperator15"  Width="{DynamicResource SeperatorWidth}" RenderTransformOrigin="0.5,0.5" Opacity="0.025">
                         <Separator.RenderTransform>
                             <TransformGroup>
@@ -370,21 +381,19 @@
                     <Button x:Name="btnGenerate" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Content="Generate" HorizontalAlignment="Center" Click="btnGenerate_Click" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Column="3" Height="25" FontSize="11" Width="55" VerticalAlignment="Center" BorderBrush="White" Style="{DynamicResource DarkButtons}" Background="{DynamicResource ButtonDarkBackground}"/>
 
                     <Button x:Name="btnOpenPaletteDialog" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="OpenPaletteSelector" Style="{StaticResource ButtonStandard}" Width="24" Height="24" >
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,16L16,16 16,0 0,0z" />
-                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,2C13.385,1.445,12.467,1.484,12,2L10,4 9,3 8,4 12,8 13,7 12,6 14,4C14.465,3.482,14.615,2.555,14,2 M6,9L8,7 9,8 7,10z M8,6L5,9 4,11 5,12 7,11 10,8z M14,8L14,14 12,14 12,15 15,15 15,8z M6.988,1L1,1 1,12 2,12 2,4 6.988,4z" />
-                                                    <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M7,10L6,9 8,7 9,8z M12,9.414L11,8.414 7.593,11.822 5.238,13 14,13 14,7.414z M2.783,11.197L4.178,8.408 7.586,5 6.586,4 6.587,4 2,4 2,13 4.585,13z M14,6.586L13.414,6 14,5.414z" />
-                                                    <GeometryDrawing Brush="#FF1AA1E2" Geometry="F1M9,13L11,13 11,15 9,15z" />
-                                                    <GeometryDrawing Brush="#FF329932" Geometry="F1M5,15L7,15 7,13 5,13z" />
-                                                    <GeometryDrawing Brush="#FFE41400" Geometry="F1M1,15L3,15 3,13 1,13z" />
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,16L16,16 16,0 0,0z" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M14,2C13.385,1.445,12.467,1.484,12,2L10,4 9,3 8,4 12,8 13,7 12,6 14,4C14.465,3.482,14.615,2.555,14,2 M6,9L8,7 9,8 7,10z M8,6L5,9 4,11 5,12 7,11 10,8z M14,8L14,14 12,14 12,15 15,15 15,8z M6.988,1L1,1 1,12 2,12 2,4 6.988,4z" />
+                                                <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M7,10L6,9 8,7 9,8z M12,9.414L11,8.414 7.593,11.822 5.238,13 14,13 14,7.414z M2.783,11.197L4.178,8.408 7.586,5 6.586,4 6.587,4 2,4 2,13 4.585,13z M14,6.586L13.414,6 14,5.414z" />
+                                                <GeometryDrawing Brush="#FF1AA1E2" Geometry="F1M9,13L11,13 11,15 9,15z" />
+                                                <GeometryDrawing Brush="#FF329932" Geometry="F1M5,15L7,15 7,13 5,13z" />
+                                                <GeometryDrawing Brush="#FFE41400" Geometry="F1M1,15L3,15 3,13 1,13z" />
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -412,28 +421,24 @@
                         </Separator.RenderTransform>
                     </Separator>
                     <Button Style="{StaticResource ButtonStandard}" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" x:Name="btnGenerateGradient"  Click="btnGenerateGradient_Click" Width="24" Height="24" >
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,15L16,15 16,1.999 0,1.999z" />
-                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M14,13L2,13 2,4 14,4z M1,14L15,14 15,3 1,3z" />
-                                                    <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M14,13L2,13 2,4 14,4z" />
-                                                    <GeometryDrawing Geometry="M13,12L3,12 3,5 13,5z">
-                                                        <GeometryDrawing.Brush>
-                                                            <LinearGradientBrush StartPoint="3,8.5" EndPoint="13,8.5" MappingMode="Absolute">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Color="#FFEFEFF0" Offset="0" />
-                                                                    <GradientStop Color="#FF424242" Offset="1" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </GeometryDrawing.Brush>
-                                                    </GeometryDrawing>
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M0,15L16,15 16,1.999 0,1.999z" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M14,13L2,13 2,4 14,4z M1,14L15,14 15,3 1,3z" />
+                                                <GeometryDrawing Brush="#FFEFEFF0" Geometry="F1M14,13L2,13 2,4 14,4z" />
+                                                <GeometryDrawing Geometry="M13,12L3,12 3,5 13,5z">
+                                                    <GeometryDrawing.Brush>
+                                                        <LinearGradientBrush StartPoint="3,8.5" EndPoint="13,8.5" MappingMode="Absolute">
+                                                            <GradientStop Color="#FFEFEFF0" Offset="0" />
+                                                            <GradientStop Color="#FF424242" Offset="1" />
+                                                        </LinearGradientBrush>
+                                                    </GeometryDrawing.Brush>
+                                                </GeometryDrawing>
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -453,23 +458,21 @@
                         </Separator.RenderTransform>
                     </Separator>
                     <Button x:Name="btnGeneratePalette" Style="{StaticResource ButtonStandard}" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Click="btnGeneratePalette_Click" Width="24" Height="24" >
-                        <Viewbox Width="16" Height="16" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+                        <Viewbox xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" Width="16" Height="16">
                             <Rectangle Width="16" Height="16">
                                 <Rectangle.Fill>
                                     <DrawingBrush>
                                         <DrawingBrush.Drawing>
                                             <DrawingGroup>
-                                                <DrawingGroup.Children>
-                                                    <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
-                                                    <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M16,8C16,12.411 12.411,16 8,16 6.456,16 5.2,14.744 5.2,13.2 5.2,12.367 5.472,11.571 5.966,10.959 6.029,10.881 6.067,10.746 6.067,10.6 6.067,10.232 5.768,9.934 5.4,9.934 5.254,9.934 5.12,9.971 5.042,10.035 4.429,10.528 3.633,10.8 2.8,10.8 1.256,10.8 0,9.544 0,8 0,3.589 3.589,0 8,0 12.411,0 16,3.589 16,8" />
-                                                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1M5.3999,7.9331C6.8709,7.9331 8.0669,9.1291 8.0669,10.6001 8.0669,11.2051 7.8739,11.7781 7.5229,12.2141 7.3179,12.4691 7.1999,12.8281 7.1999,13.2001 7.1999,13.6411 7.5589,14.0001 7.9999,14.0001 11.3089,14.0001 13.9999,11.3081 13.9999,8.0001 13.9999,4.6911 11.3089,2.0001 7.9999,2.0001 4.6919,2.0001 1.9999,4.6911 1.9999,8.0001 1.9999,8.4411 2.3589,8.8001 2.7999,8.8001 3.1779,8.8001 3.5279,8.6851 3.7859,8.4771 4.2219,8.1261 4.7949,7.9331 5.3999,7.9331" />
-                                                    <GeometryDrawing Brush="#FF424242" Geometry="F1M5.3999,7.9331C6.8709,7.9331 8.0669,9.1291 8.0669,10.6001 8.0669,11.2051 7.8739,11.7781 7.5229,12.2141 7.3179,12.4691 7.1999,12.8281 7.1999,13.2001 7.1999,13.6411 7.5589,14.0001 7.9999,14.0001 11.3089,14.0001 13.9999,11.3081 13.9999,8.0001 13.9999,4.6911 11.3089,2.0001 7.9999,2.0001 4.6919,2.0001 1.9999,4.6911 1.9999,8.0001 1.9999,8.4411 2.3589,8.8001 2.7999,8.8001 3.1779,8.8001 3.5279,8.6851 3.7859,8.4771 4.2219,8.1261 4.7949,7.9331 5.3999,7.9331 M7.9999,15.0001C7.0079,15.0001 6.1999,14.1921 6.1999,13.2001 6.1999,12.5951 6.3939,12.0211 6.7439,11.5871 6.9519,11.3281 7.0669,10.9771 7.0669,10.6001 7.0669,9.6811 6.3189,8.9331 5.3999,8.9331 5.0229,8.9331 4.6719,9.0481 4.4139,9.2561 3.9789,9.6061 3.4059,9.8001 2.7999,9.8001 1.8079,9.8001 0.999899999999999,8.9921 0.999899999999999,8.0001 0.999899999999999,4.1401 4.1399,1.0001 7.9999,1.0001 11.8589,1.0001 14.9999,4.1401 14.9999,8.0001 14.9999,11.8591 11.8589,15.0001 7.9999,15.0001" />
-                                                    <GeometryDrawing Brush="#FF642D90" Geometry="F1M4.5,5.375C4.017,5.375 3.625,5.767 3.625,6.25 3.625,6.733 4.017,7.125 4.5,7.125 4.983,7.125 5.375,6.733 5.375,6.25 5.375,5.767 4.983,5.375 4.5,5.375" />
-                                                    <GeometryDrawing Brush="#FF1AA1E2" Geometry="F1M7.125,3.625C6.642,3.625 6.25,4.017 6.25,4.5 6.25,4.983 6.642,5.375 7.125,5.375 7.608,5.375 8,4.983 8,4.5 8,4.017 7.608,3.625 7.125,3.625" />
-                                                    <GeometryDrawing Brush="#FF329932" Geometry="F1M10.625,4.5C10.142,4.5 9.75,4.892 9.75,5.375 9.75,5.858 10.142,6.25 10.625,6.25 11.108,6.25 11.5,5.858 11.5,5.375 11.5,4.892 11.108,4.5 10.625,4.5" />
-                                                    <GeometryDrawing Brush="#FFFFCC00" Geometry="F1M11.5,8C11.017,8 10.625,8.392 10.625,8.875 10.625,9.358 11.017,9.75 11.5,9.75 11.983,9.75 12.375,9.358 12.375,8.875 12.375,8.392 11.983,8 11.5,8" />
-                                                    <GeometryDrawing Brush="#FFE41400" Geometry="F1M9.75,10.625C9.267,10.625 8.875,11.017 8.875,11.5 8.875,11.983 9.267,12.375 9.75,12.375 10.233,12.375 10.625,11.983 10.625,11.5 10.625,11.017 10.233,10.625 9.75,10.625" />
-                                                </DrawingGroup.Children>
+                                                <GeometryDrawing Brush="#00FFFFFF" Geometry="F1M16,16L0,16 0,0 16,0z" />
+                                                <GeometryDrawing Brush="#FFF6F6F6" Geometry="F1M16,8C16,12.411 12.411,16 8,16 6.456,16 5.2,14.744 5.2,13.2 5.2,12.367 5.472,11.571 5.966,10.959 6.029,10.881 6.067,10.746 6.067,10.6 6.067,10.232 5.768,9.934 5.4,9.934 5.254,9.934 5.12,9.971 5.042,10.035 4.429,10.528 3.633,10.8 2.8,10.8 1.256,10.8 0,9.544 0,8 0,3.589 3.589,0 8,0 12.411,0 16,3.589 16,8" />
+                                                <GeometryDrawing Brush="#FFFFFFFF" Geometry="F1M5.3999,7.9331C6.8709,7.9331 8.0669,9.1291 8.0669,10.6001 8.0669,11.2051 7.8739,11.7781 7.5229,12.2141 7.3179,12.4691 7.1999,12.8281 7.1999,13.2001 7.1999,13.6411 7.5589,14.0001 7.9999,14.0001 11.3089,14.0001 13.9999,11.3081 13.9999,8.0001 13.9999,4.6911 11.3089,2.0001 7.9999,2.0001 4.6919,2.0001 1.9999,4.6911 1.9999,8.0001 1.9999,8.4411 2.3589,8.8001 2.7999,8.8001 3.1779,8.8001 3.5279,8.6851 3.7859,8.4771 4.2219,8.1261 4.7949,7.9331 5.3999,7.9331" />
+                                                <GeometryDrawing Brush="#FF424242" Geometry="F1M5.3999,7.9331C6.8709,7.9331 8.0669,9.1291 8.0669,10.6001 8.0669,11.2051 7.8739,11.7781 7.5229,12.2141 7.3179,12.4691 7.1999,12.8281 7.1999,13.2001 7.1999,13.6411 7.5589,14.0001 7.9999,14.0001 11.3089,14.0001 13.9999,11.3081 13.9999,8.0001 13.9999,4.6911 11.3089,2.0001 7.9999,2.0001 4.6919,2.0001 1.9999,4.6911 1.9999,8.0001 1.9999,8.4411 2.3589,8.8001 2.7999,8.8001 3.1779,8.8001 3.5279,8.6851 3.7859,8.4771 4.2219,8.1261 4.7949,7.9331 5.3999,7.9331 M7.9999,15.0001C7.0079,15.0001 6.1999,14.1921 6.1999,13.2001 6.1999,12.5951 6.3939,12.0211 6.7439,11.5871 6.9519,11.3281 7.0669,10.9771 7.0669,10.6001 7.0669,9.6811 6.3189,8.9331 5.3999,8.9331 5.0229,8.9331 4.6719,9.0481 4.4139,9.2561 3.9789,9.6061 3.4059,9.8001 2.7999,9.8001 1.8079,9.8001 0.999899999999999,8.9921 0.999899999999999,8.0001 0.999899999999999,4.1401 4.1399,1.0001 7.9999,1.0001 11.8589,1.0001 14.9999,4.1401 14.9999,8.0001 14.9999,11.8591 11.8589,15.0001 7.9999,15.0001" />
+                                                <GeometryDrawing Brush="#FF642D90" Geometry="F1M4.5,5.375C4.017,5.375 3.625,5.767 3.625,6.25 3.625,6.733 4.017,7.125 4.5,7.125 4.983,7.125 5.375,6.733 5.375,6.25 5.375,5.767 4.983,5.375 4.5,5.375" />
+                                                <GeometryDrawing Brush="#FF1AA1E2" Geometry="F1M7.125,3.625C6.642,3.625 6.25,4.017 6.25,4.5 6.25,4.983 6.642,5.375 7.125,5.375 7.608,5.375 8,4.983 8,4.5 8,4.017 7.608,3.625 7.125,3.625" />
+                                                <GeometryDrawing Brush="#FF329932" Geometry="F1M10.625,4.5C10.142,4.5 9.75,4.892 9.75,5.375 9.75,5.858 10.142,6.25 10.625,6.25 11.108,6.25 11.5,5.858 11.5,5.375 11.5,4.892 11.108,4.5 10.625,4.5" />
+                                                <GeometryDrawing Brush="#FFFFCC00" Geometry="F1M11.5,8C11.017,8 10.625,8.392 10.625,8.875 10.625,9.358 11.017,9.75 11.5,9.75 11.983,9.75 12.375,9.358 12.375,8.875 12.375,8.392 11.983,8 11.5,8" />
+                                                <GeometryDrawing Brush="#FFE41400" Geometry="F1M9.75,10.625C9.267,10.625 8.875,11.017 8.875,11.5 8.875,11.983 9.267,12.375 9.75,12.375 10.233,12.375 10.625,11.983 10.625,11.5 10.625,11.017 10.233,10.625 9.75,10.625" />
                                             </DrawingGroup>
                                         </DrawingBrush.Drawing>
                                     </DrawingBrush>
@@ -498,12 +501,9 @@
         </StackPanel>
 
 
-        <Border BorderThickness="0,0,2,0">
-            <Border.BorderBrush>
-                <SolidColorBrush Color="#FF838383" />
-            </Border.BorderBrush>
+        <Border BorderThickness="0,0,2,0" BorderBrush="#FF838383">
             <DockPanel x:Name="stackPanel" Width="200" VerticalAlignment="Stretch" DockPanel.Dock="Left" Background="{DynamicResource Gray1}" >
-                <TabControl DockPanel.Dock="Top" x:Name="tabProcess" Background="#FF272727" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"  >
+                <TabControl DockPanel.Dock="Top" x:Name="tabProcess" Background="#FF272727" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Height="206"  >
 
 
 
@@ -519,7 +519,7 @@
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
 
-                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14">Random Swap</Label>
+                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14" Content="Random Swap"/>
                             <Label Content="Iterations:"  HorizontalAlignment="Right" Margin="0" Grid.Row="1"
                    VerticalAlignment="Top" Height="26" Foreground="White" Width="62" />
                             <TextBox x:Name="IterationsTextBox"  Grid.Row="1" Grid.Column="1" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
@@ -532,6 +532,7 @@
                                     </LinearGradientBrush>
                                 </TextBox.Background>
                             </TextBox>
+                            <CheckBox x:Name="chkSwapUpdate"  IsChecked="{Binding _displayUpdates, ElementName=MainWindow}" Content="Update" Height="24" VerticalAlignment="Top" Foreground="White" Grid.ColumnSpan="2" Margin="44,7,40,0" Grid.Row="2"/>
 
                             <!--<Button Content="Start" HorizontalAlignment="Right" Margin="0,5,5,5"
                     VerticalAlignment="Center" Click="RandomSortButton_Click" Height="20" Background="{DynamicResource ButtonDarkBackground}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Grid.Row="2" Grid.Column="1" Width="40" HorizontalContentAlignment="Center" BorderBrush="White" />-->
@@ -556,7 +557,7 @@
                                 <RowDefinition Height="30" />
                             </Grid.RowDefinitions>
 
-                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14">Best Fit</Label>
+                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14" Content="Best Fit"/>
 
                             <Label Content="Sample Size:"  HorizontalAlignment="Right" Margin="0" Grid.Row="1"
                    VerticalAlignment="Top" Height="26" Foreground="White" />
@@ -606,12 +607,12 @@
 
                             </Grid.RowDefinitions>
 
-                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14">Sort</Label>
+                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14" Content="Sort"/>
 
 
 
 
-                            <ComboBox Name="ComparisonComboBox" HorizontalAlignment="Left"  Grid.Row="1" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
+                            <ComboBox x:Name="ComparisonComboBox" HorizontalAlignment="Left"  Grid.Row="1" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
                       VerticalAlignment="Top" Width="180" SelectedIndex="0" Height="22" Foreground="Black" BorderBrush="#FFD40000" Effect="{DynamicResource DropShadowTemplate}" Background="#FFEA0404" Margin="5,5,0,0" Grid.ColumnSpan="2">
                                 <ComboBoxItem Content="Colorspace" HorizontalAlignment="Left" Width="118"
                               Selected="ComboBoxItem_Selected" />
@@ -629,7 +630,7 @@
 
                     </TabItem>
 
-                    <TabItem Header="Dither" Style="{DynamicResource TabItemStyleDarkl}">
+                    <TabItem Header="Dither" Style="{DynamicResource TabItemStyleDarkl}" Margin="-2,0,-2,-2">
 
 
                         <Grid Margin="5" ShowGridLines="False" Height="{Binding Height, ElementName=stackPanel}">
@@ -644,7 +645,36 @@
 
                             </Grid.RowDefinitions>
 
-                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14">Dither</Label>
+                            <Label Foreground="White" Grid.Column="0" FontWeight="Bold" FontSize="14" Content="Dither"/>
+                            <Label Content="Dither Weight:"  HorizontalAlignment="Right"
+                                    VerticalAlignment="Top" Height="26" Foreground="White" Margin="0,1,9,0" Grid.Row="1" />
+                            <TextBox x:Name="txtDitherWeight" HorizontalAlignment="Right" Height="20" Margin="0,6,28,0" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
+                                    TextWrapping="Wrap" Text="{Binding _ditherWeight, ElementName=MainWindow}" VerticalAlignment="Top" 
+                                    LostFocus="RefreshRateTextBox_LostFocus" PreviewTextInput="RefreshRateTextBox_PreviewTextInput" Background="{DynamicResource ButtonBackGround}" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Width="50" Grid.Row="2" Grid.Column="1" Visibility="Collapsed" />
+                            <Slider x:Name="sldDitherWeight" Style="{DynamicResource DarkSlider}"   IsEnabled="{Binding UIEnabled, ElementName=MainWindow}" Width="87"   Maximum="0.1"  LargeChange="0.01" TickFrequency="0.01" TickPlacement="BottomRight" SmallChange="0.01" Value="{Binding _ditherWeight, ElementName=MainWindow, StringFormat=\{0\}%}"   AutoToolTipPrecision="2"  AutoToolTipPlacement="BottomRight" Foreground="#FF8B8B8B" Effect="{DynamicResource DropShadowTemplate}" Cursor="Hand" RenderTransformOrigin="0.495,0.938" Margin="97,9,0,29" Height="24" Padding="0,4,0,0" ScrollViewer.CanContentScroll="True" HorizontalAlignment="Center" VerticalAlignment="Center" ValueChanged="sldDitherWeight_ValueChanged" Grid.ColumnSpan="2" Grid.Row="1" Grid.RowSpan="2" >
+                                <Slider.ToolTip>
+                                    <ToolTip Content="{Binding PlacementTarget.Value, RelativeSource={RelativeSource Self}}"
+                    ContentStringFormat="Resolution: {0}%" />
+                                </Slider.ToolTip>
+                                <Slider.IsSnapToTickEnabled>
+                                    <System:Boolean>true</System:Boolean>
+                                </Slider.IsSnapToTickEnabled>
+
+                            </Slider>
+                            <CheckBox x:Name="chkDitherUpdate"  IsChecked="{Binding _ditherUpdate, ElementName=MainWindow}" Content="Update" Height="24" VerticalAlignment="Top" Margin="15,35,69,-28" Grid.Row="2" Foreground="White" Grid.ColumnSpan="2"/>
+                            <CheckBox x:Name="chkDitherOrdered"  IsChecked="{Binding _ditherOrdered, ElementName=MainWindow}" Content="Ordered" Height="24" VerticalAlignment="Top" Margin="15,6,69,0" Grid.Row="2" Foreground="White" Grid.ColumnSpan="2"/>
+                            <Label Content="Iterations:"  HorizontalAlignment="Right"
+            VerticalAlignment="Top" Height="26" Foreground="White" Width="62" Margin="0,59,28,-54" Grid.Row="2" />
+                            <TextBox x:Name="DitherIterationsTextBox" IsEnabled="{Binding UIEnabled, ElementName=MainWindow}"
+            TextWrapping="Wrap"  Text="{Binding _ditherIterations, ElementName=MainWindow}"
+            LostFocus="IterationsTextBox_LostFocus" PreviewTextInput="IterationsTextBox_PreviewTextInput" Foreground="White" Effect="{DynamicResource DropShadowTemplate}" Margin="0,64,47,-54" Width="40" HorizontalAlignment="Right" BorderBrush="White" Grid.Row="2" Grid.ColumnSpan="2" >
+                                <TextBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="#FF898989" Offset="0"/>
+                                        <GradientStop Color="#FF444444" Offset="0.996"/>
+                                    </LinearGradientBrush>
+                                </TextBox.Background>
+                            </TextBox>
 
 
                         </Grid>
@@ -669,63 +699,57 @@
 
         <Grid x:Name="CanvasGrid"  Background="{DynamicResource Gray2}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="5"></RowDefinition>
-                <RowDefinition Height="3*"></RowDefinition>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="3*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="5"></ColumnDefinition>
-                <ColumnDefinition Width="1*"></ColumnDefinition>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="5"/>
+                <ColumnDefinition Width="1*"/>
             </Grid.ColumnDefinitions>
 
             <xctk:BusyIndicator Grid.Row="0"  Grid.Column="0" x:Name="bsyPalette"  BusyContent="Processing Image..." Foreground="White" Background="{DynamicResource Gray2}" IsBusy="False" Margin="5">
                 <xctk:BusyIndicator.OverlayStyle>
-                    <Style TargetType="Rectangle">
+                    <Style TargetType="{x:Type Rectangle}">
                         <Setter Property="Fill" Value="{DynamicResource Gray2}"/>
                     </Style>
                 </xctk:BusyIndicator.OverlayStyle>
+
+                <!--<xctk:BusyIndicator.BusyContentTemplate>
+                    <DataTemplate>
+                        <StackPanel Margin="5" Background="#FF424242" Width="{Binding ActualWidth, ElementName=CanvasSource, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=CanvasSource, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ProgressBar HorizontalAlignment="Center" IsIndeterminate="True" Height="10" Width="150" VerticalAlignment="Center" Foreground="{DynamicResource ProgressBarBlue}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </xctk:BusyIndicator.BusyContentTemplate>-->
+
+                <xctk:BusyIndicator.ProgressBarStyle>
+
+                    <Style TargetType="{x:Type ProgressBar}">
+                        <Setter Property="Visibility" Value="Visible"/>
+                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"/>
+                        <Setter Property="IsIndeterminate" Value="True"/>
+                        <Setter Property="Height" Value="10"/>
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                    </Style>
+                </xctk:BusyIndicator.ProgressBarStyle>
 
                 <ContentControl >
                     <Canvas x:Name="CanvasPalette" Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
                         Grid.Column="2" Margin="15,15,15,15" 
                         MouseLeftButtonDown="OpenPalette" Opacity="0" MouseEnter="ShowPalette" MouseLeave="HidePalette" />
                 </ContentControl>
-                <!--<xctk:BusyIndicator.BusyContentTemplate>
-                    <DataTemplate>
-                        <StackPanel Margin="5" Background="#FF424242" Width="{Binding ActualWidth, ElementName=CanvasSource, Mode=OneWay}" Height="{Binding ActualHeight, ElementName=CanvasSource, Mode=OneWay}" HorizontalAlignment="Center" VerticalAlignment="Center">
-                            <ProgressBar HorizontalAlignment="Center" IsIndeterminate="True" Height="10" Width="150" VerticalAlignment="Center" Foreground="{DynamicResource ProgressBarBlue}" />
-                        </StackPanel>
-                    </DataTemplate>
-                </xctk:BusyIndicator.BusyContentTemplate>-->
-
-                <xctk:BusyIndicator.ProgressBarStyle>
-
-                    <Style TargetType="ProgressBar">
-                        <Setter Property="Visibility" Value="Visible"/>
-                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"></Setter>
-                        <Setter Property="IsIndeterminate" Value="True"></Setter>
-                        <Setter Property="Height" Value="10"></Setter>
-                        <Setter Property="Width" Value="150"></Setter>
-                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
-                    </Style>
-                </xctk:BusyIndicator.ProgressBarStyle>
             </xctk:BusyIndicator>
 
             <GridSplitter Width="3" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Background="#424242"/>
 
 
             <xctk:BusyIndicator Grid.Row="0" Grid.Column="2" x:Name="bsySource" BusyContent="Processing Image..." Foreground="White" Background="{DynamicResource Gray2}" IsBusy="False" Margin="5">
-                <ContentControl>
-                    <Canvas x:Name="CanvasSource" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
-                        Grid.Column="0"  Background="Transparent" Margin="15,15,15,15"
-                        MouseLeftButtonDown="OpenSource"  Opacity="0" MouseEnter="ShowSource" MouseLeave="HideSource" >
-
-                    </Canvas>
-                </ContentControl>
 
                 <xctk:BusyIndicator.OverlayStyle>
-                    <Style TargetType="Rectangle">
+                    <Style TargetType="{x:Type Rectangle}">
                         <Setter Property="Fill" Value="{DynamicResource Gray2}"/>
                     </Style>
                 </xctk:BusyIndicator.OverlayStyle>
@@ -739,15 +763,22 @@
 
                 <xctk:BusyIndicator.ProgressBarStyle>
 
-                    <Style TargetType="ProgressBar">
+                    <Style TargetType="{x:Type ProgressBar}">
                         <Setter Property="Visibility" Value="Visible"/>
-                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"></Setter>
-                        <Setter Property="IsIndeterminate" Value="True"></Setter>
-                        <Setter Property="Height" Value="10"></Setter>
-                        <Setter Property="Width" Value="150"></Setter>
-                        <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                        <Setter Property="Foreground" Value="{StaticResource ProgressBarBlue}"/>
+                        <Setter Property="IsIndeterminate" Value="True"/>
+                        <Setter Property="Height" Value="10"/>
+                        <Setter Property="Width" Value="150"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
                     </Style>
                 </xctk:BusyIndicator.ProgressBarStyle>
+
+
+                <ContentControl>
+                    <Canvas x:Name="CanvasSource" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Row="0"
+                        Grid.Column="0"  Background="Transparent" Margin="15,15,15,15"
+                        MouseLeftButtonDown="OpenSource"  Opacity="0" MouseEnter="ShowSource" MouseLeave="HideSource" />
+                </ContentControl>
 
 
             </xctk:BusyIndicator>

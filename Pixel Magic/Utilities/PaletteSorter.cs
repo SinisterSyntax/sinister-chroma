@@ -40,10 +40,8 @@ namespace Pixel_Magic.Utilities
             }
 
             //Colors = Colors.Where((x, i) => i % 16 == 0).ToList();
-
+            Colors = Colors.TakeEvery(4).ToList();
         }
-
-
 
         public static List<Color> GetWebSafe(int take)
         {
@@ -55,12 +53,8 @@ namespace Pixel_Magic.Utilities
             foreach (string h in hexCodes)
             {
                 Color c = (Color)Converter.ConvertFromString("#" + h.ToUpper());
-
-
-
                 list.Add(c);
             }
-
 
             var s = list.Batch((list.Count/take)).ToList();
             list.Clear();
@@ -83,26 +77,84 @@ namespace Pixel_Magic.Utilities
             foreach (string h in hexCodes)
             {
                 Color c = (Color)Converter.ConvertFromString("#" + h.ToUpper());
-
-
-
                 list.Add(c);
             }
 
-            return list;
 
+            //return list.OrderBy(x => (x.R + x.G + x.B)).ToList();
+
+             
+            return list.RandomSubset(list.Count).ToList();
+        }
+
+
+        public static List<Color> GetRGBPalette()
+        {
+
+            List <Color> list = new List<Color>();
+            list.Add(Color.FromArgb(25, 25, 25));
+            list.Add(Color.FromArgb(50, 50, 50));
+
+
+            list.Add(Color.FromArgb(190, 190, 190));
+            list.Add(Color.FromArgb(225, 225, 225));
+
+            list.Add(Color.FromArgb(138, 51, 36));
+            list.Add(Color.FromArgb(255, 112, 61));
+
+
+            list.Add(Color.FromArgb(76, 90, 48));
+            list.Add(Color.FromArgb(171, 252, 78));
+
+
+            list.Add(Color.FromArgb(135,206,235));
+            list.Add(Color.FromArgb(24, 111, 219));
+
+            //======
+            list.Add(Color.FromArgb(255, 236, 94));
+            list.Add(Color.FromArgb(197, 255, 127));
+
+            list.Add(Color.FromArgb(86, 66, 6));
+            list.Add(Color.FromArgb(214, 192, 162));
+
+            list.Add(Color.FromArgb(229, 160, 255));
+            list.Add(Color.FromArgb(120, 7, 234));
+            return list;
+        }
+
+        public static List<Color> GetRandomPalette(int paletteSize)
+        {
+
+            Random r1 = new Random();
+
+            List<Color> list = new List<Color>();
+            list.Add(Color.FromArgb(25, 25, 25));
+            list.Add(Color.FromArgb(50, 50, 50));
+
+
+            list.Add(Color.FromArgb(190, 190, 190));
+            list.Add(Color.FromArgb(225, 225, 225));
+
+
+            for (int i = 0; i < paletteSize-4; i++)
+            {
+                list.Add(Color.FromArgb(
+                    r1.Next(0, 255),
+                    r1.Next(0, 255),
+                    r1.Next(0, 255)));
+            }
+
+
+            return list;
         }
 
 
         public static Color GetClosestColor(LabColor lc)
         {
-
             //ColorPair select = (ColorPair)(Colors.OrderBy(x => DeltaE.Distance(x.LAB, lc)).ToList().First());
-            ColorPair select = Colors.MinBy(x => DeltaE.DistanceCIE1976(x.LAB, lc));
+            ColorPair select = Colors.MinBy(x => DeltaE.Distance(x.LAB, lc));
 
             return select.Color;
         }
-
-
     }
 }

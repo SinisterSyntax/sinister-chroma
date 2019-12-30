@@ -38,7 +38,7 @@ namespace Pixel_Magic.Classes
             Color = color;
             this.x = x;
             this.y = y;
-            Point = new Point3D(color.R, color.G, color.B); ;
+            Point = new Point3D(color.R, color.G, color.B);
             D = ((color.R + color.G + color.B) / 3);
             R = Color.R;
             G = Color.G;
